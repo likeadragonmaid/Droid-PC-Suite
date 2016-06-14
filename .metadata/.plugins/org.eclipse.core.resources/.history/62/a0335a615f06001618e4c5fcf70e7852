@@ -1,0 +1,49 @@
+package dpcs;
+
+import java.io.File;
+import java.io.IOException;
+
+public class checker {
+	//EXPERIMENTAL
+	
+	
+			public void checker() {
+				try {
+					try {
+						Process p0 = Runtime.getRuntime().exec("adb kill-server");
+						p0.waitFor();
+						Process p1 = Runtime.getRuntime().exec("adb shell touch /sdcard/.checkadbconnection");
+						p1.waitFor();
+						Process p2 = Runtime.getRuntime().exec("adb pull /sdcard/.checkadbconnection");
+						p2.waitFor();
+						Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/.checkadbconnection");
+						p3.waitFor();
+						File connectioncheck = new File(".checkadbconnection");
+						if (connectioncheck.exists() && !connectioncheck.isDirectory()) {
+							connectioncheck.delete();
+							adbconnected = true;
+							ADBConnectionLabel.setText("Device connected");
+
+							File file = new File("su");
+							Process p4 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
+							p4.waitFor();
+							if (file.exists() && !file.isDirectory()) {
+								file.delete();
+								rooted = true;
+								RootStatusLabel.setText("Device is rooted");
+							} else {
+								rooted = false;
+								RootStatusLabel.setText("");
+							}
+						} else {
+							adbconnected = false;
+							ADBConnectionLabel.setText("Device not connected");
+						}
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+}

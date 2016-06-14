@@ -1,0 +1,146 @@
+package dpcs;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Toolkit;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+
+@SuppressWarnings({ "serial", "unused" })
+public class Uninstaller extends JFrame {
+
+	private JPanel contentPane;
+	boolean adbconnected = false, rooted = false;
+
+	Runnable r = new Runnable() {
+		public void run() {
+			try {
+				adbconnected = false;
+				Process p1 = Runtime.getRuntime().exec("adb shell touch /sdcard/.checkadbconnection");
+				p1.waitFor();
+				Process p2 = Runtime.getRuntime().exec("adb pull /sdcard/.checkadbconnection");
+				p2.waitFor();
+				Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/.checkadbconnection");
+				p3.waitFor();
+				File file = new File(".checkadbconnection");
+				if (file.exists() && !file.isDirectory()) {
+					file.delete();
+					adbconnected = true;
+				} else {
+					JOptionPane.showMessageDialog(null, "No device connected");
+					adbconnected = false;
+				}
+			} catch (Exception e1) {
+				System.err.println(e1);
+			}
+
+			try {
+				File file = new File("su");
+				Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
+				p1.waitFor();
+				if (file.exists() && !file.isDirectory()) {
+					file.delete();
+					adbconnected = true;
+					rooted = true;
+				} else {
+					rooted = false;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+	};
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Uninstaller frame = new Uninstaller();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public Uninstaller() {
+		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Uninstaller.class.getResource("/graphics/Icon.png")));
+		setTitle("Uninstaller");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 500, 486);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JButton btnUninstallUserApps = new JButton("User Apps");
+		btnUninstallUserApps.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Thread t = new Thread(r);
+				t.start();
+				if (adbconnected == true) {
+					UninstallUserApps obj = new UninstallUserApps();
+					obj.setVisible(true);
+				}
+			}
+		});
+		btnUninstallUserApps.setBounds(140, 34, 200, 75);
+		contentPane.add(btnUninstallUserApps);
+
+		JButton btnUninstallSystemApps = new JButton("System Apps *");
+		btnUninstallSystemApps.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Thread t = new Thread(r);
+				t.start();
+				if (adbconnected == true) {
+					if (rooted == true) {
+						UninstallSystemApps obj = new UninstallSystemApps();
+						obj.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Sorry, your device is not rooted");
+					}
+				}
+			}
+		});
+		btnUninstallSystemApps.setBounds(140, 151, 200, 75);
+		contentPane.add(btnUninstallSystemApps);
+
+		JButton btnUninstallPrivapps = new JButton("Priv-apps *");
+		btnUninstallPrivapps.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Thread t = new Thread(r);
+				t.start();
+				if (adbconnected == true) {
+					if (rooted == true) {
+				UninstallPrivApps obj = new UninstallPrivApps();
+				obj.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Sorry, your device is not rooted");
+					}
+				}
+			}
+		});
+		btnUninstallPrivapps.setBounds(140, 261, 200, 75);
+		contentPane.add(btnUninstallPrivapps);
+
+		JLabel lblNeedsRoot = new JLabel("* Needs root and does not work on production builds");
+		lblNeedsRoot.setBounds(12, 413, 450, 17);
+		contentPane.add(lblNeedsRoot);
+
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(Uninstaller.class.getResource("/graphics/WhiteBG.jpg")));
+		label.setBounds(0, 0, 500, 459);
+		contentPane.add(label);
+	}
+}
