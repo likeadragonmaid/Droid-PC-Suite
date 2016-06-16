@@ -2,34 +2,23 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Cache" key="selection"/>
+		<item value="JOption" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="cache"/>
-			<item value="cache remove"/>
-			<item value="cache remover"/>
-			<item value="Kernel"/>
-			<item value="kernel"/>
-			<item value="device is not"/>
-			<item value="device not"/>
-			<item value="Device connected"/>
+			<item value="joption"/>
+			<item value="update"/>
 		</list>
 		<list key="replacehistory">
-			<item value=""/>
-			<item value="Image"/>
-			<item value="Device is connected"/>
-			<item value="Trying to break"/>
-			<item value="breaking"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="299" key="DIALOG_WIDTH"/>
 		<item value="1|Sans|9.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 		<item value="378" key="DIALOG_HEIGHT"/>
-		<item value="932" key="DIALOG_X_ORIGIN"/>
-		<item value="258" key="DIALOG_Y_ORIGIN"/>
+		<item value="621" key="DIALOG_X_ORIGIN"/>
+		<item value="347" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

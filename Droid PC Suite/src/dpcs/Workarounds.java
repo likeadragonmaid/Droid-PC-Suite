@@ -35,7 +35,7 @@ public class Workarounds extends JFrame {
 		setTitle("Common Workarounds");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Workarounds.class.getResource("/graphics/Icon.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 530, 250);
+		setBounds(100, 100, 530, 185);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -51,7 +51,7 @@ public class Workarounds extends JFrame {
 		lblIfSomeOperations.setBounds(12, 82, 506, 38);
 		contentPane.add(lblIfSomeOperations);
 
-		JLabel lblKaranvirSingh = new JLabel("Use USB 2.0 to connect andoid device to system instead of USB 3.0.");
+		JLabel lblKaranvirSingh = new JLabel("Use USB 2.0 to connect android device to system instead of USB 3.0.");
 		lblKaranvirSingh.setForeground(Color.BLACK);
 		lblKaranvirSingh.setBounds(12, 12, 506, 38);
 		contentPane.add(lblKaranvirSingh);
@@ -63,7 +63,7 @@ public class Workarounds extends JFrame {
 
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(Workarounds.class.getResource("/graphics/WhiteBG.jpg")));
-		label.setBounds(0, 0, 530, 223);
+		label.setBounds(0, -11, 530, 165);
 		contentPane.add(label);
 	}
 }

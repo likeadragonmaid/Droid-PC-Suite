@@ -34,9 +34,8 @@ import java.io.FileOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import org.apache.commons.codec.digest.DigestUtils;
-import net.lingala.zip4j.exception.ZipException;
-import net.lingala.zip4j.core.ZipFile;
 import java.awt.Color;
+import java.awt.Desktop;
 
 @SuppressWarnings({ "serial", "unused" })
 public class Interface extends JFrame {
@@ -50,6 +49,17 @@ public class Interface extends JFrame {
 		public void run() {
 			while (flag) {
 				try {
+					File updatefile = new File(".updatedownloaded"); // Auto
+																		// exit
+																		// while
+																		// updating
+																		// (to
+																		// be
+																		// targeted in future
+					if (updatefile.exists() && !updatefile.isDirectory()) {
+						updatefile.delete();
+						System.exit(0);
+					}
 					adbconnected = false;
 					Process p1 = Runtime.getRuntime().exec("adb devices");
 					p1.waitFor();
@@ -66,7 +76,6 @@ public class Interface extends JFrame {
 						ADBConnectionLabel.setText("Device is connected");
 					} else {
 						adbconnected = false;
-						ADBConnectionLabel.setText("");
 						ADBConnectionLabel.setText("Connect your device");
 					}
 				} catch (Exception e1) {
@@ -172,7 +181,7 @@ public class Interface extends JFrame {
 
 		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				System.exit(0);
 			}
 		});
 
@@ -197,90 +206,36 @@ public class Interface extends JFrame {
 			}
 		});
 
-		JMenuItem mntmCheckForUpdates = new JMenuItem("Check for updates");
-		mntmCheckForUpdates.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,
-						"Until auto updater is implemented, please visit XDA thread for news");
-				// UNIMPIMENTED UPDATE FEATURE; DO NOT MODIFY, UNLESS YOU KNOW
-				// WHAT YOU ARE DOING!
+		JMenuItem mntmNeedHelp = new JMenuItem("Need Help?");
+		mntmNeedHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				try {
-					System.out.println("Checking for updates...");
-					// URL link = new URL
-					// ("https://www.dropbox.com/s/fg53qb9j3sesbi1/AUTP.zip?dl=1");
-					// //200 OK URL
-					URL link = new URL("https://google.com/nobodycares/"); // JUST
-																			// A
-																			// FILLER
-																			// AS
-																			// IT
-																			// IS
-																			// UNIMPLIMENTED,
-																			// SO...;
-																			// BTW,
-																			// 404
-																			// CODE:
-																			// INVALID
-																			// URL.
-					HttpURLConnection huc = (HttpURLConnection) link.openConnection();
-					huc.setRequestMethod("GET");
-					huc.connect();
-					int code = huc.getResponseCode();
-					if (code == 200) {
-						if (JOptionPane.showConfirmDialog(null, "Update Available! Do you want to download update?",
-								"Update", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-							String path = System.getProperty("user.dir"); // Cache
-																			// remover
-							File file = new File(path);
-							File[] files = file.listFiles();
-							for (File f : files) {
-								if (f.isFile() && f.exists()) {
-									f.delete();
-								}
-							}
-							String fileName = "DPCS.jar";
-							InputStream in = new BufferedInputStream(link.openStream());
-							ByteArrayOutputStream out = new ByteArrayOutputStream();
-							byte[] buf = new byte[1024];
-							int n = 0;
-							while (-1 != (n = in.read(buf))) {
-								out.write(buf, 0, n);
-							}
-							out.close();
-							in.close();
-							byte[] response = out.toByteArray();
-							FileOutputStream fos = new FileOutputStream(fileName);
-							fos.write(response);
-							fos.close();
-							// EXTRACTOR
-							String source = "DPCS.jar";
-							try {
-								ZipFile zipFile = new ZipFile(source);
-								zipFile.extractAll(path);
-							} catch (ZipException e1) {
-								e1.printStackTrace();
-							}
-							// RESTART THE APP
-							if (JOptionPane.showConfirmDialog(null,
-									"Download complete, Do you want to restart Driod PC Suite?", "Update",
-									JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-								Runtime runtime = Runtime.getRuntime();
-								Process p4 = runtime.exec("java -jar DPCS.jar");
-								System.exit(0);
-							}
-						}
-					} else if (code == 404) {
-						System.out.println("Update not available");
-					} else {
-						System.out.println("Error occured while checking for updates. Error Code: " + code);
-					}
-				} catch (IOException e1) {
-					e1.printStackTrace();
+					if (JOptionPane.showConfirmDialog(null, "Open XDA-Developer thread to post a query?", "Get help",
+							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+						Desktop.getDesktop()
+								.browse(new URL(
+										"http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599")
+												.toURI());
+				} catch (Exception e) {
 				}
 			}
 		});
 
+		JMenuItem mntmCheckForUpdates = new JMenuItem("Check for updates");
+		mntmCheckForUpdates.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Checkout downloads section in XDA-Developers thread");
+				try {
+					Desktop.getDesktop()
+							.browse(new URL(
+									"http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599")
+											.toURI());
+				} catch (Exception e1) {
+				}
+			}
+		});
 		mnHelp.add(mntmCheckForUpdates);
+		mnHelp.add(mntmNeedHelp);
 		mnHelp.add(mntmAbout);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -297,7 +252,7 @@ public class Interface extends JFrame {
 				JOptionPane.showMessageDialog(null, "Now disconnect your android device and reconnect it via USB");
 				JOptionPane.showMessageDialog(null, "Reboot your device. After it completely boots up click OK");
 				try {
-					adbconnected = false; // Force kill adb server 3 times!
+					adbconnected = false; // Force kill ADB server 3 times!
 					Process p1 = Runtime.getRuntime().exec("adb kill-server");
 					p1.waitFor();
 					Process p2 = Runtime.getRuntime().exec("adb kill-server");
@@ -1752,7 +1707,7 @@ public class Interface extends JFrame {
 		label.setBounds(0, 0, 1088, 276);
 		contentPane.add(label);
 
-		Thread t = new Thread(r);
-		t.start(); // Background thread
+		Thread t = new Thread(r); // Connection service
+		t.start();
 	}
 }

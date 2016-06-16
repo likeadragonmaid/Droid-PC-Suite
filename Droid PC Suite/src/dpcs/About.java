@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Window.Type;
 import java.awt.Toolkit;
+import java.awt.Color;
 
 @SuppressWarnings({ "unused", "serial" })
 public class About extends JFrame {
@@ -35,20 +36,35 @@ public class About extends JFrame {
 		setType(Type.UTILITY);
 		setTitle("About");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 528, 328);
+		setBounds(100, 100, 528, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblVersionstable = new JLabel("Version: 1.0 (Stable) (Windows support - BETA)");
+		JLabel lblGulatikun = new JLabel("Gulati-kun");
+		lblGulatikun.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblGulatikun.setBounds(14, 296, 242, 24);
+		contentPane.add(lblGulatikun);
+		
+		JLabel lblAnilkun = new JLabel("Anil-kun");
+		lblAnilkun.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblAnilkun.setBounds(14, 272, 242, 24);
+		contentPane.add(lblAnilkun);
+		
+		JLabel lblSurikun = new JLabel("Suri-kun");
+		lblSurikun.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblSurikun.setBounds(14, 247, 242, 24);
+		contentPane.add(lblSurikun);
+		
+		JLabel lblVersionstable = new JLabel("Version: 1.1 (Stable) (Windows support - BETA)");
 		lblVersionstable.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblVersionstable.setBounds(12, 12, 375, 18);
 		contentPane.add(lblVersionstable);
 
 		JLabel lblForMyOther = new JLabel("For my other Android stuff visit me on XDA - Developers (@kvsjxd)");
 		lblForMyOther.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblForMyOther.setBounds(14, 260, 526, 24);
+		lblForMyOther.setBounds(12, 332, 502, 24);
 		contentPane.add(lblForMyOther);
 
 		JLabel lblMySensei_1 = new JLabel("Er. Karun Sensei");
@@ -68,7 +84,7 @@ public class About extends JFrame {
 
 		JLabel label_9 = new JLabel("");
 		label_9.setIcon(new ImageIcon(About.class.getResource("/graphics/Droidrobot.png")));
-		label_9.setBounds(346, 0, 180, 270);
+		label_9.setBounds(334, 50, 180, 270);
 		contentPane.add(label_9);
 
 		JLabel lblDeveloper = new JLabel("Developer");
@@ -82,8 +98,9 @@ public class About extends JFrame {
 		contentPane.add(lblMrAleksandarDespotovski);
 
 		JLabel label_2 = new JLabel("Karanvir Singh");
-		label_2.setFont(new Font("Dialog", Font.PLAIN, 15));
-		label_2.setBounds(12, 69, 242, 24);
+		label_2.setForeground(Color.RED);
+		label_2.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
+		label_2.setBounds(14, 66, 242, 24);
 		contentPane.add(label_2);
 
 		JLabel lblMyFriend = new JLabel("My friend - Chetan-san");
@@ -98,7 +115,7 @@ public class About extends JFrame {
 
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(About.class.getResource("/graphics/WhiteBG.jpg")));
-		label.setBounds(0, -26, 526, 322);
+		label.setBounds(0, -26, 526, 394);
 		contentPane.add(label);
 	}
 }
