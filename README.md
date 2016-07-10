@@ -13,4 +13,6 @@ Features:
 * Advanced backups
 * Restore from backups
 * Bypass “your” device security
+* build.prop Editor
+* ADB Terminal
 * Cyptographic hash sums calculator
