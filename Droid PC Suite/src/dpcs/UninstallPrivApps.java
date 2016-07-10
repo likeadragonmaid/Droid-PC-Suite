@@ -18,6 +18,7 @@ import javax.swing.AbstractListModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class UninstallPrivApps extends JFrame {
@@ -42,7 +43,7 @@ public class UninstallPrivApps extends JFrame {
 		});
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 	public UninstallPrivApps() {
 		setResizable(false);
 		setTitle("Uninstall Priv-apps");
@@ -50,6 +51,7 @@ public class UninstallPrivApps extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 482, 470);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -188,11 +190,6 @@ public class UninstallPrivApps extends JFrame {
 			JLabel lblNewLabel = new JLabel("Note: You should also remove app's odex file if it exits ");
 			lblNewLabel.setBounds(26, 374, 438, 17);
 			contentPane.add(lblNewLabel);
-
-			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setIcon(new ImageIcon(UninstallPrivApps.class.getResource("/graphics/WhiteBG.jpg")));
-			lblNewLabel_1.setBounds(0, 0, 482, 437);
-			contentPane.add(lblNewLabel_1);
 			File file = new File(".privapps.txt");
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();

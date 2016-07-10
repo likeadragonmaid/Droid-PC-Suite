@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 @SuppressWarnings({ "serial", "unused" })
 public class Uninstaller extends JFrame {
@@ -39,6 +40,7 @@ public class Uninstaller extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 486);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -48,12 +50,13 @@ public class Uninstaller extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				UninstallUserApps obj = new UninstallUserApps();
 				obj.setVisible(true);
+				dispose();
 			}
 		});
 
 		JLabel lblNoteUnstallationOf = new JLabel(
 				"Note: Uninstallation of priv-app is only for android 4.4.x and higher");
-		lblNoteUnstallationOf.setBounds(12, 406, 474, 15);
+		lblNoteUnstallationOf.setBounds(12, 427, 474, 15);
 		contentPane.add(lblNoteUnstallationOf);
 
 		btnUninstallUserApps.setBounds(140, 34, 200, 75);
@@ -64,6 +67,7 @@ public class Uninstaller extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				UninstallSystemApps obj = new UninstallSystemApps();
 				obj.setVisible(true);
+				dispose();
 			}
 		});
 
@@ -75,6 +79,7 @@ public class Uninstaller extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				UninstallPrivApps obj = new UninstallPrivApps();
 				obj.setVisible(true);
+				dispose();
 			}
 		});
 
@@ -82,12 +87,7 @@ public class Uninstaller extends JFrame {
 		contentPane.add(btnUninstallPrivapps);
 
 		JLabel lblNeedsRoot = new JLabel("* Needs root and does not work on production android builds");
-		lblNeedsRoot.setBounds(10, 425, 476, 17);
+		lblNeedsRoot.setBounds(10, 410, 476, 17);
 		contentPane.add(lblNeedsRoot);
-
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(Uninstaller.class.getResource("/graphics/WhiteBG.jpg")));
-		label.setBounds(0, 0, 500, 459);
-		contentPane.add(label);
 	}
 }

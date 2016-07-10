@@ -35,35 +35,36 @@ public class Workarounds extends JFrame {
 		setTitle("Common Workarounds");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Workarounds.class.getResource("/graphics/Icon.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 530, 185);
+		setBounds(100, 100, 530, 210);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblAndFastbootFiles = new JLabel("and fastboot files with their newer or older versions.");
-		lblAndFastbootFiles.setForeground(Color.BLACK);
-		lblAndFastbootFiles.setBounds(12, 100, 506, 38);
-		contentPane.add(lblAndFastbootFiles);
+		JLabel lblcommonworkaround4 = new JLabel("Connect only one android device at a time!");
+		lblcommonworkaround4.setForeground(Color.BLACK);
+		lblcommonworkaround4.setBounds(12, 132, 506, 38);
+		contentPane.add(lblcommonworkaround4);
 		
-		JLabel lblIfSomeOperations = new JLabel("If some operations do not work on windows, please replace adb");
-		lblIfSomeOperations.setForeground(Color.BLACK);
-		lblIfSomeOperations.setBounds(12, 82, 506, 38);
-		contentPane.add(lblIfSomeOperations);
+		JLabel lblcommonworkaround3_2 = new JLabel("and fastboot files with their newer or older versions.");
+		lblcommonworkaround3_2.setForeground(Color.BLACK);
+		lblcommonworkaround3_2.setBounds(12, 100, 506, 38);
+		contentPane.add(lblcommonworkaround3_2);
+		
+		JLabel lblcommonworkaround3 = new JLabel("If some operations do not work on windows, please replace adb");
+		lblcommonworkaround3.setForeground(Color.BLACK);
+		lblcommonworkaround3.setBounds(12, 82, 506, 38);
+		contentPane.add(lblcommonworkaround3);
 
-		JLabel lblKaranvirSingh = new JLabel("Use USB 2.0 to connect android device to system instead of USB 3.0.");
-		lblKaranvirSingh.setForeground(Color.BLACK);
-		lblKaranvirSingh.setBounds(12, 12, 506, 38);
-		contentPane.add(lblKaranvirSingh);
+		JLabel lblcommonworkaround1 = new JLabel("Use USB 2.0 to connect android device to system instead of USB 3.0.");
+		lblcommonworkaround1.setForeground(Color.BLACK);
+		lblcommonworkaround1.setBounds(12, 12, 506, 38);
+		contentPane.add(lblcommonworkaround1);
 
-		JLabel lblAdbAnd = new JLabel("You may also need to install your android device usb drivers.");
-		lblAdbAnd.setForeground(Color.BLACK);
-		lblAdbAnd.setBounds(12, 46, 506, 38);
-		contentPane.add(lblAdbAnd);
-
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(Workarounds.class.getResource("/graphics/WhiteBG.jpg")));
-		label.setBounds(0, -11, 530, 165);
-		contentPane.add(label);
+		JLabel lblcommonworkaround2 = new JLabel("You may also need to install your android device usb drivers.");
+		lblcommonworkaround2.setForeground(Color.BLACK);
+		lblcommonworkaround2.setBounds(12, 46, 506, 38);
+		contentPane.add(lblcommonworkaround2);
 	}
 }

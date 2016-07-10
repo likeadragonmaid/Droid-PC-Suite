@@ -11,6 +11,16 @@ import java.awt.Font;
 import java.awt.Window.Type;
 import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Desktop;
+
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings({ "unused", "serial" })
 public class About extends JFrame {
@@ -38,49 +48,84 @@ public class About extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 528, 400);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lblGulatikun = new JLabel("Gulati-kun");
-		lblGulatikun.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblGulatikun.setBounds(14, 296, 242, 24);
-		contentPane.add(lblGulatikun);
-		
-		JLabel lblAnilkun = new JLabel("Anil-kun");
-		lblAnilkun.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblAnilkun.setBounds(14, 272, 242, 24);
-		contentPane.add(lblAnilkun);
-		
-		JLabel lblSurikun = new JLabel("Suri-kun");
-		lblSurikun.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblSurikun.setBounds(14, 247, 242, 24);
-		contentPane.add(lblSurikun);
-		
-		JLabel lblVersionstable = new JLabel("Version: 1.1 (Stable) (Windows support - BETA)");
+
+		JButton btnGithub = new JButton("Github");
+		btnGithub.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Desktop.getDesktop().browse(new URL("https://github.com/kvsjxd/Droid-PC-Suite").toURI());
+				} catch (IOException | URISyntaxException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		btnGithub.setBounds(369, 295, 111, 25);
+		contentPane.add(btnGithub);
+
+		JLabel lblMyFriend4 = new JLabel("Gulati-kun");
+		lblMyFriend4.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblMyFriend4.setBounds(12, 266, 242, 24);
+		contentPane.add(lblMyFriend4);
+
+		JLabel lblMyFriend3 = new JLabel("Anil-kun");
+		lblMyFriend3.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblMyFriend3.setBounds(12, 242, 242, 24);
+		contentPane.add(lblMyFriend3);
+
+		JLabel lblMyFriend2 = new JLabel("Suri-kun");
+		lblMyFriend2.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblMyFriend2.setBounds(12, 217, 242, 24);
+		contentPane.add(lblMyFriend2);
+
+		JLabel lblVersionstable = new JLabel("Version: 1.2");
 		lblVersionstable.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblVersionstable.setBounds(12, 12, 375, 18);
+		lblVersionstable.setBounds(379, 16, 122, 18);
 		contentPane.add(lblVersionstable);
 
 		JLabel lblForMyOther = new JLabel("For my other Android stuff visit me on XDA - Developers (@kvsjxd)");
+		lblForMyOther.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					Desktop.getDesktop()
+							.browse(new URL(
+									"http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
+											.toURI());
+				} catch (IOException | URISyntaxException e) {
+					e.printStackTrace();
+				}
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblForMyOther.setForeground(Color.BLUE);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblForMyOther.setForeground(Color.BLACK);
+			}
+		});
 		lblForMyOther.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblForMyOther.setBounds(12, 332, 502, 24);
 		contentPane.add(lblForMyOther);
 
-		JLabel lblMySensei_1 = new JLabel("Er. Karun Sensei");
-		lblMySensei_1.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblMySensei_1.setBounds(14, 150, 242, 24);
-		contentPane.add(lblMySensei_1);
+		JLabel lblMySensei2 = new JLabel("Er. Karun Sensei");
+		lblMySensei2.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblMySensei2.setBounds(12, 120, 242, 24);
+		contentPane.add(lblMySensei2);
 
-		JLabel lblMySensei = new JLabel("Prashotam Sensei");
-		lblMySensei.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblMySensei.setBounds(14, 128, 242, 24);
-		contentPane.add(lblMySensei);
+		JLabel lblMySensei1 = new JLabel("Prashotam Sensei");
+		lblMySensei1.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblMySensei1.setBounds(12, 98, 242, 24);
+		contentPane.add(lblMySensei1);
 
-		JLabel lblDrtb = new JLabel("@D4r3T0B3 (github)");
-		lblDrtb.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblDrtb.setBounds(14, 224, 242, 24);
-		contentPane.add(lblDrtb);
+		JLabel lblDaretobe = new JLabel("@D4r3T0B3 (github)");
+		lblDaretobe.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblDaretobe.setBounds(12, 194, 242, 24);
+		contentPane.add(lblDaretobe);
 
 		JLabel label_9 = new JLabel("");
 		label_9.setIcon(new ImageIcon(About.class.getResource("/graphics/Droidrobot.png")));
@@ -89,33 +134,49 @@ public class About extends JFrame {
 
 		JLabel lblDeveloper = new JLabel("Developer");
 		lblDeveloper.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblDeveloper.setBounds(14, 42, 233, 24);
+		lblDeveloper.setBounds(12, 12, 233, 24);
 		contentPane.add(lblDeveloper);
 
-		JLabel lblMrAleksandarDespotovski = new JLabel("Aleksandar Despotovski-shi");
-		lblMrAleksandarDespotovski.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblMrAleksandarDespotovski.setBounds(14, 199, 242, 24);
-		contentPane.add(lblMrAleksandarDespotovski);
+		JLabel lblMrAleksandarDespotovski_shi = new JLabel("Aleksandar Despotovski-shi");
+		lblMrAleksandarDespotovski_shi.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblMrAleksandarDespotovski_shi.setBounds(12, 169, 242, 24);
+		contentPane.add(lblMrAleksandarDespotovski_shi);
 
-		JLabel label_2 = new JLabel("Karanvir Singh");
-		label_2.setForeground(Color.RED);
-		label_2.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
-		label_2.setBounds(14, 66, 242, 24);
-		contentPane.add(label_2);
+		JLabel lblMyname = new JLabel("Karanvir Singh");
+		lblMyname.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					Desktop.getDesktop()
+							.browse(new URL(
+									"http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
+											.toURI());
+				} catch (IOException | URISyntaxException e1) {
+					e1.printStackTrace();
+				}
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblMyname.setForeground(Color.BLUE);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblMyname.setForeground(Color.RED);
+			}
+		});
+		lblMyname.setForeground(Color.RED);
+		lblMyname.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 16));
+		lblMyname.setBounds(12, 36, 242, 24);
+		contentPane.add(lblMyname);
 
-		JLabel lblMyFriend = new JLabel("My friend - Chetan-san");
-		lblMyFriend.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblMyFriend.setBounds(14, 175, 242, 24);
-		contentPane.add(lblMyFriend);
+		JLabel lblMyFriend1 = new JLabel("My friend - Chetan-san");
+		lblMyFriend1.setFont(new Font("Dialog", Font.PLAIN, 15));
+		lblMyFriend1.setBounds(12, 145, 242, 24);
+		contentPane.add(lblMyFriend1);
 
 		JLabel label_6 = new JLabel("Special thanks to");
 		label_6.setFont(new Font("Dialog", Font.BOLD, 16));
-		label_6.setBounds(14, 101, 240, 15);
+		label_6.setBounds(12, 71, 240, 15);
 		contentPane.add(label_6);
-
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(About.class.getResource("/graphics/WhiteBG.jpg")));
-		label.setBounds(0, -26, 526, 394);
-		contentPane.add(label);
 	}
 }

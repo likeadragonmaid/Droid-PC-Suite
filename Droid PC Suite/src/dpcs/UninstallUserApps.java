@@ -18,6 +18,7 @@ import javax.swing.AbstractListModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class UninstallUserApps extends JFrame {
@@ -43,7 +44,7 @@ public class UninstallUserApps extends JFrame {
 		});
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 	public UninstallUserApps() {
 		setResizable(false);
 		setTitle("Uninstall User Apps");
@@ -51,6 +52,7 @@ public class UninstallUserApps extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 482, 440);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -193,11 +195,6 @@ public class UninstallUserApps extends JFrame {
 				}
 			});
 			scrollPane.setViewportView(list);
-
-			JLabel lblNewLabel = new JLabel("");
-			lblNewLabel.setIcon(new ImageIcon(UninstallUserApps.class.getResource("/graphics/WhiteBG.jpg")));
-			lblNewLabel.setBounds(0, -14, 482, 425);
-			contentPane.add(lblNewLabel);
 			File file = new File(".userapps.txt");
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();

@@ -49,18 +49,7 @@ public class Interface extends JFrame {
 		public void run() {
 			while (flag) {
 				try {
-					File updatefile = new File(".updatedownloaded"); // Auto
-																		// exit
-																		// while
-																		// updating
-																		// (to
-																		// be
-																		// targeted in future
-					if (updatefile.exists() && !updatefile.isDirectory()) {
-						updatefile.delete();
-						System.exit(0);
-					}
-					adbconnected = false;
+					adbconnected = false; //ADB initial state
 					Process p1 = Runtime.getRuntime().exec("adb devices");
 					p1.waitFor();
 					Process p2 = Runtime.getRuntime().exec("adb shell touch /sdcard/.checkadbconnection");
@@ -196,27 +185,46 @@ public class Interface extends JFrame {
 				obj.setVisible(true);
 			}
 		});
-		mnHelp.add(mntmCommonWorkarounds);
-
-		JMenuItem mntmAbout = new JMenuItem("About");
-		mntmAbout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				About obj = new About();
+		
+		JMenuItem mntmChangelog = new JMenuItem("Changelog tracker");
+		mntmChangelog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Changelog obj = new Changelog();
 				obj.setVisible(true);
 			}
 		});
+		
+				JMenuItem mntmAbout = new JMenuItem("About");
+				mntmAbout.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						About obj = new About();
+						obj.setVisible(true);
+					}
+				});
+				mnHelp.add(mntmAbout);
+		mnHelp.add(mntmChangelog);
+		mnHelp.add(mntmCommonWorkarounds);
 
-		JMenuItem mntmNeedHelp = new JMenuItem("Need Help?");
+		JMenuItem mntmNeedHelp = new JMenuItem("More help");
 		mntmNeedHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					if (JOptionPane.showConfirmDialog(null, "Open XDA-Developer thread to post a query?", "Get help",
-							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+					String[] options = new String[2];
+					if (JOptionPane.showConfirmDialog(null, "Do you need help with connectivity on Linux?", "Help",
+							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						Desktop.getDesktop()
 								.browse(new URL(
-										"http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599")
+										"https://androidonlinux.wordpress.com/2013/05/12/setting-up-adb-on-linux/")
 												.toURI());
+					} else {
+						JOptionPane.showMessageDialog(null, "I see... Check out common workarounds section... Or post your question on XDA-Developers thread");
+							Desktop.getDesktop()
+									.browse(new URL(
+											"http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599")
+													.toURI());
+					}
 				} catch (Exception e) {
+					System.err.println(e);
 				}
 			}
 		});
@@ -235,16 +243,10 @@ public class Interface extends JFrame {
 			}
 		});
 		mnHelp.add(mntmCheckForUpdates);
-		mnHelp.add(mntmNeedHelp);
-		mnHelp.add(mntmAbout);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		JButton btnForceConnect = new JButton("Force connect");
-		btnForceConnect.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		
+		JMenuItem mntmForceConnect = new JMenuItem("Force connect");
+		mntmForceConnect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null,
 						"Go to developer options and turn off android debugging and turn it on again");
 				JOptionPane.showMessageDialog(null,
@@ -304,13 +306,39 @@ public class Interface extends JFrame {
 							RootStatusLabel.setText("");
 						}
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				} catch (Exception e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
-		btnForceConnect.setBounds(921, 194, 136, 25);
-		contentPane.add(btnForceConnect);
+		mnHelp.add(mntmForceConnect);
+		mnHelp.add(mntmNeedHelp);
+
+		JMenu mnLegalInformation = new JMenu("Legal information");
+		mnHelp.add(mnLegalInformation);
+
+		JMenuItem mntmDroidPcSuite = new JMenuItem("Droid PC Suite license");
+		mntmDroidPcSuite.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GPLLicense obj = new GPLLicense();
+				obj.setVisible(true);
+			}
+		});
+		mnLegalInformation.add(mntmDroidPcSuite);
+
+		JMenuItem mntmOpenSourceLicenses = new JMenuItem("Open source licenses");
+		mntmOpenSourceLicenses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ApacheLicense obj = new ApacheLicense();
+				obj.setVisible(true);
+			}
+		});
+		mnLegalInformation.add(mntmOpenSourceLicenses);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
 		AppStatus = new JLabel("");
 		AppStatus.setBounds(12, 230, 1062, 17);
@@ -336,6 +364,7 @@ public class Interface extends JFrame {
 		contentPane.add(tabbedPane);
 
 		JPanel panel_7 = new JPanel();
+		panel_7.setBackground(Color.WHITE);
 		tabbedPane.addTab("General", null, panel_7, null);
 		panel_7.setLayout(null);
 
@@ -447,6 +476,26 @@ public class Interface extends JFrame {
 			}
 		});
 
+		JButton btnADBTerminal = new JButton("ADB Terminal");
+		btnADBTerminal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Terminal obj = new Terminal();
+				obj.setVisible(true);
+			}
+		});
+		
+		JButton btnBuildpropeditor = new JButton("build.prop Editor");
+		btnBuildpropeditor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildpropeditor obj = new Buildpropeditor();
+				obj.setVisible(true);
+			}
+		});
+		btnBuildpropeditor.setBounds(25, 236, 220, 75);
+		panel_7.add(btnBuildpropeditor);
+		btnADBTerminal.setBounds(548, 131, 220, 75);
+		panel_7.add(btnADBTerminal);
+
 		JLabel lblNoteInstallationTo = new JLabel(
 				"Note: Installation to priv-app is only for android 4.4.x and higher");
 		lblNoteInstallationTo.setBounds(12, 338, 490, 15);
@@ -458,7 +507,7 @@ public class Interface extends JFrame {
 		GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
 		GeneralDone.setBounds(766, 27, 300, 200);
 		panel_7.add(GeneralDone);
-		btnUninstallApps.setBounds(282, 157, 220, 75);
+		btnUninstallApps.setBounds(282, 131, 220, 75);
 		panel_7.add(btnUninstallApps);
 
 		JButton btnFileManager = new JButton("File Manager");
@@ -473,7 +522,7 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		btnFileManager.setBounds(25, 157, 220, 75);
+		btnFileManager.setBounds(25, 131, 220, 75);
 		panel_7.add(btnFileManager);
 
 		JLabel lblNeedsRoot = new JLabel(
@@ -485,12 +534,8 @@ public class Interface extends JFrame {
 		btnInstallUserApp.setBounds(25, 27, 220, 75);
 		panel_7.add(btnInstallUserApp);
 
-		JLabel label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
-		label_1.setBounds(0, 0, 1072, 420);
-		panel_7.add(label_1);
-
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		tabbedPane.addTab("Flasher", null, panel, null);
 		panel.setLayout(null);
 
@@ -790,12 +835,8 @@ public class Interface extends JFrame {
 		btnFlashSplash.setBounds(30, 261, 200, 75);
 		panel.add(btnFlashSplash);
 
-		JLabel label_4 = new JLabel("");
-		label_4.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
-		label_4.setBounds(0, 0, 1083, 420);
-		panel.add(label_4);
-
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
 		tabbedPane.addTab("Wiper", null, panel_1, null);
 		panel_1.setLayout(null);
 
@@ -965,12 +1006,8 @@ public class Interface extends JFrame {
 		btnWipeCache.setBounds(270, 26, 200, 75);
 		panel_1.add(btnWipeCache);
 
-		JLabel label_5 = new JLabel("");
-		label_5.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
-		label_5.setBounds(0, 0, 1072, 420);
-		panel_1.add(label_5);
-
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.WHITE);
 		tabbedPane.addTab("Rebooter", null, panel_2, null);
 		panel_2.setLayout(null);
 
@@ -1104,12 +1141,8 @@ public class Interface extends JFrame {
 		btnRebootSystem.setBounds(28, 55, 200, 75);
 		panel_2.add(btnRebootSystem);
 
-		JLabel label_6 = new JLabel("");
-		label_6.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
-		label_6.setBounds(0, 0, 1072, 420);
-		panel_2.add(label_6);
-
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Color.WHITE);
 		tabbedPane.addTab("Bootloader", null, panel_3, null);
 		panel_3.setLayout(null);
 
@@ -1164,16 +1197,8 @@ public class Interface extends JFrame {
 		btnLockBootloader.setBounds(425, 57, 230, 75);
 		panel_3.add(btnLockBootloader);
 
-		JLabel label_7 = new JLabel("");
-		label_7.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
-		label_7.setBounds(0, 0, 1072, 420);
-		panel_3.add(label_7);
-
-		JButton button = new JButton("Reboot to Recovery");
-		button.setBounds(150, 153, 200, 75);
-		panel_3.add(button);
-
 		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(Color.WHITE);
 		tabbedPane.addTab("Logger", null, panel_4, null);
 		panel_4.setLayout(null);
 
@@ -1240,9 +1265,8 @@ public class Interface extends JFrame {
 					p3.waitFor();
 					Process p4 = Runtime.getRuntime().exec("adb shell rm /sdcard/.logcat.txt");
 					p4.waitFor();
-					Reader reader = null;
 					try {
-						reader = new FileReader(new File(".logcat.txt"));
+						Reader reader = new FileReader(new File(".logcat.txt"));
 						LogViewer.read(reader, "");
 						AppStatus.setText("");
 					} catch (IOException e) {
@@ -1261,12 +1285,8 @@ public class Interface extends JFrame {
 		btnViewLogcat.setBounds(37, 13, 200, 47);
 		panel_4.add(btnViewLogcat);
 
-		JLabel label_8 = new JLabel("");
-		label_8.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
-		label_8.setBounds(0, 0, 1072, 420);
-		panel_4.add(label_8);
-
 		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(Color.WHITE);
 		tabbedPane.addTab("Backup and Restore", null, panel_5, null);
 		panel_5.setLayout(null);
 
@@ -1494,12 +1514,8 @@ public class Interface extends JFrame {
 		btnRestorePreviousBackup.setBounds(510, 70, 200, 75);
 		panel_5.add(btnRestorePreviousBackup);
 
-		JLabel label_9 = new JLabel("");
-		label_9.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
-		label_9.setBounds(0, 0, 1072, 420);
-		panel_5.add(label_9);
-
 		JPanel panel_9 = new JPanel();
+		panel_9.setBackground(Color.WHITE);
 		tabbedPane.addTab("Bypass Security", null, panel_9, null);
 		panel_9.setLayout(null);
 
@@ -1582,12 +1598,8 @@ public class Interface extends JFrame {
 		lblNewLabel.setBounds(640, 293, 285, 15);
 		panel_9.add(lblNewLabel);
 
-		JLabel label_20 = new JLabel("");
-		label_20.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
-		label_20.setBounds(0, 0, 1072, 420);
-		panel_9.add(label_20);
-
 		JPanel panel_6 = new JPanel();
+		panel_6.setBackground(Color.WHITE);
 		tabbedPane.addTab("Cryptography", null, panel_6, null);
 		panel_6.setLayout(null);
 
@@ -1696,16 +1708,6 @@ public class Interface extends JFrame {
 
 		btnMD5.setBounds(27, 26, 200, 75);
 		panel_6.add(btnMD5);
-
-		JLabel label_10 = new JLabel("");
-		label_10.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
-		label_10.setBounds(0, 0, 1072, 420);
-		panel_6.add(label_10);
-
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
-		label.setBounds(0, 0, 1088, 276);
-		contentPane.add(label);
 
 		Thread t = new Thread(r); // Connection service
 		t.start();

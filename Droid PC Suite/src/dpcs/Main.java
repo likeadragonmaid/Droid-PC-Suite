@@ -3,11 +3,13 @@ package dpcs;
 import java.io.File;
 
 import javax.swing.SwingUtilities;
+import java.awt.Color;
 
 public class Main {
 	@SuppressWarnings("static-access")
 	public static void main(String args[]) throws Exception {
 		Splash image = new Splash();
+		image.getContentPane().setBackground(Color.WHITE);
 		image.setVisible(true);
 		Thread thread = Thread.currentThread();
 		thread.sleep(5000);
@@ -16,13 +18,9 @@ public class Main {
 			public void run() {
 				new Interface().setVisible(true);
 				try {
-					Process p1 = Runtime.getRuntime().exec("adb kill-server"); // Old
-																				// ADB
-																				// instance
-																				// killer
+					Process p1 = Runtime.getRuntime().exec("adb kill-server");												// killer
 					p1.waitFor();
-					File file1 = new File(".checkadbconnection"); // Cache
-																	// remover
+					File file1 = new File(".checkadbconnection");
 					if (file1.exists() && !file1.isDirectory()) {
 						file1.delete();
 						File file2 = new File("su");

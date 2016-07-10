@@ -18,6 +18,7 @@ import javax.swing.AbstractListModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class UninstallSystemApps extends JFrame {
@@ -42,7 +43,7 @@ public class UninstallSystemApps extends JFrame {
 		});
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 	public UninstallSystemApps() {
 		setResizable(false);
 		setTitle("Uninstall System Apps");
@@ -50,6 +51,7 @@ public class UninstallSystemApps extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 482, 460);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -181,15 +183,9 @@ public class UninstallSystemApps extends JFrame {
 				}
 			});
 			scrollPane.setViewportView(list);
-
 			JLabel lblNewLabel = new JLabel("Note: You should also remove app's odex file if it exists");
 			lblNewLabel.setBounds(26, 374, 438, 17);
 			contentPane.add(lblNewLabel);
-
-			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setIcon(new ImageIcon(UninstallSystemApps.class.getResource("/graphics/WhiteBG.jpg")));
-			lblNewLabel_1.setBounds(0, 0, 482, 438);
-			contentPane.add(lblNewLabel_1);
 			File file = new File(".systemapps.txt");
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();
