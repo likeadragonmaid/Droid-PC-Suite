@@ -1,21 +1,17 @@
 package dpcs;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Toolkit;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import java.awt.Color;
 
-@SuppressWarnings({ "serial", "unused" })
+@SuppressWarnings("serial")
 public class Uninstaller extends JFrame {
 
 	private JPanel contentPane;
@@ -56,7 +52,7 @@ public class Uninstaller extends JFrame {
 
 		JLabel lblNoteUnstallationOf = new JLabel(
 				"Note: Uninstallation of priv-app is only for android 4.4.x and higher");
-		lblNoteUnstallationOf.setBounds(12, 427, 474, 15);
+		lblNoteUnstallationOf.setBounds(10, 427, 474, 15);
 		contentPane.add(lblNoteUnstallationOf);
 
 		btnUninstallUserApps.setBounds(140, 34, 200, 75);

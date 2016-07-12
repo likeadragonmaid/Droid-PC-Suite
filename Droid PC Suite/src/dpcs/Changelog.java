@@ -37,14 +37,14 @@ public class Changelog extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ApacheLicense.class.getResource("/graphics/Icon.png")));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 370, 500);
+		setBounds(100, 100, 380, 550);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 367, 468);
+		scrollPane.setBounds(0, 0, 378, 518);
 		contentPane.add(scrollPane);
 
 		LicenseViewer = new JTextArea();

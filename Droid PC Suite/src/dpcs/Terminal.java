@@ -36,7 +36,7 @@ public class Terminal extends JFrame {
 
 	public Terminal() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Terminal.class.getResource("/graphics/Icon.png")));
-		setTitle("ADB Terminal Emulator (EXPERIMENTAL)");
+		setTitle("ADB Terminal Emulator");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 448, 343);
@@ -65,7 +65,7 @@ public class Terminal extends JFrame {
 		scrollPane_1.setViewportView(commandinput);
 		commandinput.setColumns(10);
 		commandinput.setText("Start typing command here...");
-		
+
 		JButton Sendcommandbutton = new JButton("Go");
 		Sendcommandbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

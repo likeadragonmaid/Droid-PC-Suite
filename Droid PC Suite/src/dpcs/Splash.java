@@ -1,17 +1,14 @@
 package dpcs;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Toolkit;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
-@SuppressWarnings({ "unused", "serial" })
+@SuppressWarnings("serial")
 public class Splash extends JFrame {
-	private JLabel imglabel;
-	private ImageIcon img;
-
 	public Splash() {
 		super("Splash");
 		setSize(968, 316);
@@ -19,12 +16,11 @@ public class Splash extends JFrame {
 		setLocationRelativeTo(null);
 		setUndecorated(true);
 		URL img = getClass().getResource("/graphics/Splash.png");
-		Image myPicture = Toolkit.getDefaultToolkit().getImage(img);
+		Toolkit.getDefaultToolkit().getImage(img);
 		getContentPane().setLayout(null);
 		JLabel imglabel = new JLabel(new ImageIcon(Splash.class.getResource("/graphics/Splash.png")));
 		imglabel.setBackground(Color.WHITE);
 		imglabel.setBounds(0, 0, 968, 316);
-
 		getContentPane().add(imglabel);
 	}
 }

@@ -1,28 +1,26 @@
 package dpcs;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.awt.Font;
-import java.awt.Window.Type;
-import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Desktop;
-
-import javax.swing.JButton;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.SwingConstants;
 
-@SuppressWarnings({ "unused", "serial" })
+@SuppressWarnings("serial")
 public class About extends JFrame {
 
 	private JPanel contentPane;
@@ -46,7 +44,7 @@ public class About extends JFrame {
 		setType(Type.UTILITY);
 		setTitle("About");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 528, 400);
+		setBounds(100, 100, 540, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -109,7 +107,7 @@ public class About extends JFrame {
 			}
 		});
 		lblForMyOther.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblForMyOther.setBounds(12, 332, 502, 24);
+		lblForMyOther.setBounds(12, 321, 502, 24);
 		contentPane.add(lblForMyOther);
 
 		JLabel lblMySensei2 = new JLabel("Er. Karun Sensei");
@@ -128,6 +126,7 @@ public class About extends JFrame {
 		contentPane.add(lblDaretobe);
 
 		JLabel label_9 = new JLabel("");
+		label_9.setToolTipText("This variation of android robot is created using Androidify");
 		label_9.setIcon(new ImageIcon(About.class.getResource("/graphics/Droidrobot.png")));
 		label_9.setBounds(334, 50, 180, 270);
 		contentPane.add(label_9);
@@ -178,5 +177,11 @@ public class About extends JFrame {
 		label_6.setFont(new Font("Dialog", Font.BOLD, 16));
 		label_6.setBounds(12, 71, 240, 15);
 		contentPane.add(label_6);
+		
+		JLabel lblGoogle = new JLabel("Android, android green colored robot are trademarks of Google, Inc. We are not afliated with Google, Inc in any way.");
+		lblGoogle.setHorizontalAlignment(SwingConstants.LEFT);
+		lblGoogle.setFont(new Font("Dialog", Font.PLAIN, 8));
+		lblGoogle.setBounds(12, 341, 514, 24);
+		contentPane.add(lblGoogle);
 	}
 }

@@ -61,7 +61,7 @@ public class UninstallPrivApps extends JFrame {
 		contentPane.add(AppStatus);
 
 		PrivAppUninstallDone = new JLabel("");
-		PrivAppUninstallDone.setIcon(new ImageIcon(UninstallPrivApps.class.getResource("/graphics/WhiteBG.jpg")));
+		PrivAppUninstallDone.setText("");
 		PrivAppUninstallDone.setBounds(151, 312, 186, 56);
 		contentPane.add(PrivAppUninstallDone);
 
@@ -76,7 +76,7 @@ public class UninstallPrivApps extends JFrame {
 		final JButton btnUninstall = new JButton("Uninstall");
 		btnUninstall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrivAppUninstallDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				PrivAppUninstallDone.setText("");
 				if (list.getSelectedValue() == null) {
 					JOptionPane.showMessageDialog(null, "Please select an app first");
 				} else {

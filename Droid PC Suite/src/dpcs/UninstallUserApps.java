@@ -62,7 +62,7 @@ public class UninstallUserApps extends JFrame {
 		contentPane.add(AppStatus);
 
 		UserAppUninstallDone = new JLabel("");
-		UserAppUninstallDone.setIcon(new ImageIcon(UninstallUserApps.class.getResource("/graphics/WhiteBG.jpg")));
+		UserAppUninstallDone.setText("");
 		UserAppUninstallDone.setBounds(151, 312, 186, 56);
 		contentPane.add(UserAppUninstallDone);
 
@@ -77,7 +77,7 @@ public class UninstallUserApps extends JFrame {
 		final JButton btnUninstall = new JButton("Uninstall");
 		btnUninstall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UserAppUninstallDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				UserAppUninstallDone.setText("");
 				if (list.getSelectedValue() == null) {
 					JOptionPane.showMessageDialog(null, "Please select an app first");
 				} else {

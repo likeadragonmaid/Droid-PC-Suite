@@ -75,7 +75,7 @@ public class UninstallSystemApps extends JFrame {
 		final JButton btnUninstall = new JButton("Uninstall");
 		btnUninstall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SystemAppUninstallDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				SystemAppUninstallDone.setText("");
 				if (list.getSelectedValue() == null) {
 					JOptionPane.showMessageDialog(null, "Please select an app first");
 				} else {

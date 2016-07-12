@@ -2,14 +2,14 @@
 <section name="Workbench">
 	<section name="org.eclipse.wb.internal.swing.model.property.editor.font.FontDialog">
 		<item value="441" key="x"/>
-		<item value="486" key="width"/>
-		<item value="132" key="y"/>
-		<item value="464" key="height"/>
+		<item value="490" key="width"/>
+		<item value="97" key="y"/>
+		<item value="532" key="height"/>
 	</section>
 	<section name="org.eclipse.wb.internal.swing.model.property.editor.icon.ImagePropertyEditor$ImageDialog">
 		<item value="257" key="x"/>
-		<item value="857" key="width"/>
+		<item value="853" key="width"/>
 		<item value="72" key="y"/>
-		<item value="582" key="height"/>
+		<item value="585" key="height"/>
 	</section>
 </section>

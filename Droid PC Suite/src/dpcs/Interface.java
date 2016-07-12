@@ -1,43 +1,39 @@
 package dpcs;
 
+import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.JTabbedPane;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import org.apache.commons.codec.digest.DigestUtils;
-import java.awt.Color;
-import java.awt.Desktop;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-@SuppressWarnings({ "serial", "unused" })
+import org.apache.commons.codec.digest.DigestUtils;
+
+@SuppressWarnings("serial")
 public class Interface extends JFrame {
 	JLabel FlasherDone, GeneralDone, WiperDone, BackupAndRestoreDone, ADBConnectionLabel, RootStatusLabel, AppStatus;
 	boolean adbconnected = false, rooted = false;
@@ -49,7 +45,7 @@ public class Interface extends JFrame {
 		public void run() {
 			while (flag) {
 				try {
-					adbconnected = false; //ADB initial state
+					adbconnected = false; // ADB initial state
 					Process p1 = Runtime.getRuntime().exec("adb devices");
 					p1.waitFor();
 					Process p2 = Runtime.getRuntime().exec("adb shell touch /sdcard/.checkadbconnection");
@@ -100,14 +96,6 @@ public class Interface extends JFrame {
 	};
 
 	public static void main(String[] args) {
-
-		/*
-		 * UNIMPIMENTED UI FEATURE; TO BE TARGETED IN FUTURE UPDATES.
-		 * 
-		 * / try {
-		 * UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		 * } catch (Throwable e) { e.printStackTrace(); } /
-		 */
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -185,7 +173,7 @@ public class Interface extends JFrame {
 				obj.setVisible(true);
 			}
 		});
-		
+
 		JMenuItem mntmChangelog = new JMenuItem("Changelog tracker");
 		mntmChangelog.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -193,15 +181,15 @@ public class Interface extends JFrame {
 				obj.setVisible(true);
 			}
 		});
-		
-				JMenuItem mntmAbout = new JMenuItem("About");
-				mntmAbout.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						About obj = new About();
-						obj.setVisible(true);
-					}
-				});
-				mnHelp.add(mntmAbout);
+
+		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				About obj = new About();
+				obj.setVisible(true);
+			}
+		});
+		mnHelp.add(mntmAbout);
 		mnHelp.add(mntmChangelog);
 		mnHelp.add(mntmCommonWorkarounds);
 
@@ -209,20 +197,11 @@ public class Interface extends JFrame {
 		mntmNeedHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					String[] options = new String[2];
-					if (JOptionPane.showConfirmDialog(null, "Do you need help with connectivity on Linux?", "Help",
-							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-						Desktop.getDesktop()
-								.browse(new URL(
-										"https://androidonlinux.wordpress.com/2013/05/12/setting-up-adb-on-linux/")
-												.toURI());
-					} else {
-						JOptionPane.showMessageDialog(null, "I see... Check out common workarounds section... Or post your question on XDA-Developers thread");
-							Desktop.getDesktop()
-									.browse(new URL(
-											"http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599")
-													.toURI());
-					}
+					JOptionPane.showMessageDialog(null, "Post your question on XDA-Developers thread");
+					Desktop.getDesktop()
+							.browse(new URL(
+									"http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599")
+											.toURI());
 				} catch (Exception e) {
 					System.err.println(e);
 				}
@@ -243,7 +222,7 @@ public class Interface extends JFrame {
 			}
 		});
 		mnHelp.add(mntmCheckForUpdates);
-		
+
 		JMenuItem mntmForceConnect = new JMenuItem("Force connect");
 		mntmForceConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -371,7 +350,7 @@ public class Interface extends JFrame {
 		final JButton btnInstallUserApp = new JButton("Install Apps as User");
 		btnInstallUserApp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				GeneralDone.setText("");
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
 				chooser.setFileFilter(filter);
@@ -401,7 +380,7 @@ public class Interface extends JFrame {
 		final JButton btnInstallAsPrivApp = new JButton("Install Apps to priv-app *");
 		btnInstallAsPrivApp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				GeneralDone.setText("");
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
 				chooser.setFileFilter(filter);
@@ -436,7 +415,7 @@ public class Interface extends JFrame {
 		JButton btnUninstallApps = new JButton("Uninstall Apps");
 		btnUninstallApps.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				GeneralDone.setText("");
 				Uninstaller obj = new Uninstaller();
 				obj.setVisible(true);
 			}
@@ -445,7 +424,7 @@ public class Interface extends JFrame {
 		final JButton btnInstallAsSystemApp = new JButton("Install Apps to System *");
 		btnInstallAsSystemApp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				GeneralDone.setText("");
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
 				chooser.setFileFilter(filter);
@@ -483,7 +462,7 @@ public class Interface extends JFrame {
 				obj.setVisible(true);
 			}
 		});
-		
+
 		JButton btnBuildpropeditor = new JButton("build.prop Editor");
 		btnBuildpropeditor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -504,7 +483,7 @@ public class Interface extends JFrame {
 		panel_7.add(btnInstallAsSystemApp);
 
 		GeneralDone = new JLabel("");
-		GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+		GeneralDone.setText("");
 		GeneralDone.setBounds(766, 27, 300, 200);
 		panel_7.add(GeneralDone);
 		btnUninstallApps.setBounds(282, 131, 220, 75);
@@ -513,7 +492,7 @@ public class Interface extends JFrame {
 		JButton btnFileManager = new JButton("File Manager");
 		btnFileManager.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				GeneralDone.setText("");
 				try {
 					Process p1 = Runtime.getRuntime().exec("java -jar .filemanager.jar");
 					p1.waitFor();
@@ -542,7 +521,7 @@ public class Interface extends JFrame {
 		final JButton btnFlashSystem = new JButton("System");
 		btnFlashSystem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				FlasherDone.setText("");
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Img Files", "img");
 				chooser.setFileFilter(filter);
@@ -561,7 +540,6 @@ public class Interface extends JFrame {
 						commands[3] = file.getAbsolutePath();
 						Process p2 = Runtime.getRuntime().exec(commands, null);
 						p2.waitFor();
-						String[] notification = new String[2];
 						AppStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashSystem.setSelected(false);
@@ -576,7 +554,7 @@ public class Interface extends JFrame {
 		btnFlashData.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				FlasherDone.setText("");
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Img Files", "img");
 				chooser.setFileFilter(filter);
@@ -608,14 +586,13 @@ public class Interface extends JFrame {
 		final JButton btnFlashViaRecovery = new JButton("Flash via Recovery");
 		btnFlashViaRecovery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				FlasherDone.setText("");
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("zip Files", "zip");
 				chooser.setFileFilter(filter);
 				int returnVal = chooser.showOpenDialog(getParent());
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = chooser.getSelectedFile();
-					String filename = chooser.getSelectedFile().getName();
 					try {
 						JOptionPane.showMessageDialog(null,
 								"Select Update via ADB from recovery menu using physical keys on your device");
@@ -645,7 +622,7 @@ public class Interface extends JFrame {
 		panel.add(lblDontWorry);
 
 		FlasherDone = new JLabel("");
-		FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+		FlasherDone.setText("");
 		FlasherDone.setBounds(760, 29, 300, 200);
 		panel.add(FlasherDone);
 		btnFlashViaRecovery.setBounds(275, 154, 200, 75);
@@ -662,7 +639,7 @@ public class Interface extends JFrame {
 		final JButton btnFlashCache = new JButton("Cache");
 		btnFlashCache.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				FlasherDone.setText("");
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Img Files", "img");
 				chooser.setFileFilter(filter);
@@ -697,7 +674,7 @@ public class Interface extends JFrame {
 		final JButton btnBootImage = new JButton("Boot");
 		btnBootImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				FlasherDone.setText("");
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Img Files", "img");
 				chooser.setFileFilter(filter);
@@ -732,7 +709,7 @@ public class Interface extends JFrame {
 		final JButton btnFlashDatazip = new JButton("Data.zip");
 		btnFlashDatazip.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				FlasherDone.setText("");
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("zip Files", "zip");
 				chooser.setFileFilter(filter);
@@ -764,7 +741,7 @@ public class Interface extends JFrame {
 		final JButton btnFlashRecovery = new JButton("Recovery");
 		btnFlashRecovery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				FlasherDone.setText("");
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Img Files", "img");
 				chooser.setFileFilter(filter);
@@ -849,7 +826,7 @@ public class Interface extends JFrame {
 		panel_1.add(label_3);
 
 		WiperDone = new JLabel("");
-		WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+		WiperDone.setText("");
 		WiperDone.setBounds(758, 26, 300, 200);
 		panel_1.add(WiperDone);
 
@@ -868,7 +845,7 @@ public class Interface extends JFrame {
 		JButton btnWipeRecovery = new JButton("Recovery");
 		btnWipeRecovery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				WiperDone.setText("");
 				try {
 					AppStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase cache");
@@ -887,7 +864,7 @@ public class Interface extends JFrame {
 		JButton btnWipeBoot = new JButton("Boot");
 		btnWipeBoot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				WiperDone.setText("");
 				try {
 					AppStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase boot");
@@ -906,7 +883,7 @@ public class Interface extends JFrame {
 		JButton btnWipeSystem = new JButton("System");
 		btnWipeSystem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				WiperDone.setText("");
 				try {
 					AppStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase system");
@@ -925,7 +902,7 @@ public class Interface extends JFrame {
 		JButton btnWipeSplash = new JButton("Splash");
 		btnWipeSplash.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				WiperDone.setText("");
 				try {
 					AppStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase splash");
@@ -944,7 +921,7 @@ public class Interface extends JFrame {
 		JButton btnWipeData = new JButton("Data");
 		btnWipeData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				WiperDone.setText("");
 				try {
 					AppStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase data");
@@ -963,7 +940,7 @@ public class Interface extends JFrame {
 		JButton btnFlashDalvikCache = new JButton("Dalvik Cache **");
 		btnFlashDalvikCache.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				WiperDone.setText("");
 				try {
 					AppStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("adb shell su -c rm * /data/dalvik-cache");
@@ -987,7 +964,7 @@ public class Interface extends JFrame {
 		JButton btnWipeCache = new JButton("Cache");
 		btnWipeCache.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				WiperDone.setText("");
 				try {
 					AppStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase cache");
@@ -1295,7 +1272,7 @@ public class Interface extends JFrame {
 		panel_5.add(lblNoteThisIs);
 
 		BackupAndRestoreDone = new JLabel("");
-		BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+		BackupAndRestoreDone.setText("");
 		BackupAndRestoreDone.setBounds(758, 70, 300, 200);
 		panel_5.add(BackupAndRestoreDone);
 
@@ -1306,14 +1283,13 @@ public class Interface extends JFrame {
 		final JButton btnRestoreFromCustomLocationBackup = new JButton("From Custom Location");
 		btnRestoreFromCustomLocationBackup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				BackupAndRestoreDone.setText("");
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Android Backup Files", "ab");
 				chooser.setFileFilter(filter);
 				int returnVal = chooser.showOpenDialog(getParent());
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = chooser.getSelectedFile();
-					String filename = chooser.getSelectedFile().getName();
 					try {
 						AppStatus.setText("Restoring may take upto several minutes, please be patient...");
 						JOptionPane.showMessageDialog(null,
@@ -1345,9 +1321,8 @@ public class Interface extends JFrame {
 		final JButton btnBackupInternelStorage = new JButton("Internel Storage");
 		btnBackupInternelStorage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				BackupAndRestoreDone.setText("");
 				try {
-					String[] notification = new String[3];
 					AppStatus.setText("Backup can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
 							"Unlock your device and confirm the backup operation when asked");
@@ -1358,7 +1333,6 @@ public class Interface extends JFrame {
 					AppStatus.setText("Performing backup...");
 					Process p1 = Runtime.getRuntime().exec(commands, null);
 					p1.waitFor();
-					String[] notification2 = new String[2];
 					AppStatus.setText("Backup completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupInternelStorage.setSelected(false);
@@ -1374,7 +1348,7 @@ public class Interface extends JFrame {
 		final JButton btnBackupSystem = new JButton("System");
 		btnBackupSystem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				BackupAndRestoreDone.setText("");
 				try {
 					AppStatus.setText("Backup can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
@@ -1401,10 +1375,9 @@ public class Interface extends JFrame {
 		final JButton btnBackupSingleApp = new JButton("Single App");
 		btnBackupSingleApp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				BackupAndRestoreDone.setText("");
 				try {
 					String message = JOptionPane.showInputDialog(null, "Please specify a package name to backup");
-					String[] notification = new String[2];
 					AppStatus.setText("Backup can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
 							"Unlock your device and confirm the backup operation when asked");
@@ -1415,7 +1388,6 @@ public class Interface extends JFrame {
 					AppStatus.setText("Performing backup...");
 					Process p1 = Runtime.getRuntime().exec(commands, null);
 					p1.waitFor();
-					String[] notification2 = new String[2];
 					AppStatus.setText("Backup completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupSingleApp.setSelected(false);
@@ -1431,9 +1403,8 @@ public class Interface extends JFrame {
 		final JButton btnBackupAppAndAppData = new JButton("App and App Data");
 		btnBackupAppAndAppData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				BackupAndRestoreDone.setText("");
 				try {
-					String[] notification = new String[3];
 					AppStatus.setText("Backup can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
 							"Unlock your device and confirm the backup operation when asked");
@@ -1444,7 +1415,6 @@ public class Interface extends JFrame {
 					AppStatus.setText("Performing backup...");
 					Process p1 = Runtime.getRuntime().exec(commands, null);
 					p1.waitFor();
-					String[] notification2 = new String[2];
 					AppStatus.setText("Backup completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupAppAndAppData.setSelected(false);
@@ -1460,7 +1430,7 @@ public class Interface extends JFrame {
 		final JButton btnBackupWholeDevice = new JButton("Whole Device");
 		btnBackupWholeDevice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				BackupAndRestoreDone.setText("");
 				try {
 					AppStatus.setText("Backup can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
@@ -1490,7 +1460,7 @@ public class Interface extends JFrame {
 		final JButton btnRestorePreviousBackup = new JButton("Previous Backup");
 		btnRestorePreviousBackup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/WhiteBG.jpg")));
+				BackupAndRestoreDone.setText("");
 				try {
 					AppStatus.setText("Restoring can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
