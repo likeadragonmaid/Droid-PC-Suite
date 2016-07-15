@@ -19,6 +19,7 @@ public class Splash extends JFrame {
 		Toolkit.getDefaultToolkit().getImage(img);
 		getContentPane().setLayout(null);
 		JLabel imglabel = new JLabel(new ImageIcon(Splash.class.getResource("/graphics/Splash.png")));
+		imglabel.setToolTipText("This variation of android robot is created using Androidify");
 		imglabel.setBackground(Color.WHITE);
 		imglabel.setBounds(0, 0, 968, 316);
 		getContentPane().add(imglabel);

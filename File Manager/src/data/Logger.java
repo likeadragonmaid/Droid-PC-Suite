@@ -4,7 +4,6 @@ import java.awt.List;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -26,7 +25,7 @@ public class Logger {
 			logFile.renameTo(new File("lastLog.txt"));
 			writer = new BufferedWriter(new FileWriter(logFile));
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			writeLogfile(LanguageStrings.getProperty("loggerFailed"));
 		}
 	}
@@ -43,7 +42,7 @@ public class Logger {
 		try {
 			writer.write(sdf.format(now.getTime()) + ": " + msg + System.lineSeparator());
 			writer.flush();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -51,9 +50,8 @@ public class Logger {
 	public void close() {
 		try {
 			writer.close();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 }

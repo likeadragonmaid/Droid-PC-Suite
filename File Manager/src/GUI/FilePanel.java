@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -131,11 +130,17 @@ public class FilePanel extends Panel {
 
 	private void openFile(String path) {
 		Logger.writeToLog(LanguageStrings.getProperty("pullingLog"));
-		File file = reciever.pullFile(path);
+		File file = null;
+		try {
+			file = reciever.pullFile(path);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
 			new ProcessBuilder("explorer", file.getAbsolutePath()).start();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			Logger.writeToLog(LanguageStrings.getProperty("openFailedLog"));
 			e.printStackTrace();
 		}

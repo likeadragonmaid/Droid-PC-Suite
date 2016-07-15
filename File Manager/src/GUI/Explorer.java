@@ -15,7 +15,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import data.DataReciever;
@@ -100,10 +99,14 @@ public class Explorer extends Frame {
 			public void actionPerformed(ActionEvent e) {
 				String selection = (String) filePanel.getFileTableModel().getValueAt(
 						filePanel.getTable().convertRowIndexToModel(filePanel.getTable().getSelectedRow()), 0);
-				reciever.pullFile(filePanel.getDirLabel().getText() + selection);
+				try {
+					reciever.pullFile(filePanel.getDirLabel().getText() + selection);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				try {
 					new ProcessBuilder("explorer", reciever.getSaveLocation() + selection).start();
-				} catch (IOException ex) {
+				} catch (Exception ex) {
 					ex.printStackTrace();
 					Logger.writeToLog(LanguageStrings.getProperty("fileOpenFailLog"));
 				}
@@ -133,7 +136,11 @@ public class Explorer extends Frame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (source.getText() != null && source.getText().length() > 0) {
-					reciever.pushFile(source.getText(), filePanel.getDirLabel().getText());
+					try {
+						reciever.pushFile(source.getText(), filePanel.getDirLabel().getText());
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					filePanel.updateADB(reciever.getDirContent(filePanel.getDirLabel().getText()),
 							filePanel.getDirLabel().getText());
 				} else {
@@ -146,8 +153,12 @@ public class Explorer extends Frame {
 		deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				reciever.deleteFile(filePanel.getDirLabel().getText() + filePanel.getFileTableModel().getValueAt(
-						filePanel.getTable().convertRowIndexToModel(filePanel.getTable().getSelectedRow()), 0));
+				try {
+					reciever.deleteFile(filePanel.getDirLabel().getText() + filePanel.getFileTableModel().getValueAt(
+							filePanel.getTable().convertRowIndexToModel(filePanel.getTable().getSelectedRow()), 0));
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				filePanel.updateADB(reciever.getDirContent(filePanel.getDirLabel().getText()),
 						filePanel.getDirLabel().getText());
 			}

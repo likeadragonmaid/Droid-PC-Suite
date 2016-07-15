@@ -4,9 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.Reader;
-import java.net.URISyntaxException;
 import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -55,7 +53,7 @@ public class Changelog extends JFrame {
 			File licenseobj2 = new File(licenseobj.toURI());
 			Reader reader = new FileReader(new File(licenseobj2.toURI()));
 			LicenseViewer.read(reader, "");
-		} catch (URISyntaxException | IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

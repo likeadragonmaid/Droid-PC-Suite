@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
@@ -32,11 +31,15 @@ public class DataReciever {
 			 * Logger.writeToLog(LanguageStrings.getProperty("probsNotfoundLog")
 			 * );
 			 */ setSaveLocation(new File(getSaveLocation()));
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		language = new LanguageStrings(getLanguage());
+		try {
+			language = new LanguageStrings(getLanguage());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 		BufferedReader reader = null;
 		InputStream processIn = null;
@@ -48,7 +51,7 @@ public class DataReciever {
 			processIn = process.getInputStream();
 			reader = new BufferedReader(new InputStreamReader(processIn));
 			Logger.writeToLog(reader.readLine());
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Logger.writeToLog(e.getMessage());
 		} finally {
@@ -57,7 +60,7 @@ public class DataReciever {
 					reader.close();
 				if (processIn != null)
 					processIn.close();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -86,7 +89,7 @@ public class DataReciever {
 					ret.add(split[0]);
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Logger.writeToLog(e.getMessage());
 		} finally {
@@ -95,7 +98,7 @@ public class DataReciever {
 					br.close();
 				if (processIN != null)
 					processIN.close();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -110,7 +113,7 @@ public class DataReciever {
 			try {
 				new ProcessBuilder("adb", "connect", ip).start();
 				Logger.writeToLog(ip + LanguageStrings.getProperty("deviceConnectedLog"));
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				Logger.writeToLog(e.getMessage());
 			}
@@ -157,7 +160,7 @@ public class DataReciever {
 							false));
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Logger.writeToLog(e.getMessage());
 		} finally {
@@ -166,7 +169,7 @@ public class DataReciever {
 					br.close();
 				if (processIN != null)
 					processIN.close();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -182,7 +185,7 @@ public class DataReciever {
 		return false;
 	}
 
-	public File pullFile(String path) {
+	public File pullFile(String path) throws InterruptedException {
 		try {
 			String dest = saveLocation.getAbsolutePath();
 			if (!saveLocation.exists()) {
@@ -202,33 +205,27 @@ public class DataReciever {
 			Logger.writeToLog(path + LanguageStrings.getProperty("pullFromToLog") + dest);
 
 			return new File(dest + "\\" + splits[splits.length - 1]);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Logger.writeToLog(LanguageStrings.getProperty("pullFailedLog") + path);
 			Logger.writeToLog(e.getMessage());
 			return null;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			Logger.writeToLog(e.getMessage());
-			return null;
 		}
 	}
 
-	public void pushFile(String source, String destination) {
+	public void pushFile(String source, String destination) throws InterruptedException {
 		try {
 			Process process = new ProcessBuilder("adb", "-s", selectedDevice, "push", source, destination).start();
 			process.waitFor();
 			Logger.writeToLog(source + LanguageStrings.getProperty("pushFailedLog") + destination);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Logger.writeToLog(LanguageStrings.getProperty("propertiesFailedLong") + source);
 			Logger.writeToLog(e.getMessage());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 	}
 
-	public void deleteFile(String path) {
+	public void deleteFile(String path) throws InterruptedException {
 		Process p;
 		InputStream processIN = null;
 		BufferedReader reader = null;
@@ -261,19 +258,17 @@ public class DataReciever {
 					deleteFile(path);
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Logger.writeToLog(LanguageStrings.getProperty("deleteFailedLog") + path);
 			Logger.writeToLog(e.getMessage());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		} finally {
 			try {
 				if (reader != null)
 					reader.close();
 				if (processIN != null)
 					processIN.close();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -304,7 +299,7 @@ public class DataReciever {
 		probs.setProperty(key, value);
 		try {
 			probs.store(new FileWriter(new File("explorer.proberties")), "");
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Logger.writeToLog(LanguageStrings.getProperty("propertiesFailedLong"));
 			Logger.writeToLog(e.getMessage());

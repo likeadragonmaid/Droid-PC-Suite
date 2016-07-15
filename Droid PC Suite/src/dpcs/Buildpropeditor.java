@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Reader;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -65,7 +64,7 @@ public class Buildpropeditor extends JFrame {
 					try {
 						Reader reader = new FileReader(new File("build.prop"));
 						Buildpropeditorwindow.read(reader, "");
-					} catch (IOException e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 					File file = new File("build.prop");
@@ -101,7 +100,7 @@ public class Buildpropeditor extends JFrame {
 						if (write != null)
 							try {
 								write.close();
-							} catch (IOException e1) {
+							} catch (Exception e1) {
 								e1.printStackTrace();
 							}
 					}
@@ -124,7 +123,7 @@ public class Buildpropeditor extends JFrame {
 					if (write != null)
 						try {
 							write.close();
-						} catch (IOException e1) {
+						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
 				}
@@ -149,7 +148,7 @@ public class Buildpropeditor extends JFrame {
 			try {
 				Reader reader = new FileReader(new File("build.prop"));
 				Buildpropeditorwindow.read(reader, "");
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			File file = new File("build.prop");

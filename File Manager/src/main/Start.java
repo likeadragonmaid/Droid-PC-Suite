@@ -1,8 +1,6 @@
 package main;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import GUI.Explorer;
 import java.awt.Toolkit;
@@ -13,7 +11,7 @@ public class Start {
 		explorer.setIconImage(Toolkit.getDefaultToolkit().getImage(Start.class.getResource("/graphics/Icon.png")));
 	}
 
-	public static void restartApplication() throws URISyntaxException, IOException {
+	public static void restartApplication() throws Exception {
 		final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
 		final File currentJar = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 

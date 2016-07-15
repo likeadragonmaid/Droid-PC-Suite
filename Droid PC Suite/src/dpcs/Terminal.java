@@ -2,18 +2,25 @@ package dpcs;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class Terminal extends JFrame {
@@ -39,7 +46,39 @@ public class Terminal extends JFrame {
 		setTitle("ADB Terminal Emulator");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 448, 343);
+		setBounds(100, 100, 448, 357);
+
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		mnFile.add(mntmExit);
+
+		JMenu mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
+
+		JMenuItem mntmCommandList = new JMenuItem("Command list");
+		mntmCommandList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					URL licenseobj = ApacheLicense.class.getResource("/others/adbhelp.txt");
+					File licenseobj2 = new File(licenseobj.toURI());
+					Reader reader = new FileReader(new File(licenseobj2.toURI()));
+					TerminalEmulatorScreen.read(reader, "");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		mnHelp.add(mntmCommandList);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

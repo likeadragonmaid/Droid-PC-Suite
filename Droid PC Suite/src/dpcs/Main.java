@@ -20,7 +20,8 @@ public class Main {
 				try {
 					Process p1 = Runtime.getRuntime().exec("adb kill-server");
 					p1.waitFor();
-					File file1 = new File(".checkadbconnection");
+					File file1 = new File(".checkadbconnection"); // Old files
+																	// remover
 					if (file1.exists() && !file1.isDirectory()) {
 						file1.delete();
 						File file2 = new File("su");

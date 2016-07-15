@@ -9,8 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -56,7 +54,7 @@ public class About extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					Desktop.getDesktop().browse(new URL("https://github.com/kvsjxd/Droid-PC-Suite").toURI());
-				} catch (IOException | URISyntaxException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -79,7 +77,7 @@ public class About extends JFrame {
 		lblMyFriend2.setBounds(12, 217, 242, 24);
 		contentPane.add(lblMyFriend2);
 
-		JLabel lblVersionstable = new JLabel("Version: 1.2");
+		JLabel lblVersionstable = new JLabel("Version: 1.3");
 		lblVersionstable.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblVersionstable.setBounds(379, 16, 122, 18);
 		contentPane.add(lblVersionstable);
@@ -93,14 +91,16 @@ public class About extends JFrame {
 							.browse(new URL(
 									"http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
 											.toURI());
-				} catch (IOException | URISyntaxException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lblForMyOther.setForeground(Color.BLUE);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblForMyOther.setForeground(Color.BLACK);
@@ -150,14 +150,16 @@ public class About extends JFrame {
 							.browse(new URL(
 									"http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
 											.toURI());
-				} catch (IOException | URISyntaxException e1) {
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lblMyname.setForeground(Color.BLUE);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblMyname.setForeground(Color.RED);
@@ -177,8 +179,9 @@ public class About extends JFrame {
 		label_6.setFont(new Font("Dialog", Font.BOLD, 16));
 		label_6.setBounds(12, 71, 240, 15);
 		contentPane.add(label_6);
-		
-		JLabel lblGoogle = new JLabel("Android, android green colored robot are trademarks of Google, Inc. We are not afliated with Google, Inc in any way.");
+
+		JLabel lblGoogle = new JLabel(
+				"Android, android green colored robot are trademarks of Google, Inc. We are not afliated with Google, Inc in any way.");
 		lblGoogle.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGoogle.setFont(new Font("Dialog", Font.PLAIN, 8));
 		lblGoogle.setBounds(12, 341, 514, 24);
