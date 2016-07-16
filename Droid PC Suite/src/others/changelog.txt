@@ -1,13 +1,9 @@
 Version 1.3 Stable (Build 160715)
 
 * Screen recorder added
-* Added button for taking Screenshot
-* ADB Help added to ADB Terminal
-* Wait for device added
-* Serial no. viewer added to help
+* Added button for taking a Screenshot
 * ADB tools added
-* Device state viewer added
-* ADB version viewer added
+* ADB Help added to ADB Terminal
 * ADB help added in Menu bar and ADB Terminal
 * Few tips added
 * "More help" renamed to "Online help"
