@@ -56,6 +56,7 @@ public class Buildpropeditor extends JFrame {
 		scrollPane.setViewportView(Buildpropeditorwindow);
 
 		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.setToolTipText("Refetch build.prop from android device");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -80,6 +81,7 @@ public class Buildpropeditor extends JFrame {
 		contentPane.add(btnRefresh);
 
 		JButton btnSaveonpc = new JButton("Save to PC");
+		btnSaveonpc.setToolTipText("Save the printed text on sceen as a file");
 		btnSaveonpc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame parentFrame = new JFrame();
@@ -111,6 +113,7 @@ public class Buildpropeditor extends JFrame {
 		contentPane.add(btnSaveonpc);
 
 		JButton btnPushtosdcard = new JButton("Push to sdcard");
+		btnPushtosdcard.setToolTipText("Push the text printed on screen to your device's sdcard as a build.prop file");
 		btnPushtosdcard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FileWriter write = null;

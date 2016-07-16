@@ -74,6 +74,7 @@ public class UninstallPrivApps extends JFrame {
 		contentPane.add(scrollPane);
 
 		final JButton btnUninstall = new JButton("Uninstall");
+		btnUninstall.setToolTipText("Uninstall the selected app");
 		btnUninstall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PrivAppUninstallDone.setText("");
@@ -130,6 +131,7 @@ public class UninstallPrivApps extends JFrame {
 		contentPane.add(btnUninstall);
 
 		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.setToolTipText("Refresh the apps list");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

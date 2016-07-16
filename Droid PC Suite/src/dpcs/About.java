@@ -50,6 +50,7 @@ public class About extends JFrame {
 		contentPane.setLayout(null);
 
 		JButton btnGithub = new JButton("Github");
+		btnGithub.setToolTipText("Access Droid PC Suite github repository");
 		btnGithub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {

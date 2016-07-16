@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+	<moveCategory
+		id="org.eclipse.wb.swing.BoxLayout"
+		nextCategory="org.eclipse.wb.swing.components"/>
+</commands>

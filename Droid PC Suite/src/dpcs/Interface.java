@@ -45,7 +45,7 @@ public class Interface extends JFrame {
 		public void run() {
 			while (flag) {
 				try {
-					adbconnected = false; // ADB initial state
+					adbconnected = false;
 					Process p1 = Runtime.getRuntime().exec("adb devices");
 					p1.waitFor();
 					Process p2 = Runtime.getRuntime().exec("adb shell touch /sdcard/.checkadbconnection");
@@ -167,6 +167,8 @@ public class Interface extends JFrame {
 		menuBar.add(mnHelp);
 
 		JMenuItem mntmCommonWorkarounds = new JMenuItem("Common workarounds");
+		mntmCommonWorkarounds
+				.setToolTipText("View solutions and tips to avoid the common problems while using this application");
 		mntmCommonWorkarounds.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Workarounds obj = new Workarounds();
@@ -175,6 +177,7 @@ public class Interface extends JFrame {
 		});
 
 		JMenuItem mntmChangelog = new JMenuItem("Changelog tracker");
+		mntmChangelog.setToolTipText("Track the changes made to this application over the time");
 		mntmChangelog.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Changelog obj = new Changelog();
@@ -183,6 +186,7 @@ public class Interface extends JFrame {
 		});
 
 		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.setToolTipText("Information about the application");
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				About obj = new About();
@@ -192,9 +196,11 @@ public class Interface extends JFrame {
 		mnHelp.add(mntmAbout);
 
 		JMenu mnADBTools = new JMenu("ADB tools");
+		mnADBTools.setToolTipText("Access various ADB tools");
 		mnHelp.add(mnADBTools);
 
 		JMenuItem mntmForceConnect = new JMenuItem("Force connect");
+		mntmForceConnect.setToolTipText("Force connect android device to computer using ADB protocol");
 		mnADBTools.add(mntmForceConnect);
 		mntmForceConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -258,8 +264,9 @@ public class Interface extends JFrame {
 			}
 		});
 
-		JMenuItem mntmState = new JMenuItem("View device state");
-		mntmState.addActionListener(new ActionListener() {
+		JMenuItem mntmDevicestate = new JMenuItem("View device state");
+		mntmDevicestate.setToolTipText("Check android device state");
+		mntmDevicestate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					Process p1 = Runtime.getRuntime().exec("adb get-state");
@@ -273,6 +280,7 @@ public class Interface extends JFrame {
 		});
 
 		JMenuItem mntmAdbHelp = new JMenuItem("View ADB help");
+		mntmAdbHelp.setToolTipText("Get help regarding ADB");
 		mntmAdbHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ADBHelp obj = new ADBHelp();
@@ -282,6 +290,7 @@ public class Interface extends JFrame {
 		mnADBTools.add(mntmAdbHelp);
 
 		JMenuItem mntmAdbVersion = new JMenuItem("View ADB version");
+		mntmAdbVersion.setToolTipText("Check the version of ADB installed on your computer");
 		mnADBTools.add(mntmAdbVersion);
 		mntmAdbVersion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -295,9 +304,10 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		mnADBTools.add(mntmState);
+		mnADBTools.add(mntmDevicestate);
 
 		JMenuItem mntmSerialNo = new JMenuItem("View serial no.");
+		mntmSerialNo.setToolTipText("Check ADB connectivity serial no. of your android device");
 		mnADBTools.add(mntmSerialNo);
 		mntmSerialNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -313,6 +323,7 @@ public class Interface extends JFrame {
 		});
 
 		JMenuItem mntmWaitForDevice = new JMenuItem("Wait for device");
+		mntmWaitForDevice.setToolTipText("Ask ADB to wait for your device until the device can accept commands");
 		mntmWaitForDevice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -328,9 +339,10 @@ public class Interface extends JFrame {
 		mnHelp.add(mntmChangelog);
 
 		JMenuItem mntmCheckForUpdates = new JMenuItem("Check for updates");
+		mntmCheckForUpdates.setToolTipText("Check for the new updates of this application");
 		mntmCheckForUpdates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Checkout downloads section in XDA-Developers thread");
+				JOptionPane.showMessageDialog(null, "Please checkout downloads section in XDA-Developers thread");
 				try {
 					Desktop.getDesktop()
 							.browse(new URL(
@@ -344,6 +356,7 @@ public class Interface extends JFrame {
 		mnHelp.add(mntmCommonWorkarounds);
 
 		JMenuItem mntmNeedHelp = new JMenuItem("Online help");
+		mntmNeedHelp.setToolTipText("Get online help for Droid PC Suite");
 		mntmNeedHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -359,9 +372,11 @@ public class Interface extends JFrame {
 		});
 
 		JMenu mnLegalInformation = new JMenu("Legal information");
+		mnLegalInformation.setToolTipText("Vew legal information about the application");
 		mnHelp.add(mnLegalInformation);
 
 		JMenuItem mntmDroidPcSuite = new JMenuItem("Droid PC Suite license");
+		mntmDroidPcSuite.setToolTipText("View Droid PC Suite licence");
 		mntmDroidPcSuite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GPLLicense obj = new GPLLicense();
@@ -371,6 +386,8 @@ public class Interface extends JFrame {
 		mnLegalInformation.add(mntmDroidPcSuite);
 
 		JMenuItem mntmOpenSourceLicenses = new JMenuItem("Open source licenses");
+		mntmOpenSourceLicenses
+				.setToolTipText("View other open source licences for other softwares used with this application");
 		mntmOpenSourceLicenses.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ApacheLicense obj = new ApacheLicense();
@@ -409,6 +426,7 @@ public class Interface extends JFrame {
 		panel_7.setLayout(null);
 
 		final JButton btnInstallUserApp = new JButton("Install Apps as User");
+		btnInstallUserApp.setToolTipText("Install apps to your android device normally using an apk file");
 		btnInstallUserApp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GeneralDone.setText("");
@@ -439,6 +457,8 @@ public class Interface extends JFrame {
 		});
 
 		final JButton btnInstallAsPrivApp = new JButton("Install Apps to priv-app *#");
+		btnInstallAsPrivApp
+				.setToolTipText("Install apps to your android device system with privileges using an apk file");
 		btnInstallAsPrivApp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				GeneralDone.setText("");
@@ -474,6 +494,7 @@ public class Interface extends JFrame {
 		});
 
 		JButton btnUninstallApps = new JButton("Uninstall Apps");
+		btnUninstallApps.setToolTipText("Uninstall apps from your android device");
 		btnUninstallApps.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GeneralDone.setText("");
@@ -483,6 +504,7 @@ public class Interface extends JFrame {
 		});
 
 		final JButton btnInstallAsSystemApp = new JButton("Install Apps to System *");
+		btnInstallAsSystemApp.setToolTipText("Install apps to your android device system using an apk file");
 		btnInstallAsSystemApp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				GeneralDone.setText("");
@@ -517,6 +539,7 @@ public class Interface extends JFrame {
 		});
 
 		JButton btnADBTerminal = new JButton("ADB Terminal");
+		btnADBTerminal.setToolTipText("Send commands to your android device via ADB protocol, EXPERIMENTAL!");
 		btnADBTerminal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Terminal obj = new Terminal();
@@ -525,6 +548,8 @@ public class Interface extends JFrame {
 		});
 
 		JButton btnBuildpropeditor = new JButton("build.prop Editor");
+		btnBuildpropeditor
+				.setToolTipText("Editor for editing build properties of your android device, Use with Caution!");
 		btnBuildpropeditor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Buildpropeditor obj = new Buildpropeditor();
@@ -546,10 +571,11 @@ public class Interface extends JFrame {
 		GeneralDone.setText("");
 		GeneralDone.setBounds(766, 27, 300, 200);
 		panel_7.add(GeneralDone);
-		btnUninstallApps.setBounds(282, 131, 220, 75);
+		btnUninstallApps.setBounds(25, 131, 220, 75);
 		panel_7.add(btnUninstallApps);
 
 		JButton btnFileManager = new JButton("File Manager");
+		btnFileManager.setToolTipText("Access files on your android device");
 		btnFileManager.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GeneralDone.setText("");
@@ -561,7 +587,7 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		btnFileManager.setBounds(25, 131, 220, 75);
+		btnFileManager.setBounds(282, 131, 220, 75);
 		panel_7.add(btnFileManager);
 
 		JLabel lblNeedsRoot = new JLabel(
@@ -574,6 +600,7 @@ public class Interface extends JFrame {
 		panel_7.add(btnInstallUserApp);
 
 		JButton btnScreenshot = new JButton("Screenshot");
+		btnScreenshot.setToolTipText("Screenshot your android device screen");
 		btnScreenshot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -602,6 +629,7 @@ public class Interface extends JFrame {
 		panel_7.add(btnScreenshot);
 
 		JButton btnScreenRecorder = new JButton("Screen Recorder #");
+		btnScreenRecorder.setToolTipText("Record android device screen");
 		btnScreenRecorder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String[] options = new String[] { "5 Sec", "30 Sec", "60 Sec", "180 Sec", "Custom" };
@@ -660,6 +688,7 @@ public class Interface extends JFrame {
 		panel.setLayout(null);
 
 		final JButton btnFlashSystem = new JButton("System");
+		btnFlashSystem.setToolTipText("Flash system partition");
 		btnFlashSystem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FlasherDone.setText("");
@@ -692,6 +721,7 @@ public class Interface extends JFrame {
 		});
 
 		final JButton btnFlashData = new JButton("Data");
+		btnFlashData.setToolTipText("Flash data partition");
 		btnFlashData.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -725,6 +755,7 @@ public class Interface extends JFrame {
 		});
 
 		final JButton btnFlashViaRecovery = new JButton("Flash via Recovery");
+		btnFlashViaRecovery.setToolTipText("Flash a zip archive using recovery");
 		btnFlashViaRecovery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FlasherDone.setText("");
@@ -766,7 +797,7 @@ public class Interface extends JFrame {
 		FlasherDone.setText("");
 		FlasherDone.setBounds(760, 29, 300, 200);
 		panel.add(FlasherDone);
-		btnFlashViaRecovery.setBounds(275, 154, 200, 75);
+		btnFlashViaRecovery.setBounds(275, 147, 200, 75);
 		panel.add(btnFlashViaRecovery);
 		btnFlashData.setBounds(525, 29, 200, 75);
 		panel.add(btnFlashData);
@@ -778,6 +809,7 @@ public class Interface extends JFrame {
 		panel.add(lblDeviceMust);
 
 		final JButton btnFlashCache = new JButton("Cache");
+		btnFlashCache.setToolTipText("Flash cache partition");
 		btnFlashCache.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FlasherDone.setText("");
@@ -813,6 +845,7 @@ public class Interface extends JFrame {
 		panel.add(btnFlashCache);
 
 		final JButton btnBootImage = new JButton("Boot");
+		btnBootImage.setToolTipText("Flash boot partition");
 		btnBootImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FlasherDone.setText("");
@@ -847,8 +880,9 @@ public class Interface extends JFrame {
 		btnBootImage.setBounds(30, 29, 200, 75);
 		panel.add(btnBootImage);
 
-		final JButton btnFlashDatazip = new JButton("Data.zip");
-		btnFlashDatazip.addActionListener(new ActionListener() {
+		final JButton btnFlashZipArchive = new JButton("Zip Archive");
+		btnFlashZipArchive.setToolTipText("Flash a zip archive");
+		btnFlashZipArchive.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FlasherDone.setText("");
 				JFileChooser chooser = new JFileChooser();
@@ -868,7 +902,7 @@ public class Interface extends JFrame {
 						p1.waitFor();
 						AppStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-						btnFlashDatazip.setSelected(false);
+						btnFlashZipArchive.setSelected(false);
 					} catch (Exception e1) {
 						System.err.println(e1);
 					}
@@ -876,10 +910,11 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnFlashDatazip.setBounds(30, 146, 200, 75);
-		panel.add(btnFlashDatazip);
+		btnFlashZipArchive.setBounds(30, 147, 200, 75);
+		panel.add(btnFlashZipArchive);
 
 		final JButton btnFlashRecovery = new JButton("Recovery");
+		btnFlashRecovery.setToolTipText("Flash recovery partition");
 		btnFlashRecovery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FlasherDone.setText("");
@@ -911,7 +946,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnFlashRecovery.setBounds(525, 154, 200, 75);
+		btnFlashRecovery.setBounds(525, 147, 200, 75);
 		panel.add(btnFlashRecovery);
 
 		JLabel lblYouMust = new JLabel("* You must have a bootloader that supports fastboot commands");
@@ -919,6 +954,7 @@ public class Interface extends JFrame {
 		panel.add(lblYouMust);
 
 		final JButton btnFlashSplash = new JButton("Splash");
+		btnFlashSplash.setToolTipText("Flash splash partition");
 		btnFlashSplash.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
@@ -984,6 +1020,7 @@ public class Interface extends JFrame {
 		panel_1.add(label_13);
 
 		JButton btnWipeRecovery = new JButton("Recovery");
+		btnWipeRecovery.setToolTipText("Wipe recovery partition");
 		btnWipeRecovery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				WiperDone.setText("");
@@ -1003,6 +1040,7 @@ public class Interface extends JFrame {
 		panel_1.add(btnWipeRecovery);
 
 		JButton btnWipeBoot = new JButton("Boot");
+		btnWipeBoot.setToolTipText("Flash boot partition");
 		btnWipeBoot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				WiperDone.setText("");
@@ -1022,6 +1060,7 @@ public class Interface extends JFrame {
 		panel_1.add(btnWipeBoot);
 
 		JButton btnWipeSystem = new JButton("System");
+		btnWipeSystem.setToolTipText("Wipe system partition");
 		btnWipeSystem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				WiperDone.setText("");
@@ -1041,6 +1080,7 @@ public class Interface extends JFrame {
 		panel_1.add(btnWipeSystem);
 
 		JButton btnWipeSplash = new JButton("Splash");
+		btnWipeSplash.setToolTipText("Wipe splash partition");
 		btnWipeSplash.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				WiperDone.setText("");
@@ -1060,6 +1100,7 @@ public class Interface extends JFrame {
 		panel_1.add(btnWipeSplash);
 
 		JButton btnWipeData = new JButton("Data");
+		btnWipeData.setToolTipText("Wipe data partition");
 		btnWipeData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				WiperDone.setText("");
@@ -1079,6 +1120,7 @@ public class Interface extends JFrame {
 		panel_1.add(btnWipeData);
 
 		JButton btnFlashDalvikCache = new JButton("Dalvik Cache **");
+		btnFlashDalvikCache.setToolTipText("Wipe dalvik cache");
 		btnFlashDalvikCache.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				WiperDone.setText("");
@@ -1103,6 +1145,7 @@ public class Interface extends JFrame {
 		panel_1.add(btnFlashDalvikCache);
 
 		JButton btnWipeCache = new JButton("Cache");
+		btnWipeCache.setToolTipText("Wipe cache partition");
 		btnWipeCache.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				WiperDone.setText("");
@@ -1158,6 +1201,7 @@ public class Interface extends JFrame {
 		panel_2.add(lblYouMust_1);
 
 		JButton btnRebootFromFastboot = new JButton("Fastboot *");
+		btnRebootFromFastboot.setToolTipText("Reboot android device from fastboot mode to normal");
 		btnRebootFromFastboot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -1175,6 +1219,7 @@ public class Interface extends JFrame {
 		panel_2.add(btnRebootFromFastboot);
 
 		JButton btnRebootToBootloaderFromFastboot = new JButton("Fastboot to Bootloader *");
+		btnRebootToBootloaderFromFastboot.setToolTipText("Reboot to Bootloader mode while accessing fastboot mode");
 		btnRebootToBootloaderFromFastboot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -1192,6 +1237,7 @@ public class Interface extends JFrame {
 		panel_2.add(btnRebootToBootloaderFromFastboot);
 
 		JButton btnRebootToRecovery = new JButton("Recovery");
+		btnRebootToRecovery.setToolTipText("Reboot android device to recovery mode");
 		btnRebootToRecovery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -1209,6 +1255,7 @@ public class Interface extends JFrame {
 		panel_2.add(btnRebootToRecovery);
 
 		JButton btnRebootToFastboot = new JButton("Fastboot");
+		btnRebootToFastboot.setToolTipText("Reboot android device to fastboot mode");
 		btnRebootToFastboot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -1226,6 +1273,7 @@ public class Interface extends JFrame {
 		panel_2.add(btnRebootToFastboot);
 
 		JButton btnRebootToBootloader = new JButton("Bootloader #");
+		btnRebootToBootloader.setToolTipText("Reboot android device to bootloader mode");
 		btnRebootToBootloader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -1243,6 +1291,7 @@ public class Interface extends JFrame {
 		panel_2.add(btnRebootToBootloader);
 
 		JButton btnRebootSystem = new JButton("System");
+		btnRebootSystem.setToolTipText("Reboot android device normally");
 		btnRebootSystem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -1278,6 +1327,7 @@ public class Interface extends JFrame {
 		panel_3.add(lblOnlyForNexus);
 
 		JButton btnUnlockBootloader = new JButton("Unlock Bootloader");
+		btnUnlockBootloader.setToolTipText("Unlock android device bootloader");
 		btnUnlockBootloader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -1299,6 +1349,7 @@ public class Interface extends JFrame {
 		panel_3.add(btnUnlockBootloader);
 
 		JButton btnLockBootloader = new JButton("Lock Bootloader");
+		btnLockBootloader.setToolTipText("Lock android device bootloader");
 		btnLockBootloader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -1329,6 +1380,7 @@ public class Interface extends JFrame {
 		scrollPane.setViewportView(LogViewer);
 
 		JButton btnSaveAsTextFile = new JButton("Save as a text file");
+		btnSaveAsTextFile.setToolTipText("Save printed logcat as a text file on computer");
 		btnSaveAsTextFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame parentFrame = new JFrame();
@@ -1361,6 +1413,7 @@ public class Interface extends JFrame {
 		panel_4.add(btnSaveAsTextFile);
 
 		JButton btnClearLogact = new JButton("Clear");
+		btnClearLogact.setToolTipText("Clean the printed logcat from the screen");
 		btnClearLogact.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LogViewer.setText("");
@@ -1371,6 +1424,7 @@ public class Interface extends JFrame {
 		panel_4.add(btnClearLogact);
 
 		JButton btnViewLogcat = new JButton("View Logcat");
+		btnViewLogcat.setToolTipText("Print android device logcat on screen");
 		btnViewLogcat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -1422,6 +1476,8 @@ public class Interface extends JFrame {
 		panel_5.add(lblRestoreOperations);
 
 		final JButton btnRestoreFromCustomLocationBackup = new JButton("From Custom Location");
+		btnRestoreFromCustomLocationBackup
+				.setToolTipText("Restore data to android device from the backup stored somewhere on the computer");
 		btnRestoreFromCustomLocationBackup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
@@ -1460,6 +1516,7 @@ public class Interface extends JFrame {
 		panel_5.add(lblBackup);
 
 		final JButton btnBackupInternelStorage = new JButton("Internel Storage");
+		btnBackupInternelStorage.setToolTipText("Backup android device internal storage");
 		btnBackupInternelStorage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
@@ -1487,6 +1544,7 @@ public class Interface extends JFrame {
 		panel_5.add(btnBackupInternelStorage);
 
 		final JButton btnBackupSystem = new JButton("System");
+		btnBackupSystem.setToolTipText("Backup android device system");
 		btnBackupSystem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
@@ -1514,6 +1572,7 @@ public class Interface extends JFrame {
 		panel_5.add(btnBackupSystem);
 
 		final JButton btnBackupSingleApp = new JButton("Single App");
+		btnBackupSingleApp.setToolTipText("Backup a single app from android device");
 		btnBackupSingleApp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
@@ -1542,6 +1601,7 @@ public class Interface extends JFrame {
 		panel_5.add(btnBackupSingleApp);
 
 		final JButton btnBackupAppAndAppData = new JButton("App and App Data");
+		btnBackupAppAndAppData.setToolTipText("Backup app and it's data from android device");
 		btnBackupAppAndAppData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
@@ -1569,6 +1629,7 @@ public class Interface extends JFrame {
 		panel_5.add(btnBackupAppAndAppData);
 
 		final JButton btnBackupWholeDevice = new JButton("Whole Device");
+		btnBackupWholeDevice.setToolTipText("Backup whole android device");
 		btnBackupWholeDevice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
@@ -1599,6 +1660,7 @@ public class Interface extends JFrame {
 		panel_5.add(btnBackupWholeDevice);
 
 		final JButton btnRestorePreviousBackup = new JButton("Previous Backup");
+		btnRestorePreviousBackup.setToolTipText("Restore data to android device from the previous backup");
 		btnRestorePreviousBackup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
@@ -1635,10 +1697,11 @@ public class Interface extends JFrame {
 		panel_9.add(lblRootOperationsexperimental);
 
 		JLabel lblMethodbetter = new JLabel("Method #1 (Recommended)");
-		lblMethodbetter.setBounds(12, 42, 163, 15);
+		lblMethodbetter.setBounds(12, 42, 248, 15);
 		panel_9.add(lblMethodbetter);
 
 		JButton btnPattern = new JButton("Pattern #");
+		btnPattern.setToolTipText("Remove pattern security from android device (Experimental)");
 		btnPattern.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -1656,6 +1719,7 @@ public class Interface extends JFrame {
 		panel_9.add(btnPattern);
 
 		JButton btnPasswordPin = new JButton("Password/ PIN #");
+		btnPasswordPin.setToolTipText("Remove password or pin security from android device (Experimental)");
 		btnPasswordPin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -1681,6 +1745,8 @@ public class Interface extends JFrame {
 		panel_9.add(lblNonRoot);
 
 		JButton btnJellyBeanPatternPasswordPin = new JButton("Pattern/ Password/ PIN *");
+		btnJellyBeanPatternPasswordPin
+				.setToolTipText("Remove pattern, password or pin security from android device (Experimental)");
 		btnJellyBeanPatternPasswordPin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -1715,6 +1781,7 @@ public class Interface extends JFrame {
 		panel_6.setLayout(null);
 
 		JButton btnSHA512 = new JButton("SHA-512");
+		btnSHA512.setToolTipText("Calculate SHA-512 sum of a file");
 		btnSHA512.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser chooser = new JFileChooser();
@@ -1729,6 +1796,7 @@ public class Interface extends JFrame {
 		});
 
 		JButton btnClearCalculatedCrypto = new JButton("Clear");
+		btnClearCalculatedCrypto.setToolTipText("Clear the calculated sum");
 		btnClearCalculatedCrypto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CalculatedCrypto.setText("");
@@ -1753,6 +1821,7 @@ public class Interface extends JFrame {
 		panel_6.add(btnSHA512);
 
 		JButton btnSHA384 = new JButton("SHA-384");
+		btnSHA384.setToolTipText("Calculate SHA-384 sum of a file");
 		btnSHA384.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser chooser = new JFileChooser();
@@ -1770,6 +1839,7 @@ public class Interface extends JFrame {
 		panel_6.add(btnSHA384);
 
 		JButton btnSHA256 = new JButton("SHA-256");
+		btnSHA256.setToolTipText("Calculate SHA-256 sum of a file");
 		btnSHA256.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser chooser = new JFileChooser();
@@ -1787,6 +1857,7 @@ public class Interface extends JFrame {
 		panel_6.add(btnSHA256);
 
 		JButton btnSHA1 = new JButton("SHA-1");
+		btnSHA1.setToolTipText("Calculate SHA-1 sum of a file");
 		btnSHA1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser chooser = new JFileChooser();
@@ -1804,6 +1875,7 @@ public class Interface extends JFrame {
 		panel_6.add(btnSHA1);
 
 		JButton btnMD5 = new JButton("MD5");
+		btnMD5.setToolTipText("Calculate MD5 sum of a file");
 		btnMD5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser chooser = new JFileChooser();

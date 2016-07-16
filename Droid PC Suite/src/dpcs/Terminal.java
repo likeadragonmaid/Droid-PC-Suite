@@ -66,6 +66,7 @@ public class Terminal extends JFrame {
 		menuBar.add(mnHelp);
 
 		JMenuItem mntmCommandList = new JMenuItem("Command list");
+		mntmCommandList.setToolTipText("View ADB command list");
 		mntmCommandList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -101,11 +102,13 @@ public class Terminal extends JFrame {
 		contentPane.add(scrollPane_1);
 
 		commandinput = new JTextField();
+		commandinput.setToolTipText("Type the commands here for execution");
 		scrollPane_1.setViewportView(commandinput);
 		commandinput.setColumns(10);
 		commandinput.setText("Start typing command here...");
 
 		JButton Sendcommandbutton = new JButton("Go");
+		Sendcommandbutton.setToolTipText("Execute the specified command");
 		Sendcommandbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -127,6 +130,7 @@ public class Terminal extends JFrame {
 		contentPane.add(Sendcommandbutton);
 
 		JButton ADBbutton = new JButton("$ adb");
+		ADBbutton.setToolTipText("Insert \"adb\" in front of command");
 		ADBbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				commandinput.setText("adb ");
@@ -136,6 +140,7 @@ public class Terminal extends JFrame {
 		contentPane.add(ADBbutton);
 
 		JButton Fastbootbutton = new JButton("$ fastboot");
+		Fastbootbutton.setToolTipText("Insert \"fastboot\" in front of command");
 		Fastbootbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				commandinput.setText("fastboot ");
@@ -145,6 +150,7 @@ public class Terminal extends JFrame {
 		contentPane.add(Fastbootbutton);
 
 		JButton clearbutton = new JButton("Clear");
+		clearbutton.setToolTipText("Clear the terminal");
 		clearbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TerminalEmulatorScreen.setText("");
