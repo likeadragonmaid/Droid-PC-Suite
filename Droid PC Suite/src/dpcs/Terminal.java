@@ -65,21 +65,50 @@ public class Terminal extends JFrame {
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 
-		JMenuItem mntmCommandList = new JMenuItem("Command list");
-		mntmCommandList.setToolTipText("View ADB command list");
-		mntmCommandList.addActionListener(new ActionListener() {
+		JMenuItem mntmADBCommandList = new JMenuItem("ADB Command list");
+		mntmADBCommandList.setToolTipText("View ADB command list");
+		mntmADBCommandList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					URL licenseobj = ApacheLicense.class.getResource("/others/adbhelp.txt");
-					File licenseobj2 = new File(licenseobj.toURI());
-					Reader reader = new FileReader(new File(licenseobj2.toURI()));
+					URL obj = Terminal.class.getResource("/others/adbhelp.txt");
+					File obj2 = new File(obj.toURI());
+					Reader reader = new FileReader(new File(obj2.toURI()));
 					TerminalEmulatorScreen.read(reader, "");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-		mnHelp.add(mntmCommandList);
+		mnHelp.add(mntmADBCommandList);
+
+		JMenuItem mntmAndroidShellCommand = new JMenuItem("Android shell command list");
+		mntmAndroidShellCommand.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Process p1 = Runtime.getRuntime()
+							.exec("adb shell ls /system/bin/ > /sdcard/.androidshellcommands.txt");
+					p1.waitFor();
+					Process p2 = Runtime.getRuntime().exec("adb pull /sdcard/.androidshellcommands.txt");
+					p2.waitFor();
+					Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/.androidshellcommands.txt");
+					p3.waitFor();
+					try {
+						Reader reader = new FileReader(new File(".androidshellcommands.txt"));
+						TerminalEmulatorScreen.read(reader, "");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					File file = new File(".androidshellcommands.txt");
+					if (file.exists() && !file.isDirectory()) {
+						file.delete();
+					}
+				} catch (Exception e) {
+					System.err.println(e);
+				}
+			}
+		});
+		mntmAndroidShellCommand.setToolTipText("View list of android shell supported command list");
+		mnHelp.add(mntmAndroidShellCommand);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

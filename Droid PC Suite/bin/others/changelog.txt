@@ -1,21 +1,37 @@
 Version 1.3 Stable (Build 160716)
 
 * Screen recorder added
-* Added button for taking Screenshot
-* ADB Help added to ADB Terminal
-* Wait for device added
-* Serial no. viewer added to help
+* Added button for taking screenshots
+* Flash radio added
+* Wipe radio added
+* Reboot to download mode for Samsung devices added
+* Device feature support viewer added
+* Check for max users supported by device added
+* Developer tools added
+* App information viewer added
+* App packages list viewer added
+* Battery information tool added
+* CPU information viewer added
+* Kill Apps feature added
+* Memory information tool added
+* WiFi Information tool added
+* Force connect moved to ADB tools
+* ADB Help added to ADB Terminal and ADB tools
 * ADB tools added
+* ADB version checker added
 * Device state viewer added
-* ADB version viewer added
+* Serial no. viewer added
+* Wait for device added
 * ADB help added in Menu bar and ADB Terminal
-* Tips added for almost all the tools (Except filemanager)
+* Tips added for almost all the tools (Except File Manager)
 * "More help" renamed to "Online help"
 * Lot of back end improvements in File Manager
 * Few UI changes
+* Uninstaller improved
 * Better performance
 * Code optimized and cleaned
 * More minor improvements
+* Bug fixes
 
 Version 1.2 Stable (Build 160712)
 

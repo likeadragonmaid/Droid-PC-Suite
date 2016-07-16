@@ -49,7 +49,7 @@ public class UninstallPrivApps extends JFrame {
 		setTitle("Uninstall Priv-apps");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(UninstallSystemApps.class.getResource("/graphics/Icon.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 482, 470);
+		setBounds(100, 100, 482, 500);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -192,6 +192,14 @@ public class UninstallPrivApps extends JFrame {
 			JLabel lblNewLabel = new JLabel("Note: You should also remove app's odex file if it exits ");
 			lblNewLabel.setBounds(26, 374, 438, 17);
 			contentPane.add(lblNewLabel);
+
+			JLabel lblNeedsRootAnd = new JLabel("Needs root and does not work on production android builds!");
+			lblNeedsRootAnd.setBounds(8, 426, 454, 17);
+			contentPane.add(lblNeedsRootAnd);
+
+			JLabel lblOnlyForAndroid = new JLabel("Uninstallation only for android 4.4.x and higher!");
+			lblOnlyForAndroid.setBounds(8, 452, 450, 15);
+			contentPane.add(lblOnlyForAndroid);
 			File file = new File(".privapps.txt");
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();

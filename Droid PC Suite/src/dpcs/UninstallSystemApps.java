@@ -49,7 +49,7 @@ public class UninstallSystemApps extends JFrame {
 		setTitle("Uninstall System Apps");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(UninstallSystemApps.class.getResource("/graphics/Icon.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 482, 460);
+		setBounds(100, 100, 482, 475);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -188,6 +188,10 @@ public class UninstallSystemApps extends JFrame {
 			JLabel lblNewLabel = new JLabel("Note: You should also remove app's odex file if it exists");
 			lblNewLabel.setBounds(26, 374, 438, 17);
 			contentPane.add(lblNewLabel);
+
+			JLabel label = new JLabel("Needs root and does not work on production android builds!");
+			label.setBounds(12, 413, 454, 17);
+			contentPane.add(label);
 			File file = new File(".systemapps.txt");
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();

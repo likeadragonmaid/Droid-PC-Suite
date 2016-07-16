@@ -36,18 +36,18 @@ public class Workarounds extends JFrame {
 		setTitle("Common Workarounds");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Workarounds.class.getResource("/graphics/Icon.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 530, 235);
+		setBounds(100, 100, 530, 270);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblcommonworkaround5 = new JLabel("* WARNING! Connect only one android device at a time!");
-		lblcommonworkaround5.setToolTipText("Or Droid PC Suite will not function normally!");
-		lblcommonworkaround5.setForeground(Color.RED);
-		lblcommonworkaround5.setBounds(12, 146, 504, 24);
-		contentPane.add(lblcommonworkaround5);
+		JLabel lblcommonworkaround6 = new JLabel("* WARNING! Connect only one android device at a time!");
+		lblcommonworkaround6.setToolTipText("Or Droid PC Suite will not function normally!");
+		lblcommonworkaround6.setForeground(Color.RED);
+		lblcommonworkaround6.setBounds(12, 186, 504, 24);
+		contentPane.add(lblcommonworkaround6);
 
 		JLabel lblcommonworkaround3_2 = new JLabel("and fastboot files with their newer or older versions.");
 		lblcommonworkaround3_2.setForeground(Color.BLACK);
@@ -70,16 +70,16 @@ public class Workarounds extends JFrame {
 		lblcommonworkaround2.setBounds(12, 32, 506, 38);
 		contentPane.add(lblcommonworkaround2);
 
-		JLabel lblcommonworkaround6 = new JLabel("* Click here for help with connectivity of android device on Linux.");
-		lblcommonworkaround6.addMouseListener(new MouseAdapter() {
+		JLabel lblcommonworkaround7 = new JLabel("* Click here for help with connectivity of android device on Linux.");
+		lblcommonworkaround7.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				lblcommonworkaround6.setForeground(Color.BLACK);
+				lblcommonworkaround7.setForeground(Color.BLACK);
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				lblcommonworkaround6.setForeground(Color.BLUE);
+				lblcommonworkaround7.setForeground(Color.BLUE);
 			}
 
 			@Override
@@ -93,8 +93,8 @@ public class Workarounds extends JFrame {
 				}
 			}
 		});
-		lblcommonworkaround6.setBounds(12, 171, 504, 24);
-		contentPane.add(lblcommonworkaround6);
+		lblcommonworkaround7.setBounds(12, 206, 504, 24);
+		contentPane.add(lblcommonworkaround7);
 
 		JLabel lblcommonworkaroud4 = new JLabel("* If File Manager does not work, make sure you are using Launcher");
 		lblcommonworkaroud4.setToolTipText("i.e. Launcher for Microsoft Windows.exe or Launcher_for _Linux.sh");
@@ -107,5 +107,13 @@ public class Workarounds extends JFrame {
 		lblcommonworkaround4_2.setForeground(Color.BLACK);
 		lblcommonworkaround4_2.setBounds(22, 119, 486, 24);
 		contentPane.add(lblcommonworkaround4_2);
+
+		JLabel lblcommonworkaround5 = new JLabel("* Don't worry if the app says to connect your device while android");
+		lblcommonworkaround5.setBounds(14, 145, 486, 19);
+		contentPane.add(lblcommonworkaround5);
+
+		JLabel lblcommonworkaround5_2 = new JLabel("is not booted ex. fastboot, bootloader, booting etc.");
+		lblcommonworkaround5_2.setBounds(24, 164, 476, 19);
+		contentPane.add(lblcommonworkaround5_2);
 	}
 }

@@ -21,7 +21,7 @@ public class GPLLicense extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ApacheLicense frame = new ApacheLicense();
+					GPLLicense frame = new GPLLicense();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,7 +32,7 @@ public class GPLLicense extends JFrame {
 
 	public GPLLicense() {
 		setTitle("Droid PC Suite's License");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ApacheLicense.class.getResource("/graphics/Icon.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GPLLicense.class.getResource("/graphics/Icon.png")));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 550, 500);
@@ -49,7 +49,7 @@ public class GPLLicense extends JFrame {
 		LicenseViewer.setEditable(false);
 		scrollPane.setViewportView(LicenseViewer);
 		try {
-			URL licenseobj = ApacheLicense.class.getResource("/licenses/gpl-2.0.txt");
+			URL licenseobj = GPLLicense.class.getResource("/licenses/gpl-2.0.txt");
 			File licenseobj2 = new File(licenseobj.toURI());
 			Reader reader = new FileReader(new File(licenseobj2.toURI()));
 			LicenseViewer.read(reader, "");

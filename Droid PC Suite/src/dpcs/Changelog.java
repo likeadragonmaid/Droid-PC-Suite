@@ -14,14 +14,14 @@ import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class Changelog extends JFrame {
-	JTextArea LicenseViewer;
+	JTextArea ChangelogViewer;
 	private JPanel contentPane;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ApacheLicense frame = new ApacheLicense();
+					Changelog frame = new Changelog();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,7 +32,7 @@ public class Changelog extends JFrame {
 
 	public Changelog() {
 		setTitle("Changelog Tracker");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ApacheLicense.class.getResource("/graphics/Icon.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Changelog.class.getResource("/graphics/Icon.png")));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 380, 550);
@@ -45,14 +45,14 @@ public class Changelog extends JFrame {
 		scrollPane.setBounds(0, 0, 378, 518);
 		contentPane.add(scrollPane);
 
-		LicenseViewer = new JTextArea();
-		LicenseViewer.setEditable(false);
-		scrollPane.setViewportView(LicenseViewer);
+		ChangelogViewer = new JTextArea();
+		ChangelogViewer.setEditable(false);
+		scrollPane.setViewportView(ChangelogViewer);
 		try {
-			URL licenseobj = ApacheLicense.class.getResource("/others/changelog.txt");
-			File licenseobj2 = new File(licenseobj.toURI());
-			Reader reader = new FileReader(new File(licenseobj2.toURI()));
-			LicenseViewer.read(reader, "");
+			URL obj = Changelog.class.getResource("/others/changelog.txt");
+			File obj2 = new File(obj.toURI());
+			Reader reader = new FileReader(new File(obj2.toURI()));
+			ChangelogViewer.read(reader, "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

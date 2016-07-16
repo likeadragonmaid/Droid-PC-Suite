@@ -287,6 +287,22 @@ public class Interface extends JFrame {
 				obj.setVisible(true);
 			}
 		});
+
+		JMenuItem mntmNoOfUsers = new JMenuItem("Max users supported?");
+		mntmNoOfUsers.setToolTipText("Max no. of users supported by android device");
+		mntmNoOfUsers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Process p1 = Runtime.getRuntime().exec("adb shell pm get-max-users");
+					p1.waitFor();
+					BufferedReader reader = new BufferedReader(new InputStreamReader(p1.getInputStream()));
+					JOptionPane.showMessageDialog(null, reader.readLine());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		mnADBTools.add(mntmNoOfUsers);
 		mnADBTools.add(mntmAdbHelp);
 
 		JMenuItem mntmAdbVersion = new JMenuItem("View ADB version");
@@ -370,6 +386,16 @@ public class Interface extends JFrame {
 				}
 			}
 		});
+
+		JMenuItem mntmDeviceFeatures = new JMenuItem("Device features");
+		mntmDeviceFeatures.setToolTipText("View list of features supported by the android device");
+		mntmDeviceFeatures.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Devicefeatures obj = new Devicefeatures();
+				obj.setVisible(true);
+			}
+		});
+		mnHelp.add(mntmDeviceFeatures);
 
 		JMenu mnLegalInformation = new JMenu("Legal information");
 		mnLegalInformation.setToolTipText("Vew legal information about the application");
@@ -498,8 +524,31 @@ public class Interface extends JFrame {
 		btnUninstallApps.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GeneralDone.setText("");
-				Uninstaller obj = new Uninstaller();
-				obj.setVisible(true);
+				String[] options = new String[] { "User apps", "Priv-apps", "System apps" };
+				int response = JOptionPane.showOptionDialog(null, "Which kind of app you want to uninstall?",
+						"Uninstaller", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options,
+						options[0]);
+				if (response == 0) {
+					try {
+						UninstallUserApps obj = new UninstallUserApps();
+						obj.setVisible(true);
+					} catch (Exception e1) {
+					}
+				}
+				if (response == 1) {
+					try {
+						UninstallPrivApps obj = new UninstallPrivApps();
+						obj.setVisible(true);
+					} catch (Exception e1) {
+					}
+				}
+				if (response == 2) {
+					try {
+						UninstallSystemApps obj = new UninstallSystemApps();
+						obj.setVisible(true);
+					} catch (Exception e1) {
+					}
+				}
 			}
 		});
 
@@ -785,14 +834,6 @@ public class Interface extends JFrame {
 			}
 		});
 
-		JLabel lblAndroidIsNot = new JLabel("android is not booted ex. fastboot, bootloader, booting etc.");
-		lblAndroidIsNot.setBounds(568, 334, 475, 19);
-		panel.add(lblAndroidIsNot);
-
-		JLabel lblDontWorry = new JLabel("Note: Don't worry if the app says to connect your device while");
-		lblDontWorry.setBounds(525, 317, 518, 19);
-		panel.add(lblDontWorry);
-
 		FlasherDone = new JLabel("");
 		FlasherDone.setText("");
 		FlasherDone.setBounds(760, 29, 300, 200);
@@ -801,11 +842,11 @@ public class Interface extends JFrame {
 		panel.add(btnFlashViaRecovery);
 		btnFlashData.setBounds(525, 29, 200, 75);
 		panel.add(btnFlashData);
-		btnFlashSystem.setBounds(275, 261, 200, 75);
+		btnFlashSystem.setBounds(525, 261, 200, 75);
 		panel.add(btnFlashSystem);
 
 		JLabel lblDeviceMust = new JLabel("* Device must be in fastboot mode");
-		lblDeviceMust.setBounds(574, 356, 469, 19);
+		lblDeviceMust.setBounds(639, 357, 469, 19);
 		panel.add(lblDeviceMust);
 
 		final JButton btnFlashCache = new JButton("Cache");
@@ -986,21 +1027,48 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnFlashSplash.setBounds(30, 261, 200, 75);
+		btnFlashSplash.setBounds(275, 261, 200, 75);
 		panel.add(btnFlashSplash);
+
+		JButton btnFlashRadio = new JButton("Radio");
+		btnFlashRadio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
+				JFileChooser chooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("IMG Files", "img");
+				chooser.setFileFilter(filter);
+				int returnVal = chooser.showOpenDialog(getParent());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = chooser.getSelectedFile();
+					String filename = chooser.getSelectedFile().getName();
+					try {
+						AppStatus.setText("Flashing...");
+						Process p1 = Runtime.getRuntime().exec("fastboot erase radio");
+						p1.waitFor();
+						String[] commands = new String[4];
+						commands[0] = "fastboot";
+						commands[1] = "flash";
+						commands[2] = "radio";
+						commands[3] = file.getAbsolutePath();
+						Process p2 = Runtime.getRuntime().exec(commands, null);
+						p2.waitFor();
+						AppStatus.setText(filename + "has been successfully flashed on your android device");
+						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
+						btnFlashSplash.setSelected(false);
+					} catch (Exception e1) {
+						System.err.println(e1);
+					}
+				}
+			}
+		});
+		btnFlashRadio.setToolTipText("Flash radio partition");
+		btnFlashRadio.setBounds(30, 261, 200, 75);
+		panel.add(btnFlashRadio);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
 		tabbedPane.addTab("Wiper", null, panel_1, null);
 		panel_1.setLayout(null);
-
-		JLabel label_11 = new JLabel("android is not booted ex. fastboot, bootloader, booting etc.");
-		label_11.setBounds(313, 323, 475, 19);
-		panel_1.add(label_11);
-
-		JLabel label_3 = new JLabel("Note: Don't worry if the app says to connect your device while");
-		label_3.setBounds(270, 306, 518, 19);
-		panel_1.add(label_3);
 
 		WiperDone = new JLabel("");
 		WiperDone.setText("");
@@ -1076,7 +1144,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnWipeSystem.setBounds(25, 241, 200, 75);
+		btnWipeSystem.setBounds(270, 245, 200, 75);
 		panel_1.add(btnWipeSystem);
 
 		JButton btnWipeSplash = new JButton("Splash");
@@ -1096,7 +1164,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnWipeSplash.setBounds(523, 137, 200, 75);
+		btnWipeSplash.setBounds(25, 245, 200, 75);
 		panel_1.add(btnWipeSplash);
 
 		JButton btnWipeData = new JButton("Data");
@@ -1167,21 +1235,32 @@ public class Interface extends JFrame {
 		btnWipeCache.setBounds(270, 26, 200, 75);
 		panel_1.add(btnWipeCache);
 
+		JButton btnWipeRadio = new JButton("Radio");
+		btnWipeRadio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WiperDone.setText("");
+				try {
+					AppStatus.setText("Wiping...");
+					Process p1 = Runtime.getRuntime().exec("fastboot erase radio");
+					p1.waitFor();
+					AppStatus.setText("Radio has been wiped");
+					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
+				} catch (Exception e1) {
+					System.err.println(e1);
+				}
+			}
+		});
+		btnWipeRadio.setToolTipText("Wipe radio partition");
+		btnWipeRadio.setBounds(523, 137, 200, 75);
+		panel_1.add(btnWipeRadio);
+
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
 		tabbedPane.addTab("Rebooter", null, panel_2, null);
 		panel_2.setLayout(null);
 
-		JLabel label_12 = new JLabel("Note: Don't worry if the app says to connect your device while");
-		label_12.setBounds(491, 314, 518, 19);
-		panel_2.add(label_12);
-
-		JLabel label_16 = new JLabel("android is not booted ex. fastboot, bootloader, booting etc.");
-		label_16.setBounds(534, 332, 464, 19);
-		panel_2.add(label_16);
-
 		JLabel lblRebootFrom = new JLabel("Reboot from :");
-		lblRebootFrom.setBounds(28, 182, 200, 15);
+		lblRebootFrom.setBounds(470, 181, 148, 15);
 		panel_2.add(lblRebootFrom);
 
 		JLabel lblRebootTo = new JLabel("Reboot to :");
@@ -1215,7 +1294,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootFromFastboot.setBounds(28, 230, 200, 75);
+		btnRebootFromFastboot.setBounds(281, 232, 200, 75);
 		panel_2.add(btnRebootFromFastboot);
 
 		JButton btnRebootToBootloaderFromFastboot = new JButton("Fastboot to Bootloader *");
@@ -1233,7 +1312,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootToBootloaderFromFastboot.setBounds(279, 230, 240, 75);
+		btnRebootToBootloaderFromFastboot.setBounds(532, 232, 240, 75);
 		panel_2.add(btnRebootToBootloaderFromFastboot);
 
 		JButton btnRebootToRecovery = new JButton("Recovery");
@@ -1308,6 +1387,27 @@ public class Interface extends JFrame {
 		btnRebootSystem.setBounds(28, 55, 200, 75);
 		panel_2.add(btnRebootSystem);
 
+		JButton btnRebooToDownload = new JButton("Download ^");
+		btnRebooToDownload.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					AppStatus.setText("Rebooting...");
+					Process p1 = Runtime.getRuntime().exec("adb reboot download");
+					p1.waitFor();
+					AppStatus.setText("Done");
+				} catch (Exception e1) {
+					System.err.println(e1);
+				}
+			}
+		});
+		btnRebooToDownload.setToolTipText("Reboot android device to download mode");
+		btnRebooToDownload.setBounds(28, 232, 200, 75);
+		panel_2.add(btnRebooToDownload);
+
+		JLabel lblForSamsung = new JLabel("^ For Samsung devices only");
+		lblForSamsung.setBounds(708, 359, 238, 19);
+		panel_2.add(lblForSamsung);
+
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.WHITE);
 		tabbedPane.addTab("Bootloader", null, panel_3, null);
@@ -1376,6 +1476,7 @@ public class Interface extends JFrame {
 		panel_4.add(scrollPane);
 
 		final JTextArea LogViewer = new JTextArea();
+		LogViewer.setText("Click View Logcat");
 		LogViewer.setEditable(false);
 		scrollPane.setViewportView(LogViewer);
 
@@ -1433,10 +1534,8 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					Process p2 = Runtime.getRuntime().exec("adb pull /sdcard/.logcat.txt");
 					p2.waitFor();
-					Process p3 = Runtime.getRuntime().exec("adb logcat -c");
+					Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/.logcat.txt");
 					p3.waitFor();
-					Process p4 = Runtime.getRuntime().exec("adb shell rm /sdcard/.logcat.txt");
-					p4.waitFor();
 					try {
 						Reader reader = new FileReader(new File(".logcat.txt"));
 						LogViewer.read(reader, "");
@@ -1891,6 +1990,107 @@ public class Interface extends JFrame {
 
 		btnMD5.setBounds(27, 26, 200, 75);
 		panel_6.add(btnMD5);
+
+		JPanel panel_8 = new JPanel();
+		panel_8.setBackground(Color.WHITE);
+		tabbedPane.addTab("Dev. Tools", null, panel_8, null);
+		panel_8.setLayout(null);
+
+		JButton btnMemoryInformation = new JButton("Memory Information");
+		btnMemoryInformation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Memoryinfo obj = new Memoryinfo();
+				obj.setVisible(true);
+			}
+		});
+		btnMemoryInformation.setToolTipText("View current memory information of android device");
+		btnMemoryInformation.setBounds(598, 169, 200, 75);
+		panel_8.add(btnMemoryInformation);
+
+		JButton btnBatteryInformation = new JButton("Battery Information");
+		btnBatteryInformation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Batteryinfo obj = new Batteryinfo();
+				obj.setVisible(true);
+			}
+		});
+		btnBatteryInformation.setToolTipText("View current battery information of android device");
+		btnBatteryInformation.setBounds(598, 49, 200, 75);
+		panel_8.add(btnBatteryInformation);
+
+		JButton btnCpuInformation = new JButton("CPU Information");
+		btnCpuInformation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CPUinfo obj = new CPUinfo();
+				obj.setVisible(true);
+			}
+		});
+		btnCpuInformation.setToolTipText("View current CPU information of android device");
+		btnCpuInformation.setBounds(36, 169, 200, 75);
+		panel_8.add(btnCpuInformation);
+
+		JButton btnAppInformation = new JButton("App Information");
+		btnAppInformation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Appinfo obj = new Appinfo();
+				obj.setVisible(true);
+			}
+		});
+		btnAppInformation.setToolTipText("View current app information of android device");
+		btnAppInformation.setBounds(36, 49, 200, 75);
+		panel_8.add(btnAppInformation);
+
+		JButton btnKillApps = new JButton("Kill Apps");
+		btnKillApps.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String[] options = new String[] { "Enter package name", "Kill all apps" };
+				int response = JOptionPane.showOptionDialog(null, "Which app(s) should be killed?", "Kill Apps",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+				if (response == 0) {
+					try {
+						JOptionPane.showMessageDialog(null, "You can find an app package name from App Packages List");
+						String selectedapp = (JOptionPane.showInputDialog(null, "Enter app's package name:"));
+						Process p1 = Runtime.getRuntime().exec("adb shell am force-stop " + selectedapp);
+						p1.waitFor();
+						JOptionPane.showMessageDialog(null, selectedapp + " has been killed");
+					} catch (Exception e1) {
+					}
+				}
+				if (response == 1) {
+					try {
+						Process p1 = Runtime.getRuntime().exec("adb shell am kill-all");
+						p1.waitFor();
+						JOptionPane.showMessageDialog(null, "All safe-to-kill apps are killed");
+					} catch (Exception e1) {
+					}
+				}
+			}
+		});
+		btnKillApps.setToolTipText("Kill any app currently running on android device");
+		btnKillApps.setBounds(318, 169, 200, 75);
+		panel_8.add(btnKillApps);
+
+		JButton btnWifiInformation = new JButton("WiFi Information");
+		btnWifiInformation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Wifiinfo obj = new Wifiinfo();
+				obj.setVisible(true);
+			}
+		});
+		btnWifiInformation.setToolTipText("View current wifi information of android device");
+		btnWifiInformation.setBounds(36, 292, 200, 75);
+		panel_8.add(btnWifiInformation);
+
+		JButton btnAppPackageList = new JButton("App Packages List");
+		btnAppPackageList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AppPackagesList obj = new AppPackagesList();
+				obj.setVisible(true);
+			}
+		});
+		btnAppPackageList.setToolTipText("View all installed app packages list information");
+		btnAppPackageList.setBounds(318, 49, 200, 75);
+		panel_8.add(btnAppPackageList);
 
 		JLabel label_2 = new JLabel("");
 		label_2.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Interface_logo.png")));
