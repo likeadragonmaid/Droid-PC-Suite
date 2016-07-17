@@ -4,7 +4,7 @@ Version 1.3 Stable (Build 160716)
 * Added button for taking screenshots
 * Flash radio added
 * Wipe radio added
-* Reboot to download mode for Samsung devices added
+* Reboot to download mode for samsung devices added
 * Device feature support viewer added
 * Check for max users supported by device added
 * Developer tools added
@@ -12,11 +12,11 @@ Version 1.3 Stable (Build 160716)
 * App packages list viewer added
 * Battery information tool added
 * CPU information viewer added
-* Kill Apps feature added
+* Kill apps feature added
 * Memory information tool added
-* WiFi Information tool added
+* WiFi information tool added
 * Force connect moved to ADB tools
-* ADB Help added to ADB Terminal and ADB tools
+* ADB help added to ADB Terminal and ADB tools
 * ADB tools added
 * ADB version checker added
 * Device state viewer added

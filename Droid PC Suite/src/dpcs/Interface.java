@@ -1791,13 +1791,9 @@ public class Interface extends JFrame {
 		tabbedPane.addTab("Bypass Security", null, panel_9, null);
 		panel_9.setLayout(null);
 
-		JLabel lblRootOperationsexperimental = new JLabel("Root Operations [EXPERIMENTAL] :");
-		lblRootOperationsexperimental.setBounds(12, 12, 388, 15);
+		JLabel lblRootOperationsexperimental = new JLabel("Method #1 : Root Operations (Recommended) [EXPERIMENTAL] :");
+		lblRootOperationsexperimental.setBounds(12, 12, 507, 15);
 		panel_9.add(lblRootOperationsexperimental);
-
-		JLabel lblMethodbetter = new JLabel("Method #1 (Recommended)");
-		lblMethodbetter.setBounds(12, 42, 248, 15);
-		panel_9.add(lblMethodbetter);
 
 		JButton btnPattern = new JButton("Pattern #");
 		btnPattern.setToolTipText("Remove pattern security from android device (Experimental)");
@@ -1836,11 +1832,11 @@ public class Interface extends JFrame {
 		panel_9.add(btnPasswordPin);
 
 		JLabel lblMayNot = new JLabel("# Works on Android 4.4.x and lower");
-		lblMayNot.setBounds(630, 250, 269, 15);
+		lblMayNot.setBounds(630, 250, 366, 15);
 		panel_9.add(lblMayNot);
 
-		JLabel lblNonRoot = new JLabel("Non - Root/ Root Operations [EXPERIMENTAL] :");
-		lblNonRoot.setBounds(12, 191, 388, 15);
+		JLabel lblNonRoot = new JLabel("Method # 2 : Non - Root/ Root Operations [EXPERIMENTAL] :");
+		lblNonRoot.setBounds(12, 191, 507, 15);
 		panel_9.add(lblNonRoot);
 
 		JButton btnJellyBeanPatternPasswordPin = new JButton("Pattern/ Password/ PIN *");
@@ -1866,12 +1862,12 @@ public class Interface extends JFrame {
 		btnJellyBeanPatternPasswordPin.setBounds(200, 250, 240, 75);
 		panel_9.add(btnJellyBeanPatternPasswordPin);
 
-		JLabel lblWorksWell = new JLabel("* Works well on Jelly Bean Devices but");
-		lblWorksWell.setBounds(630, 273, 285, 15);
+		JLabel lblWorksWell = new JLabel("* Works well on Jelly Bean Devices but may or");
+		lblWorksWell.setBounds(630, 273, 366, 15);
 		panel_9.add(lblWorksWell);
 
-		JLabel lblNewLabel = new JLabel("may work for older android versions");
-		lblNewLabel.setBounds(640, 293, 285, 15);
+		JLabel lblNewLabel = new JLabel("may not work for older/ newer android versions");
+		lblNewLabel.setBounds(640, 293, 356, 15);
 		panel_9.add(lblNewLabel);
 
 		JPanel panel_6 = new JPanel();
@@ -2004,7 +2000,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnMemoryInformation.setToolTipText("View current memory information of android device");
-		btnMemoryInformation.setBounds(598, 169, 200, 75);
+		btnMemoryInformation.setBounds(548, 134, 220, 72);
 		panel_8.add(btnMemoryInformation);
 
 		JButton btnBatteryInformation = new JButton("Battery Information");
@@ -2015,7 +2011,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnBatteryInformation.setToolTipText("View current battery information of android device");
-		btnBatteryInformation.setBounds(598, 49, 200, 75);
+		btnBatteryInformation.setBounds(548, 27, 220, 75);
 		panel_8.add(btnBatteryInformation);
 
 		JButton btnCpuInformation = new JButton("CPU Information");
@@ -2026,7 +2022,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnCpuInformation.setToolTipText("View current CPU information of android device");
-		btnCpuInformation.setBounds(36, 169, 200, 75);
+		btnCpuInformation.setBounds(25, 131, 220, 75);
 		panel_8.add(btnCpuInformation);
 
 		JButton btnAppInformation = new JButton("App Information");
@@ -2037,7 +2033,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnAppInformation.setToolTipText("View current app information of android device");
-		btnAppInformation.setBounds(36, 49, 200, 75);
+		btnAppInformation.setBounds(25, 27, 220, 75);
 		panel_8.add(btnAppInformation);
 
 		JButton btnKillApps = new JButton("Kill Apps");
@@ -2067,7 +2063,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnKillApps.setToolTipText("Kill any app currently running on android device");
-		btnKillApps.setBounds(318, 169, 200, 75);
+		btnKillApps.setBounds(282, 131, 220, 75);
 		panel_8.add(btnKillApps);
 
 		JButton btnWifiInformation = new JButton("WiFi Information");
@@ -2078,7 +2074,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnWifiInformation.setToolTipText("View current wifi information of android device");
-		btnWifiInformation.setBounds(36, 292, 200, 75);
+		btnWifiInformation.setBounds(25, 236, 220, 75);
 		panel_8.add(btnWifiInformation);
 
 		JButton btnAppPackageList = new JButton("App Packages List");
@@ -2089,7 +2085,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnAppPackageList.setToolTipText("View all installed app packages list information");
-		btnAppPackageList.setBounds(318, 49, 200, 75);
+		btnAppPackageList.setBounds(282, 27, 220, 75);
 		panel_8.add(btnAppPackageList);
 
 		JLabel label_2 = new JLabel("");
