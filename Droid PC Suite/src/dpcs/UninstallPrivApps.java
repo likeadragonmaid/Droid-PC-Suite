@@ -66,7 +66,7 @@ public class UninstallPrivApps extends JFrame {
 		contentPane.add(PrivAppUninstallDone);
 
 		JLabel lblSelect = new JLabel("Select an app to remove");
-		lblSelect.setBounds(26, 12, 405, 17);
+		lblSelect.setBounds(25, 12, 405, 17);
 		contentPane.add(lblSelect);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -190,11 +190,11 @@ public class UninstallPrivApps extends JFrame {
 			scrollPane.setViewportView(list);
 
 			JLabel lblNewLabel = new JLabel("Note: You should also remove app's odex file if it exits ");
-			lblNewLabel.setBounds(26, 374, 438, 17);
+			lblNewLabel.setBounds(25, 374, 438, 17);
 			contentPane.add(lblNewLabel);
 
 			JLabel lblNeedsRootAnd = new JLabel("Needs root and does not work on production android builds!");
-			lblNeedsRootAnd.setBounds(8, 426, 454, 17);
+			lblNeedsRootAnd.setBounds(25, 426, 454, 17);
 			contentPane.add(lblNeedsRootAnd);
 
 			JLabel lblOnlyForAndroid = new JLabel("Uninstallation only for android 4.4.x and higher!");

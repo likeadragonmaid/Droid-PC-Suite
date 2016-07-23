@@ -475,7 +475,7 @@ public class Interface extends JFrame {
 		panel_7.add(btnADBTerminal);
 
 		JLabel lblNoteInstallationTo = new JLabel("# Only for android 4.4.x and higher");
-		lblNoteInstallationTo.setBounds(12, 284, 1046, 15);
+		lblNoteInstallationTo.setBounds(25, 284, 1046, 15);
 		panel_7.add(lblNoteInstallationTo);
 
 		GeneralDone = new JLabel("");
@@ -501,7 +501,7 @@ public class Interface extends JFrame {
 
 		JLabel lblNeedsRoot = new JLabel(
 				"* Needs root access, also may not work with some devices regardless of root access");
-		lblNeedsRoot.setBounds(12, 311, 1046, 15);
+		lblNeedsRoot.setBounds(25, 311, 1046, 15);
 		panel_7.add(lblNeedsRoot);
 
 		JButton btnScreenshot = new JButton("Screenshot");
@@ -733,12 +733,12 @@ public class Interface extends JFrame {
 
 		JLabel lblInstallationAndUninstallation = new JLabel(
 				"Installation and Uninstallation of apps to Priv-app is only for android 4.4 and higher, requires root and even simply may no work on your device!");
-		lblInstallationAndUninstallation.setBounds(12, 365, 1046, 15);
+		lblInstallationAndUninstallation.setBounds(25, 365, 1046, 15);
 		panel_7.add(lblInstallationAndUninstallation);
 
 		JLabel lblInstallationAndUninstallation_1 = new JLabel(
 				"Installation and Uninstallation of apps to System requires root, and may not work for your device!");
-		lblInstallationAndUninstallation_1.setBounds(12, 338, 1046, 15);
+		lblInstallationAndUninstallation_1.setBounds(25, 338, 1046, 15);
 		panel_7.add(lblInstallationAndUninstallation_1);
 
 		JPanel panel = new JPanel();
@@ -998,7 +998,7 @@ public class Interface extends JFrame {
 
 		JLabel lblYouMust = new JLabel(
 				"You must have a bootloader that supports fastboot commands and device must be in fastboot mode");
-		lblYouMust.setBounds(22, 356, 835, 19);
+		lblYouMust.setBounds(25, 356, 835, 19);
 		panel.add(lblYouMust);
 
 		final JButton btnFlashSplash = new JButton("Splash");
@@ -1083,7 +1083,7 @@ public class Interface extends JFrame {
 		panel_1.add(WiperDone);
 
 		JLabel label_13 = new JLabel("** Device must be rooted");
-		label_13.setBounds(6, 336, 252, 19);
+		label_13.setBounds(25, 336, 252, 19);
 		panel_1.add(label_13);
 
 		JButton btnWipeRecovery = new JButton("Recovery");
@@ -1255,7 +1255,7 @@ public class Interface extends JFrame {
 
 		JLabel label = new JLabel(
 				"You must have a bootloader that supports fastboot commands and device must be in fastboot mode");
-		label.setBounds(6, 357, 835, 19);
+		label.setBounds(25, 357, 835, 19);
 		panel_1.add(label);
 
 		JPanel panel_2 = new JPanel();
@@ -1264,23 +1264,23 @@ public class Interface extends JFrame {
 		panel_2.setLayout(null);
 
 		JLabel lblRebootFrom = new JLabel("Reboot from :");
-		lblRebootFrom.setBounds(28, 181, 220, 15);
+		lblRebootFrom.setBounds(25, 181, 220, 15);
 		panel_2.add(lblRebootFrom);
 
 		JLabel lblRebootTo = new JLabel("Reboot to :");
-		lblRebootTo.setBounds(28, 12, 220, 15);
+		lblRebootTo.setBounds(25, 12, 220, 15);
 		panel_2.add(lblRebootTo);
 
 		JLabel lblNotFor = new JLabel("# Not for Samsung devices");
-		lblNotFor.setBounds(491, 359, 238, 19);
+		lblNotFor.setBounds(514, 359, 238, 19);
 		panel_2.add(lblNotFor);
 
 		JLabel lblDeviceMust_1 = new JLabel("Device must be in fastboot mode (Except for Reboot System)");
-		lblDeviceMust_1.setBounds(10, 332, 479, 19);
+		lblDeviceMust_1.setBounds(25, 332, 479, 19);
 		panel_2.add(lblDeviceMust_1);
 
 		JLabel lblYouMust_1 = new JLabel("* You must have a bootloader that supports fastboot commands");
-		lblYouMust_1.setBounds(10, 359, 470, 19);
+		lblYouMust_1.setBounds(25, 359, 470, 19);
 		panel_2.add(lblYouMust_1);
 
 		JButton btnRebootFromFastboot = new JButton("Fastboot *");
@@ -1373,7 +1373,7 @@ public class Interface extends JFrame {
 		panel_2.add(btnRebooToDownload);
 
 		JLabel lblForSamsung = new JLabel("^ For Samsung devices only");
-		lblForSamsung.setBounds(708, 359, 238, 19);
+		lblForSamsung.setBounds(749, 359, 238, 19);
 		panel_2.add(lblForSamsung);
 
 		JButton btnRebootToRecovery = new JButton("Recovery");
@@ -1418,7 +1418,7 @@ public class Interface extends JFrame {
 		panel_3.setLayout(null);
 
 		JLabel label_17 = new JLabel("Note: Don't worry if the app says to connect your device while");
-		label_17.setBounds(23, 320, 580, 19);
+		label_17.setBounds(25, 320, 580, 19);
 		panel_3.add(label_17);
 
 		JLabel label_18 = new JLabel("android is not booted ex. fastboot, bootloader, booting etc.");
@@ -2129,7 +2129,7 @@ public class Interface extends JFrame {
 		panel_8.add(btnAppPackageList);
 
 		JLabel lblNoteSomeOf = new JLabel("Note: Some of these tools might not work on your device");
-		lblNoteSomeOf.setBounds(12, 353, 490, 15);
+		lblNoteSomeOf.setBounds(25, 345, 490, 15);
 		panel_8.add(lblNoteSomeOf);
 
 		JLabel label_2 = new JLabel("");

@@ -91,8 +91,7 @@ public class Batteryinfo extends JFrame {
 		btnSaveToFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (BatteryInformationViewer.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"Cannot save empty file!");
+					JOptionPane.showMessageDialog(null, "Cannot save empty file!");
 				} else {
 					JFrame parentFrame = new JFrame();
 					JFileChooser fileChooser = new JFileChooser();
