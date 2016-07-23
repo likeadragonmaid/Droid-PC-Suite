@@ -1894,7 +1894,7 @@ public class Interface extends JFrame {
 		btnClearCalculatedCrypto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CalculatedCrypto.setText("");
-				// InputCrypto.setText("");
+				InputCrypto.setText("");
 			}
 		});
 
