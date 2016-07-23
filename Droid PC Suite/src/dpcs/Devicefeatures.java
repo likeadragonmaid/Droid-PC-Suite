@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Reader;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -43,7 +44,7 @@ public class Devicefeatures extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Devicefeatures.class.getResource("/graphics/Icon.png")));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 380, 570);
+		setBounds(100, 100, 380, 581);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,33 +62,37 @@ public class Devicefeatures extends JFrame {
 		btnSaveToFile = new JButton("Save to file");
 		btnSaveToFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFrame parentFrame = new JFrame();
-				JFileChooser fileChooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
-				fileChooser.setFileFilter(filter);
-				fileChooser.setDialogTitle("Save as a text file");
-				int userSelection = fileChooser.showSaveDialog(parentFrame);
-				if (userSelection == JFileChooser.APPROVE_OPTION) {
-					File fileToSave = fileChooser.getSelectedFile();
-					FileWriter write = null;
-					try {
-						write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
-						DeviceFeaturesViewer.write(write);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					} finally {
-						if (write != null)
-							try {
-								write.close();
-							} catch (Exception e1) {
-								e1.printStackTrace();
-							}
+				if (DeviceFeaturesViewer.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"Cannot save empty file!");
+				} else {
+					JFrame parentFrame = new JFrame();
+					JFileChooser fileChooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+					fileChooser.setFileFilter(filter);
+					fileChooser.setDialogTitle("Save as a text file");
+					int userSelection = fileChooser.showSaveDialog(parentFrame);
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+						File fileToSave = fileChooser.getSelectedFile();
+						FileWriter write = null;
+						try {
+							write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
+							DeviceFeaturesViewer.write(write);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						} finally {
+							if (write != null)
+								try {
+									write.close();
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+						}
 					}
 				}
 			}
 		});
 		btnSaveToFile.setToolTipText("Save battery information from screen to a file on the computer");
-		btnSaveToFile.setBounds(122, 478, 120, 47);
+		btnSaveToFile.setBounds(75, 483, 220, 47);
 		contentPane.add(btnSaveToFile);
 		try {
 			Process p1 = Runtime.getRuntime().exec("adb shell pm list features > /sdcard/.devicefeatures.txt");

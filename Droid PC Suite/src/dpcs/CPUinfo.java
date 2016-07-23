@@ -12,6 +12,7 @@ import java.io.Reader;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -20,7 +21,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("serial")
 public class CPUinfo extends JFrame {
-	JTextArea CPUinformationViewer;
+	JTextArea CPUInformationViewer;
 	private JPanel contentPane;
 	private JButton btnRefresh;
 
@@ -53,9 +54,9 @@ public class CPUinfo extends JFrame {
 		scrollPane.setBounds(0, 0, 552, 311);
 		contentPane.add(scrollPane);
 
-		CPUinformationViewer = new JTextArea();
-		CPUinformationViewer.setEditable(false);
-		scrollPane.setViewportView(CPUinformationViewer);
+		CPUInformationViewer = new JTextArea();
+		CPUInformationViewer.setEditable(false);
+		scrollPane.setViewportView(CPUInformationViewer);
 
 		btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
@@ -69,7 +70,7 @@ public class CPUinfo extends JFrame {
 					p3.waitFor();
 					try {
 						Reader reader = new FileReader(new File(".cpuinfo.txt"));
-						CPUinformationViewer.read(reader, "");
+						CPUInformationViewer.read(reader, "");
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -83,39 +84,43 @@ public class CPUinfo extends JFrame {
 			}
 		});
 		btnRefresh.setToolTipText("Refetch CPU information from android device");
-		btnRefresh.setBounds(12, 323, 120, 47);
+		btnRefresh.setBounds(22, 323, 220, 47);
 		contentPane.add(btnRefresh);
 
 		JButton btnSaveToFile = new JButton("Save to file");
 		btnSaveToFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame parentFrame = new JFrame();
-				JFileChooser fileChooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
-				fileChooser.setFileFilter(filter);
-				fileChooser.setDialogTitle("Save as a text file");
-				int userSelection = fileChooser.showSaveDialog(parentFrame);
-				if (userSelection == JFileChooser.APPROVE_OPTION) {
-					File fileToSave = fileChooser.getSelectedFile();
-					FileWriter write = null;
-					try {
-						write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
-						CPUinformationViewer.write(write);
-					} catch (Exception e) {
-						e.printStackTrace();
-					} finally {
-						if (write != null)
-							try {
-								write.close();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
+				if (CPUInformationViewer.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Cannot save empty file!");
+				} else {
+					JFrame parentFrame = new JFrame();
+					JFileChooser fileChooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+					fileChooser.setFileFilter(filter);
+					fileChooser.setDialogTitle("Save as a text file");
+					int userSelection = fileChooser.showSaveDialog(parentFrame);
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+						File fileToSave = fileChooser.getSelectedFile();
+						FileWriter write = null;
+						try {
+							write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
+							CPUInformationViewer.write(write);
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							if (write != null)
+								try {
+									write.close();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+						}
 					}
 				}
 			}
 		});
 		btnSaveToFile.setToolTipText("Save CPU information information from screen to a file on the computer");
-		btnSaveToFile.setBounds(422, 323, 120, 47);
+		btnSaveToFile.setBounds(320, 323, 220, 47);
 		contentPane.add(btnSaveToFile);
 		try {
 			Process p1 = Runtime.getRuntime().exec("adb shell dumpsys cpuinfo > /sdcard/.cpuinfo.txt");
@@ -126,7 +131,7 @@ public class CPUinfo extends JFrame {
 			p3.waitFor();
 			try {
 				Reader reader = new FileReader(new File(".cpuinfo.txt"));
-				CPUinformationViewer.read(reader, "");
+				CPUInformationViewer.read(reader, "");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

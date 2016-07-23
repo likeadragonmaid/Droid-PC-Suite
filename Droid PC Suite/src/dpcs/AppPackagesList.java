@@ -46,7 +46,7 @@ public class AppPackagesList extends JFrame {
 		setTitle("App Packages List");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AppPackagesList.class.getResource("/graphics/Icon.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 479, 440);
+		setBounds(100, 100, 479, 451);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -95,7 +95,7 @@ public class AppPackagesList extends JFrame {
 				}
 			}
 		});
-		btnRefresh.setBounds(176, 357, 125, 38);
+		btnRefresh.setBounds(125, 357, 220, 47);
 		contentPane.add(btnRefresh);
 
 		try {

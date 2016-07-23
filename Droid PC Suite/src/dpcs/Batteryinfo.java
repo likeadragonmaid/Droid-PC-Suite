@@ -12,6 +12,7 @@ import java.io.Reader;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -20,7 +21,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("serial")
 public class Batteryinfo extends JFrame {
-	JTextArea BatteryinformationViewer;
+	JTextArea BatteryInformationViewer;
 	private JPanel contentPane;
 	private JButton btnRefresh;
 
@@ -53,9 +54,9 @@ public class Batteryinfo extends JFrame {
 		scrollPane.setBounds(0, 0, 378, 238);
 		contentPane.add(scrollPane);
 
-		BatteryinformationViewer = new JTextArea();
-		BatteryinformationViewer.setEditable(false);
-		scrollPane.setViewportView(BatteryinformationViewer);
+		BatteryInformationViewer = new JTextArea();
+		BatteryInformationViewer.setEditable(false);
+		scrollPane.setViewportView(BatteryInformationViewer);
 
 		btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
@@ -69,7 +70,7 @@ public class Batteryinfo extends JFrame {
 					p3.waitFor();
 					try {
 						Reader reader = new FileReader(new File(".batteryinfo.txt"));
-						BatteryinformationViewer.read(reader, "");
+						BatteryInformationViewer.read(reader, "");
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -89,27 +90,32 @@ public class Batteryinfo extends JFrame {
 		JButton btnSaveToFile = new JButton("Save to file");
 		btnSaveToFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame parentFrame = new JFrame();
-				JFileChooser fileChooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
-				fileChooser.setFileFilter(filter);
-				fileChooser.setDialogTitle("Save as a text file");
-				int userSelection = fileChooser.showSaveDialog(parentFrame);
-				if (userSelection == JFileChooser.APPROVE_OPTION) {
-					File fileToSave = fileChooser.getSelectedFile();
-					FileWriter write = null;
-					try {
-						write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
-						BatteryinformationViewer.write(write);
-					} catch (Exception e) {
-						e.printStackTrace();
-					} finally {
-						if (write != null)
-							try {
-								write.close();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
+				if (BatteryInformationViewer.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,
+							"Cannot save empty file!");
+				} else {
+					JFrame parentFrame = new JFrame();
+					JFileChooser fileChooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+					fileChooser.setFileFilter(filter);
+					fileChooser.setDialogTitle("Save as a text file");
+					int userSelection = fileChooser.showSaveDialog(parentFrame);
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+						File fileToSave = fileChooser.getSelectedFile();
+						FileWriter write = null;
+						try {
+							write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
+							BatteryInformationViewer.write(write);
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							if (write != null)
+								try {
+									write.close();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+						}
 					}
 				}
 			}
@@ -126,7 +132,7 @@ public class Batteryinfo extends JFrame {
 			p3.waitFor();
 			try {
 				Reader reader = new FileReader(new File(".batteryinfo.txt"));
-				BatteryinformationViewer.read(reader, "");
+				BatteryInformationViewer.read(reader, "");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

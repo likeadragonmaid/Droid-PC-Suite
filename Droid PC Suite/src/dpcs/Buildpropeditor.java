@@ -11,6 +11,7 @@ import java.io.Reader;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -20,7 +21,7 @@ import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class Buildpropeditor extends JFrame {
-	JTextArea Buildpropeditorwindow;
+	JTextArea BuildPropEditorWindow;
 	private JPanel contentPane;
 
 	public static void main(String[] args) {
@@ -52,8 +53,81 @@ public class Buildpropeditor extends JFrame {
 		scrollPane.setBounds(0, 0, 698, 415);
 		contentPane.add(scrollPane);
 
-		Buildpropeditorwindow = new JTextArea();
-		scrollPane.setViewportView(Buildpropeditorwindow);
+		BuildPropEditorWindow = new JTextArea();
+		scrollPane.setViewportView(BuildPropEditorWindow);
+
+		JButton btnSaveonpc = new JButton("Save to PC");
+		btnSaveonpc.setToolTipText("Save the printed text on sceen as a file");
+		btnSaveonpc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (BuildPropEditorWindow.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Cannot save empty file!");
+				} else {
+					JFrame parentFrame = new JFrame();
+					JFileChooser fileChooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("prop Files", "prop");
+					fileChooser.setFileFilter(filter);
+					fileChooser.setDialogTitle("Save to PC");
+					int userSelection = fileChooser.showSaveDialog(parentFrame);
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+						File fileToSave = fileChooser.getSelectedFile();
+						FileWriter write = null;
+						try {
+							write = new FileWriter(fileToSave.getAbsolutePath() + ".prop");
+							BuildPropEditorWindow.write(write);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						} finally {
+							if (write != null)
+								try {
+									write.close();
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+						}
+					}
+				}
+			}
+		});
+		btnSaveonpc.setBounds(478, 427, 200, 47);
+		contentPane.add(btnSaveonpc);
+
+		JButton btnPushtosdcard = new JButton("Push to sdcard");
+		btnPushtosdcard.setToolTipText("Push the text printed on screen to your device's sdcard as a build.prop file");
+		btnPushtosdcard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (BuildPropEditorWindow.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Cannot push empty file!");
+				} else {
+					FileWriter write = null;
+					try {
+						write = new FileWriter("build.prop");
+						BuildPropEditorWindow.write(write);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					} finally {
+						if (write != null)
+							try {
+								write.close();
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+					}
+					try {
+						Process p1 = Runtime.getRuntime().exec("adb push build.prop /sdcard/");
+						p1.waitFor();
+						File file = new File("build.prop");
+						if (file.exists() && !file.isDirectory()) {
+							file.delete();
+						}
+					} catch (Exception e1) {
+						System.err.println(e1);
+					}
+				}
+			}
+		});
+		btnPushtosdcard.setBounds(21, 427, 200, 47);
+		contentPane.add(btnPushtosdcard);
 
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.setToolTipText("Refetch build.prop from android device");
@@ -64,7 +138,7 @@ public class Buildpropeditor extends JFrame {
 					p1.waitFor();
 					try {
 						Reader reader = new FileReader(new File("build.prop"));
-						Buildpropeditorwindow.read(reader, "");
+						BuildPropEditorWindow.read(reader, "");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -77,80 +151,15 @@ public class Buildpropeditor extends JFrame {
 				}
 			}
 		});
-		btnRefresh.setBounds(21, 427, 200, 47);
+		btnRefresh.setBounds(250, 427, 200, 47);
 		contentPane.add(btnRefresh);
-
-		JButton btnSaveonpc = new JButton("Save to PC");
-		btnSaveonpc.setToolTipText("Save the printed text on sceen as a file");
-		btnSaveonpc.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFrame parentFrame = new JFrame();
-				JFileChooser fileChooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("prop Files", "prop");
-				fileChooser.setFileFilter(filter);
-				fileChooser.setDialogTitle("Save to PC");
-				int userSelection = fileChooser.showSaveDialog(parentFrame);
-				if (userSelection == JFileChooser.APPROVE_OPTION) {
-					File fileToSave = fileChooser.getSelectedFile();
-					FileWriter write = null;
-					try {
-						write = new FileWriter(fileToSave.getAbsolutePath() + ".prop");
-						Buildpropeditorwindow.write(write);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					} finally {
-						if (write != null)
-							try {
-								write.close();
-							} catch (Exception e1) {
-								e1.printStackTrace();
-							}
-					}
-				}
-			}
-		});
-		btnSaveonpc.setBounds(250, 427, 200, 47);
-		contentPane.add(btnSaveonpc);
-
-		JButton btnPushtosdcard = new JButton("Push to sdcard");
-		btnPushtosdcard.setToolTipText("Push the text printed on screen to your device's sdcard as a build.prop file");
-		btnPushtosdcard.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FileWriter write = null;
-				try {
-					write = new FileWriter("build.prop");
-					Buildpropeditorwindow.write(write);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				} finally {
-					if (write != null)
-						try {
-							write.close();
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-				}
-				try {
-					Process p1 = Runtime.getRuntime().exec("adb push build.prop /sdcard/");
-					p1.waitFor();
-					File file = new File("build.prop");
-					if (file.exists() && !file.isDirectory()) {
-						file.delete();
-					}
-				} catch (Exception e1) {
-					System.err.println(e1);
-				}
-			}
-		});
-		btnPushtosdcard.setBounds(478, 427, 200, 47);
-		contentPane.add(btnPushtosdcard);
 
 		try {
 			Process p1 = Runtime.getRuntime().exec("adb pull /system/build.prop");
 			p1.waitFor();
 			try {
 				Reader reader = new FileReader(new File("build.prop"));
-				Buildpropeditorwindow.read(reader, "");
+				BuildPropEditorWindow.read(reader, "");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

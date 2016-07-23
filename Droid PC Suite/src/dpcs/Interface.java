@@ -451,142 +451,6 @@ public class Interface extends JFrame {
 		tabbedPane.addTab("General", null, panel_7, null);
 		panel_7.setLayout(null);
 
-		final JButton btnInstallUserApp = new JButton("Install Apps as User");
-		btnInstallUserApp.setToolTipText("Install apps to your android device normally using an apk file");
-		btnInstallUserApp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GeneralDone.setText("");
-				JFileChooser chooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
-				chooser.setFileFilter(filter);
-				int returnVal = chooser.showOpenDialog(getParent());
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = chooser.getSelectedFile();
-					String filename = chooser.getSelectedFile().getName();
-					try {
-						AppStatus.setText("Installing...");
-						String[] commands = new String[3];
-						commands[0] = "adb";
-						commands[1] = "install";
-						commands[2] = file.getAbsolutePath();
-						AppStatus.setText("Installing App...");
-						Process p1 = Runtime.getRuntime().exec(commands, null);
-						p1.waitFor();
-						AppStatus.setText(filename + " has been successfully installed on your android device!");
-						GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-						btnInstallUserApp.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
-					}
-				}
-			}
-		});
-
-		final JButton btnInstallAsPrivApp = new JButton("Install Apps to priv-app *#");
-		btnInstallAsPrivApp
-				.setToolTipText("Install apps to your android device system with privileges using an apk file");
-		btnInstallAsPrivApp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				GeneralDone.setText("");
-				JFileChooser chooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
-				chooser.setFileFilter(filter);
-				int returnVal = chooser.showOpenDialog(getParent());
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = chooser.getSelectedFile();
-					try {
-						AppStatus.setText("Installing...");
-						Process p1 = Runtime.getRuntime().exec("adb remount");
-						p1.waitFor();
-						String[] pushcommand = new String[4];
-						pushcommand[0] = "adb";
-						pushcommand[1] = "push";
-						pushcommand[2] = file.getAbsolutePath();
-						pushcommand[3] = "/system/priv-app/";
-						AppStatus.setText("Installing App...");
-						Process p2 = Runtime.getRuntime().exec(pushcommand, null);
-						p2.waitFor();
-						AppStatus.setText("Rebooting your android device");
-						Process p3 = Runtime.getRuntime().exec("adb reboot");
-						p3.waitFor();
-						AppStatus.setText("");
-						GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-						btnInstallAsPrivApp.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
-					}
-				}
-			}
-		});
-
-		JButton btnUninstallApps = new JButton("Uninstall Apps");
-		btnUninstallApps.setToolTipText("Uninstall apps from your android device");
-		btnUninstallApps.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GeneralDone.setText("");
-				String[] options = new String[] { "User apps", "Priv-apps", "System apps" };
-				int response = JOptionPane.showOptionDialog(null, "Which kind of app you want to uninstall?",
-						"Uninstaller", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options,
-						options[0]);
-				if (response == 0) {
-					try {
-						UninstallUserApps obj = new UninstallUserApps();
-						obj.setVisible(true);
-					} catch (Exception e1) {
-					}
-				}
-				if (response == 1) {
-					try {
-						UninstallPrivApps obj = new UninstallPrivApps();
-						obj.setVisible(true);
-					} catch (Exception e1) {
-					}
-				}
-				if (response == 2) {
-					try {
-						UninstallSystemApps obj = new UninstallSystemApps();
-						obj.setVisible(true);
-					} catch (Exception e1) {
-					}
-				}
-			}
-		});
-
-		final JButton btnInstallAsSystemApp = new JButton("Install Apps to System *");
-		btnInstallAsSystemApp.setToolTipText("Install apps to your android device system using an apk file");
-		btnInstallAsSystemApp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				GeneralDone.setText("");
-				JFileChooser chooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
-				chooser.setFileFilter(filter);
-				int returnVal = chooser.showOpenDialog(getParent());
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = chooser.getSelectedFile();
-					try {
-						AppStatus.setText("Installing...");
-						Process p1 = Runtime.getRuntime().exec("adb remount");
-						p1.waitFor();
-						String[] pushcommand = new String[4];
-						pushcommand[0] = "adb";
-						pushcommand[1] = "push";
-						pushcommand[2] = file.getAbsolutePath();
-						pushcommand[3] = "/system/app/";
-						Process p2 = Runtime.getRuntime().exec(pushcommand, null);
-						p2.waitFor();
-						AppStatus.setText("Rebooting your android device");
-						Process p3 = Runtime.getRuntime().exec("adb reboot");
-						p3.waitFor();
-						AppStatus.setText("");
-						GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-						btnInstallAsSystemApp.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
-					}
-				}
-			}
-		});
-
 		JButton btnADBTerminal = new JButton("ADB Terminal");
 		btnADBTerminal.setToolTipText("Send commands to your android device via ADB protocol, EXPERIMENTAL!");
 		btnADBTerminal.addActionListener(new ActionListener() {
@@ -605,23 +469,19 @@ public class Interface extends JFrame {
 				obj.setVisible(true);
 			}
 		});
-		btnBuildpropeditor.setBounds(25, 236, 220, 75);
+		btnBuildpropeditor.setBounds(541, 27, 220, 75);
 		panel_7.add(btnBuildpropeditor);
-		btnADBTerminal.setBounds(541, 131, 220, 75);
+		btnADBTerminal.setBounds(25, 27, 220, 75);
 		panel_7.add(btnADBTerminal);
 
 		JLabel lblNoteInstallationTo = new JLabel("# Only for android 4.4.x and higher");
-		lblNoteInstallationTo.setBounds(12, 338, 490, 15);
+		lblNoteInstallationTo.setBounds(12, 284, 1046, 15);
 		panel_7.add(lblNoteInstallationTo);
-		btnInstallAsSystemApp.setBounds(541, 27, 220, 75);
-		panel_7.add(btnInstallAsSystemApp);
 
 		GeneralDone = new JLabel("");
 		GeneralDone.setText("");
 		GeneralDone.setBounds(766, 27, 300, 220);
 		panel_7.add(GeneralDone);
-		btnUninstallApps.setBounds(25, 131, 220, 75);
-		panel_7.add(btnUninstallApps);
 
 		JButton btnFileManager = new JButton("File Manager");
 		btnFileManager.setToolTipText("Access files on your android device");
@@ -636,17 +496,13 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		btnFileManager.setBounds(282, 131, 220, 75);
+		btnFileManager.setBounds(25, 131, 220, 75);
 		panel_7.add(btnFileManager);
 
 		JLabel lblNeedsRoot = new JLabel(
 				"* Needs root access, also may not work with some devices regardless of root access");
-		lblNeedsRoot.setBounds(12, 365, 689, 15);
+		lblNeedsRoot.setBounds(12, 311, 1046, 15);
 		panel_7.add(lblNeedsRoot);
-		btnInstallAsPrivApp.setBounds(282, 27, 220, 75);
-		panel_7.add(btnInstallAsPrivApp);
-		btnInstallUserApp.setBounds(25, 27, 220, 75);
-		panel_7.add(btnInstallUserApp);
 
 		JButton btnScreenshot = new JButton("Screenshot");
 		btnScreenshot.setToolTipText("Screenshot your android device screen");
@@ -674,7 +530,7 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		btnScreenshot.setBounds(282, 236, 220, 75);
+		btnScreenshot.setBounds(282, 131, 220, 75);
 		panel_7.add(btnScreenshot);
 
 		JButton btnScreenRecorder = new JButton("Screen Recorder #");
@@ -728,8 +584,162 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		btnScreenRecorder.setBounds(541, 236, 220, 75);
+		btnScreenRecorder.setBounds(541, 131, 220, 75);
 		panel_7.add(btnScreenRecorder);
+
+		JButton btnAppManager = new JButton("App Manager");
+		btnAppManager.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GeneralDone.setText("");
+				String[] MainOptions = new String[] { "Install apps", "Uninstall apps" };
+				int MainResponse = JOptionPane.showOptionDialog(null, "Select an operation", "App Manager",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, MainOptions, MainOptions[0]);
+				if (MainResponse == 0) {
+					try {
+						GeneralDone.setText("");
+						String[] options = new String[] { "User apps", "Priv-apps", "System apps" };
+						int response = JOptionPane.showOptionDialog(null, "Where to install the app?", "Installer",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+						if (response == 0) {
+							try {
+								GeneralDone.setText("");
+								JFileChooser chooser = new JFileChooser();
+								FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
+								chooser.setFileFilter(filter);
+								int returnVal = chooser.showOpenDialog(getParent());
+								if (returnVal == JFileChooser.APPROVE_OPTION) {
+									File file = chooser.getSelectedFile();
+									String filename = chooser.getSelectedFile().getName();
+									try {
+										AppStatus.setText("Installing...");
+										String[] commands = new String[3];
+										commands[0] = "adb";
+										commands[1] = "install";
+										commands[2] = file.getAbsolutePath();
+										AppStatus.setText("Installing App...");
+										Process p1 = Runtime.getRuntime().exec(commands, null);
+										p1.waitFor();
+										AppStatus.setText(
+												filename + " has been successfully installed on your android device!");
+										GeneralDone.setIcon(
+												new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
+									} catch (Exception e1) {
+										System.err.println(e1);
+									}
+								}
+							} catch (Exception e1) {
+							}
+						}
+						if (response == 1) {
+							GeneralDone.setText("");
+							JFileChooser chooser = new JFileChooser();
+							FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
+							chooser.setFileFilter(filter);
+							int returnVal = chooser.showOpenDialog(getParent());
+							if (returnVal == JFileChooser.APPROVE_OPTION) {
+								File file = chooser.getSelectedFile();
+								try {
+									AppStatus.setText("Installing...");
+									Process p1 = Runtime.getRuntime().exec("adb remount");
+									p1.waitFor();
+									String[] pushcommand = new String[4];
+									pushcommand[0] = "adb";
+									pushcommand[1] = "push";
+									pushcommand[2] = file.getAbsolutePath();
+									pushcommand[3] = "/system/priv-app/";
+									AppStatus.setText("Installing App...");
+									Process p2 = Runtime.getRuntime().exec(pushcommand, null);
+									p2.waitFor();
+									AppStatus.setText("Rebooting your android device");
+									Process p3 = Runtime.getRuntime().exec("adb reboot");
+									p3.waitFor();
+									AppStatus.setText("");
+									GeneralDone
+											.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
+								} catch (Exception e1) {
+									System.err.println(e1);
+								}
+							}
+						}
+						if (response == 2) {
+							GeneralDone.setText("");
+							JFileChooser chooser = new JFileChooser();
+							FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
+							chooser.setFileFilter(filter);
+							int returnVal = chooser.showOpenDialog(getParent());
+							if (returnVal == JFileChooser.APPROVE_OPTION) {
+								File file = chooser.getSelectedFile();
+								try {
+									AppStatus.setText("Installing...");
+									Process p1 = Runtime.getRuntime().exec("adb remount");
+									p1.waitFor();
+									String[] pushcommand = new String[4];
+									pushcommand[0] = "adb";
+									pushcommand[1] = "push";
+									pushcommand[2] = file.getAbsolutePath();
+									pushcommand[3] = "/system/app/";
+									Process p2 = Runtime.getRuntime().exec(pushcommand, null);
+									p2.waitFor();
+									AppStatus.setText("Rebooting your android device");
+									Process p3 = Runtime.getRuntime().exec("adb reboot");
+									p3.waitFor();
+									AppStatus.setText("");
+									GeneralDone
+											.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
+								} catch (Exception e1) {
+									System.err.println(e1);
+								}
+							}
+						}
+					} catch (Exception e1) {
+					}
+				}
+				if (MainResponse == 1) {
+					try {
+						GeneralDone.setText("");
+						String[] options = new String[] { "User apps", "Priv-apps", "System apps" };
+						int response = JOptionPane.showOptionDialog(null, "Which kind of app you want to uninstall?",
+								"Uninstaller", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options,
+								options[0]);
+						if (response == 0) {
+							try {
+								UninstallUserApps obj = new UninstallUserApps();
+								obj.setVisible(true);
+							} catch (Exception e1) {
+							}
+						}
+						if (response == 1) {
+							try {
+								UninstallPrivApps obj = new UninstallPrivApps();
+								obj.setVisible(true);
+							} catch (Exception e1) {
+							}
+						}
+						if (response == 2) {
+							try {
+								UninstallSystemApps obj = new UninstallSystemApps();
+								obj.setVisible(true);
+							} catch (Exception e1) {
+							}
+						}
+					} catch (Exception e1) {
+					}
+				}
+			}
+		});
+		btnAppManager.setToolTipText("Manage Apps on your android device");
+		btnAppManager.setBounds(282, 27, 220, 75);
+		panel_7.add(btnAppManager);
+
+		JLabel lblInstallationAndUninstallation = new JLabel(
+				"Installation and Uninstallation of apps to Priv-app is only for android 4.4 and higher, requires root and even simply may no work on your device!");
+		lblInstallationAndUninstallation.setBounds(12, 365, 1046, 15);
+		panel_7.add(lblInstallationAndUninstallation);
+
+		JLabel lblInstallationAndUninstallation_1 = new JLabel(
+				"Installation and Uninstallation of apps to System requires root, and may not work for your device!");
+		lblInstallationAndUninstallation_1.setBounds(12, 338, 1046, 15);
+		panel_7.add(lblInstallationAndUninstallation_1);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -838,16 +848,12 @@ public class Interface extends JFrame {
 		FlasherDone.setText("");
 		FlasherDone.setBounds(760, 29, 300, 220);
 		panel.add(FlasherDone);
-		btnFlashViaRecovery.setBounds(282, 131, 220, 75);
+		btnFlashViaRecovery.setBounds(25, 131, 220, 75);
 		panel.add(btnFlashViaRecovery);
 		btnFlashData.setBounds(541, 27, 220, 75);
 		panel.add(btnFlashData);
-		btnFlashSystem.setBounds(541, 236, 220, 75);
+		btnFlashSystem.setBounds(282, 236, 220, 75);
 		panel.add(btnFlashSystem);
-
-		JLabel lblDeviceMust = new JLabel("* Device must be in fastboot mode");
-		lblDeviceMust.setBounds(639, 357, 469, 19);
-		panel.add(lblDeviceMust);
 
 		final JButton btnFlashCache = new JButton("Cache");
 		btnFlashCache.setToolTipText("Flash cache partition");
@@ -951,7 +957,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnFlashZipArchive.setBounds(25, 131, 220, 75);
+		btnFlashZipArchive.setBounds(541, 236, 220, 75);
 		panel.add(btnFlashZipArchive);
 
 		final JButton btnFlashRecovery = new JButton("Recovery");
@@ -990,8 +996,9 @@ public class Interface extends JFrame {
 		btnFlashRecovery.setBounds(541, 131, 220, 75);
 		panel.add(btnFlashRecovery);
 
-		JLabel lblYouMust = new JLabel("* You must have a bootloader that supports fastboot commands");
-		lblYouMust.setBounds(22, 356, 533, 19);
+		JLabel lblYouMust = new JLabel(
+				"You must have a bootloader that supports fastboot commands and device must be in fastboot mode");
+		lblYouMust.setBounds(22, 356, 835, 19);
 		panel.add(lblYouMust);
 
 		final JButton btnFlashSplash = new JButton("Splash");
@@ -1027,7 +1034,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnFlashSplash.setBounds(282, 236, 220, 75);
+		btnFlashSplash.setBounds(25, 236, 220, 75);
 		panel.add(btnFlashSplash);
 
 		JButton btnFlashRadio = new JButton("Radio");
@@ -1062,7 +1069,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnFlashRadio.setToolTipText("Flash radio partition");
-		btnFlashRadio.setBounds(25, 236, 220, 75);
+		btnFlashRadio.setBounds(282, 131, 220, 75);
 		panel.add(btnFlashRadio);
 
 		JPanel panel_1 = new JPanel();
@@ -1075,16 +1082,8 @@ public class Interface extends JFrame {
 		WiperDone.setBounds(758, 26, 300, 220);
 		panel_1.add(WiperDone);
 
-		JLabel lblYouDeviceBootloader = new JLabel("You device bootloader must support fastboot commands");
-		lblYouDeviceBootloader.setBounds(523, 357, 470, 19);
-		panel_1.add(lblYouDeviceBootloader);
-
-		JLabel label_14 = new JLabel("Device must be in fastboot mode");
-		label_14.setBounds(270, 357, 252, 19);
-		panel_1.add(label_14);
-
 		JLabel label_13 = new JLabel("** Device must be rooted");
-		label_13.setBounds(6, 357, 252, 19);
+		label_13.setBounds(6, 336, 252, 19);
 		panel_1.add(label_13);
 
 		JButton btnWipeRecovery = new JButton("Recovery");
@@ -1104,7 +1103,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnWipeRecovery.setBounds(282, 131, 220, 75);
+		btnWipeRecovery.setBounds(541, 131, 220, 75);
 		panel_1.add(btnWipeRecovery);
 
 		JButton btnWipeBoot = new JButton("Boot");
@@ -1251,8 +1250,13 @@ public class Interface extends JFrame {
 			}
 		});
 		btnWipeRadio.setToolTipText("Wipe radio partition");
-		btnWipeRadio.setBounds(541, 131, 220, 75);
+		btnWipeRadio.setBounds(282, 131, 220, 75);
 		panel_1.add(btnWipeRadio);
+
+		JLabel label = new JLabel(
+				"You must have a bootloader that supports fastboot commands and device must be in fastboot mode");
+		label.setBounds(6, 357, 835, 19);
+		panel_1.add(label);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
@@ -1260,7 +1264,7 @@ public class Interface extends JFrame {
 		panel_2.setLayout(null);
 
 		JLabel lblRebootFrom = new JLabel("Reboot from :");
-		lblRebootFrom.setBounds(470, 181, 148, 15);
+		lblRebootFrom.setBounds(28, 181, 220, 15);
 		panel_2.add(lblRebootFrom);
 
 		JLabel lblRebootTo = new JLabel("Reboot to :");
@@ -1315,24 +1319,6 @@ public class Interface extends JFrame {
 		btnRebootToBootloaderFromFastboot.setBounds(532, 232, 220, 75);
 		panel_2.add(btnRebootToBootloaderFromFastboot);
 
-		JButton btnRebootToRecovery = new JButton("Recovery");
-		btnRebootToRecovery.setToolTipText("Reboot android device to recovery mode");
-		btnRebootToRecovery.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					AppStatus.setText("Rebooting...");
-					Process p1 = Runtime.getRuntime().exec("adb reboot recovery");
-					p1.waitFor();
-					AppStatus.setText("Done");
-				} catch (Exception e1) {
-					System.err.println(e1);
-				}
-			}
-		});
-
-		btnRebootToRecovery.setBounds(785, 55, 220, 75);
-		panel_2.add(btnRebootToRecovery);
-
 		JButton btnRebootToFastboot = new JButton("Fastboot");
 		btnRebootToFastboot.setToolTipText("Reboot android device to fastboot mode");
 		btnRebootToFastboot.addActionListener(new ActionListener() {
@@ -1348,7 +1334,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootToFastboot.setBounds(529, 55, 220, 75);
+		btnRebootToFastboot.setBounds(281, 55, 220, 75);
 		panel_2.add(btnRebootToFastboot);
 
 		JButton btnRebootToBootloader = new JButton("Bootloader #");
@@ -1366,26 +1352,8 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootToBootloader.setBounds(279, 55, 220, 75);
+		btnRebootToBootloader.setBounds(28, 55, 220, 75);
 		panel_2.add(btnRebootToBootloader);
-
-		JButton btnRebootSystem = new JButton("System");
-		btnRebootSystem.setToolTipText("Reboot android device normally");
-		btnRebootSystem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					AppStatus.setText("Rebooting...");
-					Process p1 = Runtime.getRuntime().exec("adb reboot");
-					p1.waitFor();
-					AppStatus.setText("Done");
-				} catch (Exception e1) {
-					System.err.println(e1);
-				}
-			}
-		});
-
-		btnRebootSystem.setBounds(28, 55, 220, 75);
-		panel_2.add(btnRebootSystem);
 
 		JButton btnRebooToDownload = new JButton("Download ^");
 		btnRebooToDownload.addActionListener(new ActionListener() {
@@ -1408,22 +1376,58 @@ public class Interface extends JFrame {
 		lblForSamsung.setBounds(708, 359, 238, 19);
 		panel_2.add(lblForSamsung);
 
+		JButton btnRebootToRecovery = new JButton("Recovery");
+		btnRebootToRecovery.setToolTipText("Reboot android device to recovery mode");
+		btnRebootToRecovery.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					AppStatus.setText("Rebooting...");
+					Process p1 = Runtime.getRuntime().exec("adb reboot recovery");
+					p1.waitFor();
+					AppStatus.setText("Done");
+				} catch (Exception e1) {
+					System.err.println(e1);
+				}
+			}
+		});
+
+		btnRebootToRecovery.setBounds(532, 55, 220, 75);
+		panel_2.add(btnRebootToRecovery);
+
+		JButton btnRebootSystem = new JButton("System");
+		btnRebootSystem.setToolTipText("Reboot android device normally");
+		btnRebootSystem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					AppStatus.setText("Rebooting...");
+					Process p1 = Runtime.getRuntime().exec("adb reboot");
+					p1.waitFor();
+					AppStatus.setText("Done");
+				} catch (Exception e1) {
+					System.err.println(e1);
+				}
+			}
+		});
+
+		btnRebootSystem.setBounds(785, 55, 220, 75);
+		panel_2.add(btnRebootSystem);
+
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.WHITE);
 		tabbedPane.addTab("Bootloader", null, panel_3, null);
 		panel_3.setLayout(null);
 
 		JLabel label_17 = new JLabel("Note: Don't worry if the app says to connect your device while");
-		label_17.setBounds(23, 320, 518, 19);
+		label_17.setBounds(23, 320, 580, 19);
 		panel_3.add(label_17);
 
 		JLabel label_18 = new JLabel("android is not booted ex. fastboot, bootloader, booting etc.");
-		label_18.setBounds(66, 337, 475, 19);
+		label_18.setBounds(66, 337, 580, 19);
 		panel_3.add(label_18);
 
 		JLabel lblOnlyForNexus = new JLabel(
 				"Works only with specific devices ex. Nexus, Android One, few MTK devices etc.");
-		lblOnlyForNexus.setBounds(25, 358, 660, 19);
+		lblOnlyForNexus.setBounds(66, 358, 580, 19);
 		panel_3.add(lblOnlyForNexus);
 
 		JButton btnUnlockBootloader = new JButton("Unlock Bootloader");
@@ -1483,27 +1487,33 @@ public class Interface extends JFrame {
 		btnSaveAsTextFile.setToolTipText("Save printed logcat as a text file on computer");
 		btnSaveAsTextFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame parentFrame = new JFrame();
-				JFileChooser fileChooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
-				fileChooser.setFileFilter(filter);
-				fileChooser.setDialogTitle("Save as a text file");
-				int userSelection = fileChooser.showSaveDialog(parentFrame);
-				if (userSelection == JFileChooser.APPROVE_OPTION) {
-					File fileToSave = fileChooser.getSelectedFile();
-					FileWriter write = null;
-					try {
-						write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
-						LogViewer.write(write);
-					} catch (Exception e) {
-						e.printStackTrace();
-					} finally {
-						if (write != null)
-							try {
-								write.close();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
+				if (LogViewer.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "No log found, please click view log");
+				} else {
+					AppStatus.setText("");
+					JFrame parentFrame = new JFrame();
+					JFileChooser fileChooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+					fileChooser.setFileFilter(filter);
+					fileChooser.setDialogTitle("Save as a text file");
+					int userSelection = fileChooser.showSaveDialog(parentFrame);
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+						File fileToSave = fileChooser.getSelectedFile();
+						FileWriter write = null;
+						try {
+							write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
+							LogViewer.write(write);
+							AppStatus.setText("Logcat saved");
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							if (write != null)
+								try {
+									write.close();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+						}
 					}
 				}
 			}
@@ -1520,7 +1530,7 @@ public class Interface extends JFrame {
 				AppStatus.setText("Logcat cleared");
 			}
 		});
-		btnClearLogact.setBounds(838, 12, 220, 48);
+		btnClearLogact.setBounds(12, 13, 220, 48);
 		panel_4.add(btnClearLogact);
 
 		JButton btnViewLogcat = new JButton("View Logcat");
@@ -1552,17 +1562,13 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnViewLogcat.setBounds(12, 13, 220, 47);
+		btnViewLogcat.setBounds(838, 13, 220, 47);
 		panel_4.add(btnViewLogcat);
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.WHITE);
 		tabbedPane.addTab("Backup and Restore", null, panel_5, null);
 		panel_5.setLayout(null);
-
-		JLabel lblNoteThisIs = new JLabel("Note: This is android native backup and restore utility");
-		lblNoteThisIs.setBounds(270, 346, 420, 15);
-		panel_5.add(lblNoteThisIs);
 
 		BackupAndRestoreDone = new JLabel("");
 		BackupAndRestoreDone.setText("");
@@ -1606,7 +1612,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRestoreFromCustomLocationBackup.setBounds(510, 184, 220, 75);
+		btnRestoreFromCustomLocationBackup.setBounds(510, 70, 220, 75);
 		panel_5.add(btnRestoreFromCustomLocationBackup);
 
 		JLabel lblBackup = new JLabel("Backup Operations");
@@ -1638,36 +1644,8 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupInternelStorage.setBounds(25, 301, 220, 75);
+		btnBackupInternelStorage.setBounds(270, 70, 220, 75);
 		panel_5.add(btnBackupInternelStorage);
-
-		final JButton btnBackupSystem = new JButton("System");
-		btnBackupSystem.setToolTipText("Backup android device system");
-		btnBackupSystem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				BackupAndRestoreDone.setText("");
-				try {
-					AppStatus.setText("Backup can take upto several minutes, please be patient...");
-					JOptionPane.showMessageDialog(null,
-							"Unlock your device and confirm the backup operation when asked");
-					String[] commands = new String[3];
-					commands[0] = "adb";
-					commands[1] = "backup";
-					commands[2] = "-system";
-					AppStatus.setText("Performing backup...");
-					Process p1 = Runtime.getRuntime().exec(commands, null);
-					p1.waitFor();
-					AppStatus.setText("Backup completed successfully!");
-					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-					btnBackupSystem.setSelected(false);
-				} catch (Exception e1) {
-					System.err.println(e1);
-				}
-			}
-		});
-
-		btnBackupSystem.setBounds(25, 186, 220, 75);
-		panel_5.add(btnBackupSystem);
 
 		final JButton btnBackupSingleApp = new JButton("Single App");
 		btnBackupSingleApp.setToolTipText("Backup a single app from android device");
@@ -1695,7 +1673,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupSingleApp.setBounds(270, 185, 220, 75);
+		btnBackupSingleApp.setBounds(25, 185, 220, 75);
 		panel_5.add(btnBackupSingleApp);
 
 		final JButton btnBackupAppAndAppData = new JButton("App and App Data");
@@ -1723,7 +1701,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupAppAndAppData.setBounds(270, 70, 220, 75);
+		btnBackupAppAndAppData.setBounds(25, 70, 220, 75);
 		panel_5.add(btnBackupAppAndAppData);
 
 		final JButton btnBackupWholeDevice = new JButton("Whole Device");
@@ -1754,7 +1732,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupWholeDevice.setBounds(25, 70, 220, 75);
+		btnBackupWholeDevice.setBounds(25, 301, 220, 75);
 		panel_5.add(btnBackupWholeDevice);
 
 		final JButton btnRestorePreviousBackup = new JButton("Previous Backup");
@@ -1782,8 +1760,36 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRestorePreviousBackup.setBounds(510, 70, 220, 75);
+		btnRestorePreviousBackup.setBounds(510, 184, 220, 75);
 		panel_5.add(btnRestorePreviousBackup);
+
+		final JButton btnBackupSystem = new JButton("System");
+		btnBackupSystem.setToolTipText("Backup android device system");
+		btnBackupSystem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				BackupAndRestoreDone.setText("");
+				try {
+					AppStatus.setText("Backup can take upto several minutes, please be patient...");
+					JOptionPane.showMessageDialog(null,
+							"Unlock your device and confirm the backup operation when asked");
+					String[] commands = new String[3];
+					commands[0] = "adb";
+					commands[1] = "backup";
+					commands[2] = "-system";
+					AppStatus.setText("Performing backup...");
+					Process p1 = Runtime.getRuntime().exec(commands, null);
+					p1.waitFor();
+					AppStatus.setText("Backup completed successfully!");
+					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
+					btnBackupSystem.setSelected(false);
+				} catch (Exception e1) {
+					System.err.println(e1);
+				}
+			}
+		});
+
+		btnBackupSystem.setBounds(270, 185, 220, 75);
+		panel_5.add(btnBackupSystem);
 
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(Color.WHITE);
@@ -1838,10 +1844,10 @@ public class Interface extends JFrame {
 		lblNonRoot.setBounds(12, 191, 507, 15);
 		panel_9.add(lblNonRoot);
 
-		JButton btnJellyBeanPatternPasswordPin = new JButton("Pattern/ Password/ PIN *");
-		btnJellyBeanPatternPasswordPin
-				.setToolTipText("Remove pattern, password or pin security from android device (Experimental)");
-		btnJellyBeanPatternPasswordPin.addActionListener(new ActionListener() {
+		JButton btnJellyBeanPatternPinPassword = new JButton("Pattern/ PIN/ Password *");
+		btnJellyBeanPatternPinPassword
+				.setToolTipText("Remove pattern, pin or password security from android device (Experimental)");
+		btnJellyBeanPatternPinPassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					AppStatus.setText("Trying to break into security...");
@@ -1858,8 +1864,8 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnJellyBeanPatternPasswordPin.setBounds(220, 250, 220, 75);
-		panel_9.add(btnJellyBeanPatternPasswordPin);
+		btnJellyBeanPatternPinPassword.setBounds(220, 250, 220, 75);
+		panel_9.add(btnJellyBeanPatternPinPassword);
 
 		JLabel lblWorksWell = new JLabel("* Works well on Jelly Bean Devices but may or");
 		lblWorksWell.setBounds(630, 273, 366, 15);
@@ -1889,15 +1895,6 @@ public class Interface extends JFrame {
 			}
 		});
 
-		JButton btnClearCalculatedCrypto = new JButton("Clear");
-		btnClearCalculatedCrypto.setToolTipText("Clear the calculated sum");
-		btnClearCalculatedCrypto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CalculatedCrypto.setText("");
-				InputCrypto.setText("");
-			}
-		});
-
 		JScrollPane scrollPane_2 = new JScrollPane();
 		scrollPane_2.setBounds(12, 352, 900, 25);
 		panel_6.add(scrollPane_2);
@@ -1905,8 +1902,6 @@ public class Interface extends JFrame {
 		InputCrypto = new JTextArea();
 		InputCrypto.setToolTipText("Input sum to be compared with calculated sum");
 		scrollPane_2.setViewportView(InputCrypto);
-		btnClearCalculatedCrypto.setBounds(625, 168, 220, 75);
-		panel_6.add(btnClearCalculatedCrypto);
 
 		JLabel lblLabelCalculatedSum = new JLabel("Calculated Sum :");
 		lblLabelCalculatedSum.setBounds(12, 266, 235, 17);
@@ -1921,7 +1916,7 @@ public class Interface extends JFrame {
 		CalculatedCrypto.setToolTipText("Calclated sum");
 		scrollPane_1.setViewportView(CalculatedCrypto);
 		CalculatedCrypto.setEditable(false);
-		btnSHA512.setBounds(625, 26, 220, 75);
+		btnSHA512.setBounds(625, 168, 220, 75);
 		panel_6.add(btnSHA512);
 
 		JButton btnSHA384 = new JButton("SHA-384");
@@ -1957,7 +1952,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnSHA256.setBounds(325, 26, 220, 75);
+		btnSHA256.setBounds(27, 168, 220, 75);
 		panel_6.add(btnSHA256);
 
 		JButton btnSHA1 = new JButton("SHA-1");
@@ -1975,7 +1970,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnSHA1.setBounds(27, 168, 220, 75);
+		btnSHA1.setBounds(625, 26, 220, 75);
 		panel_6.add(btnSHA1);
 
 		JButton btnMD5 = new JButton("MD5");
@@ -1993,7 +1988,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnMD5.setBounds(27, 26, 220, 75);
+		btnMD5.setBounds(325, 26, 220, 75);
 		panel_6.add(btnMD5);
 
 		JLabel lblInputSumTo = new JLabel("Input Sum to be compared :");
@@ -2020,6 +2015,17 @@ public class Interface extends JFrame {
 		});
 		btnCompare.setBounds(924, 294, 134, 83);
 		panel_6.add(btnCompare);
+
+		JButton btnClearCalculatedCrypto = new JButton("Clear");
+		btnClearCalculatedCrypto.setToolTipText("Clear the calculated sum");
+		btnClearCalculatedCrypto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CalculatedCrypto.setText("");
+				InputCrypto.setText("");
+			}
+		});
+		btnClearCalculatedCrypto.setBounds(27, 26, 220, 75);
+		panel_6.add(btnClearCalculatedCrypto);
 
 		JPanel panel_8 = new JPanel();
 		panel_8.setBackground(Color.WHITE);
@@ -2121,6 +2127,10 @@ public class Interface extends JFrame {
 		btnAppPackageList.setToolTipText("View all installed app packages list information");
 		btnAppPackageList.setBounds(282, 27, 220, 75);
 		panel_8.add(btnAppPackageList);
+
+		JLabel lblNoteSomeOf = new JLabel("Note: Some of these tools might not work on your device");
+		lblNoteSomeOf.setBounds(12, 353, 490, 15);
+		panel_8.add(lblNoteSomeOf);
 
 		JLabel label_2 = new JLabel("");
 		label_2.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Interface_logo.png")));

@@ -47,7 +47,7 @@ public class Terminal extends JFrame {
 		setTitle("ADB Terminal Emulator");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 448, 357);
+		setBounds(100, 100, 448, 370);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

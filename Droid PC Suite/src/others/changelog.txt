@@ -2,6 +2,7 @@ Version 1.3 Stable (Build 160723)
 
 * Screen recorder added
 * Added button for taking screenshots
+* Installer and Uninstaller bundled in App Manager
 * Flash radio added
 * Wipe radio added
 * Reboot to download mode for samsung devices added

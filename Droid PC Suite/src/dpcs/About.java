@@ -49,9 +49,9 @@ public class About extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JButton btnGithub = new JButton("Github");
-		btnGithub.setToolTipText("Access Droid PC Suite github repository");
-		btnGithub.addActionListener(new ActionListener() {
+		JButton btnGitHub = new JButton("GitHub");
+		btnGitHub.setToolTipText("Access Droid PC Suite github repository");
+		btnGitHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					Desktop.getDesktop().browse(new URL("https://github.com/kvsjxd/Droid-PC-Suite").toURI());
@@ -60,8 +60,8 @@ public class About extends JFrame {
 				}
 			}
 		});
-		btnGithub.setBounds(369, 295, 111, 25);
-		contentPane.add(btnGithub);
+		btnGitHub.setBounds(369, 295, 111, 25);
+		contentPane.add(btnGitHub);
 
 		JLabel lblMyFriend4 = new JLabel("Gulati-kun");
 		lblMyFriend4.setFont(new Font("Dialog", Font.PLAIN, 15));

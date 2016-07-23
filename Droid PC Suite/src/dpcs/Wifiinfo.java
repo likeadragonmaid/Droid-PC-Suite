@@ -12,6 +12,7 @@ import java.io.Reader;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -20,7 +21,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("serial")
 public class Wifiinfo extends JFrame {
-	JTextArea WiFiinformationViewer;
+	JTextArea WiFIinformationViewer;
 	private JPanel contentPane;
 	private JButton btnRefresh;
 
@@ -53,9 +54,9 @@ public class Wifiinfo extends JFrame {
 		scrollPane.setBounds(0, 0, 622, 472);
 		contentPane.add(scrollPane);
 
-		WiFiinformationViewer = new JTextArea();
-		WiFiinformationViewer.setEditable(false);
-		scrollPane.setViewportView(WiFiinformationViewer);
+		WiFIinformationViewer = new JTextArea();
+		WiFIinformationViewer.setEditable(false);
+		scrollPane.setViewportView(WiFIinformationViewer);
 
 		btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
@@ -69,7 +70,7 @@ public class Wifiinfo extends JFrame {
 					p3.waitFor();
 					try {
 						Reader reader = new FileReader(new File(".wifiinfo.txt"));
-						WiFiinformationViewer.read(reader, "");
+						WiFIinformationViewer.read(reader, "");
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -83,39 +84,43 @@ public class Wifiinfo extends JFrame {
 			}
 		});
 		btnRefresh.setToolTipText("Refetch battery information from android device");
-		btnRefresh.setBounds(12, 488, 165, 52);
+		btnRefresh.setBounds(34, 484, 220, 47);
 		contentPane.add(btnRefresh);
 
 		JButton btnSaveToFile = new JButton("Save to file");
 		btnSaveToFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame parentFrame = new JFrame();
-				JFileChooser fileChooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
-				fileChooser.setFileFilter(filter);
-				fileChooser.setDialogTitle("Save as a text file");
-				int userSelection = fileChooser.showSaveDialog(parentFrame);
-				if (userSelection == JFileChooser.APPROVE_OPTION) {
-					File fileToSave = fileChooser.getSelectedFile();
-					FileWriter write = null;
-					try {
-						write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
-						WiFiinformationViewer.write(write);
-					} catch (Exception e) {
-						e.printStackTrace();
-					} finally {
-						if (write != null)
-							try {
-								write.close();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
+				if (WiFIinformationViewer.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Cannot save empty file!");
+				} else {
+					JFrame parentFrame = new JFrame();
+					JFileChooser fileChooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+					fileChooser.setFileFilter(filter);
+					fileChooser.setDialogTitle("Save as a text file");
+					int userSelection = fileChooser.showSaveDialog(parentFrame);
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+						File fileToSave = fileChooser.getSelectedFile();
+						FileWriter write = null;
+						try {
+							write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
+							WiFIinformationViewer.write(write);
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							if (write != null)
+								try {
+									write.close();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+						}
 					}
 				}
 			}
 		});
 		btnSaveToFile.setToolTipText("Save WiFi information from screen to a file on the computer");
-		btnSaveToFile.setBounds(447, 488, 165, 52);
+		btnSaveToFile.setBounds(359, 484, 220, 47);
 		contentPane.add(btnSaveToFile);
 		try {
 			Process p1 = Runtime.getRuntime().exec("adb shell dumpsys wifi > /sdcard/.wifiinfo.txt");
@@ -126,7 +131,7 @@ public class Wifiinfo extends JFrame {
 			p3.waitFor();
 			try {
 				Reader reader = new FileReader(new File(".wifiinfo.txt"));
-				WiFiinformationViewer.read(reader, "");
+				WiFIinformationViewer.read(reader, "");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
