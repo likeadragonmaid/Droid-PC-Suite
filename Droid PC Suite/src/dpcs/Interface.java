@@ -36,9 +36,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 @SuppressWarnings("serial")
 public class Interface extends JFrame {
 	JLabel FlasherDone, GeneralDone, WiperDone, BackupAndRestoreDone, ADBConnectionLabel, RootStatusLabel, AppStatus;
+	JTextArea LogViewer, CalculatedCrypto, InputCrypto;
 	boolean adbconnected = false, rooted = false;
 	private JPanel contentPane;
-	JTextArea CalculatedCrypto;
 
 	volatile boolean flag = true;
 	Runnable r = new Runnable() {
@@ -607,18 +607,18 @@ public class Interface extends JFrame {
 		});
 		btnBuildpropeditor.setBounds(25, 236, 220, 75);
 		panel_7.add(btnBuildpropeditor);
-		btnADBTerminal.setBounds(548, 131, 220, 75);
+		btnADBTerminal.setBounds(541, 131, 220, 75);
 		panel_7.add(btnADBTerminal);
 
 		JLabel lblNoteInstallationTo = new JLabel("# Only for android 4.4.x and higher");
 		lblNoteInstallationTo.setBounds(12, 338, 490, 15);
 		panel_7.add(lblNoteInstallationTo);
-		btnInstallAsSystemApp.setBounds(548, 27, 220, 75);
+		btnInstallAsSystemApp.setBounds(541, 27, 220, 75);
 		panel_7.add(btnInstallAsSystemApp);
 
 		GeneralDone = new JLabel("");
 		GeneralDone.setText("");
-		GeneralDone.setBounds(766, 27, 300, 200);
+		GeneralDone.setBounds(766, 27, 300, 220);
 		panel_7.add(GeneralDone);
 		btnUninstallApps.setBounds(25, 131, 220, 75);
 		panel_7.add(btnUninstallApps);
@@ -728,7 +728,7 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		btnScreenRecorder.setBounds(548, 236, 220, 75);
+		btnScreenRecorder.setBounds(541, 236, 220, 75);
 		panel_7.add(btnScreenRecorder);
 
 		JPanel panel = new JPanel();
@@ -836,13 +836,13 @@ public class Interface extends JFrame {
 
 		FlasherDone = new JLabel("");
 		FlasherDone.setText("");
-		FlasherDone.setBounds(760, 29, 300, 200);
+		FlasherDone.setBounds(760, 29, 300, 220);
 		panel.add(FlasherDone);
-		btnFlashViaRecovery.setBounds(275, 147, 200, 75);
+		btnFlashViaRecovery.setBounds(282, 131, 220, 75);
 		panel.add(btnFlashViaRecovery);
-		btnFlashData.setBounds(525, 29, 200, 75);
+		btnFlashData.setBounds(541, 27, 220, 75);
 		panel.add(btnFlashData);
-		btnFlashSystem.setBounds(525, 261, 200, 75);
+		btnFlashSystem.setBounds(541, 236, 220, 75);
 		panel.add(btnFlashSystem);
 
 		JLabel lblDeviceMust = new JLabel("* Device must be in fastboot mode");
@@ -882,7 +882,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnFlashCache.setBounds(275, 29, 200, 75);
+		btnFlashCache.setBounds(282, 27, 220, 75);
 		panel.add(btnFlashCache);
 
 		final JButton btnBootImage = new JButton("Boot");
@@ -918,7 +918,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBootImage.setBounds(30, 29, 200, 75);
+		btnBootImage.setBounds(25, 27, 220, 75);
 		panel.add(btnBootImage);
 
 		final JButton btnFlashZipArchive = new JButton("Zip Archive");
@@ -951,7 +951,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnFlashZipArchive.setBounds(30, 147, 200, 75);
+		btnFlashZipArchive.setBounds(25, 131, 220, 75);
 		panel.add(btnFlashZipArchive);
 
 		final JButton btnFlashRecovery = new JButton("Recovery");
@@ -987,7 +987,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnFlashRecovery.setBounds(525, 147, 200, 75);
+		btnFlashRecovery.setBounds(541, 131, 220, 75);
 		panel.add(btnFlashRecovery);
 
 		JLabel lblYouMust = new JLabel("* You must have a bootloader that supports fastboot commands");
@@ -1027,7 +1027,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnFlashSplash.setBounds(275, 261, 200, 75);
+		btnFlashSplash.setBounds(282, 236, 220, 75);
 		panel.add(btnFlashSplash);
 
 		JButton btnFlashRadio = new JButton("Radio");
@@ -1062,7 +1062,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnFlashRadio.setToolTipText("Flash radio partition");
-		btnFlashRadio.setBounds(30, 261, 200, 75);
+		btnFlashRadio.setBounds(25, 236, 220, 75);
 		panel.add(btnFlashRadio);
 
 		JPanel panel_1 = new JPanel();
@@ -1072,7 +1072,7 @@ public class Interface extends JFrame {
 
 		WiperDone = new JLabel("");
 		WiperDone.setText("");
-		WiperDone.setBounds(758, 26, 300, 200);
+		WiperDone.setBounds(758, 26, 300, 220);
 		panel_1.add(WiperDone);
 
 		JLabel lblYouDeviceBootloader = new JLabel("You device bootloader must support fastboot commands");
@@ -1104,7 +1104,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnWipeRecovery.setBounds(270, 137, 200, 75);
+		btnWipeRecovery.setBounds(282, 131, 220, 75);
 		panel_1.add(btnWipeRecovery);
 
 		JButton btnWipeBoot = new JButton("Boot");
@@ -1124,7 +1124,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnWipeBoot.setBounds(25, 26, 200, 75);
+		btnWipeBoot.setBounds(25, 27, 220, 75);
 		panel_1.add(btnWipeBoot);
 
 		JButton btnWipeSystem = new JButton("System");
@@ -1144,7 +1144,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnWipeSystem.setBounds(270, 245, 200, 75);
+		btnWipeSystem.setBounds(282, 236, 220, 75);
 		panel_1.add(btnWipeSystem);
 
 		JButton btnWipeSplash = new JButton("Splash");
@@ -1164,7 +1164,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnWipeSplash.setBounds(25, 245, 200, 75);
+		btnWipeSplash.setBounds(25, 236, 220, 75);
 		panel_1.add(btnWipeSplash);
 
 		JButton btnWipeData = new JButton("Data");
@@ -1184,7 +1184,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnWipeData.setBounds(25, 137, 200, 75);
+		btnWipeData.setBounds(25, 131, 220, 75);
 		panel_1.add(btnWipeData);
 
 		JButton btnFlashDalvikCache = new JButton("Dalvik Cache **");
@@ -1209,7 +1209,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnFlashDalvikCache.setBounds(518, 26, 200, 75);
+		btnFlashDalvikCache.setBounds(541, 27, 220, 75);
 		panel_1.add(btnFlashDalvikCache);
 
 		JButton btnWipeCache = new JButton("Cache");
@@ -1232,7 +1232,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnWipeCache.setBounds(270, 26, 200, 75);
+		btnWipeCache.setBounds(282, 27, 220, 75);
 		panel_1.add(btnWipeCache);
 
 		JButton btnWipeRadio = new JButton("Radio");
@@ -1251,7 +1251,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnWipeRadio.setToolTipText("Wipe radio partition");
-		btnWipeRadio.setBounds(523, 137, 200, 75);
+		btnWipeRadio.setBounds(541, 131, 220, 75);
 		panel_1.add(btnWipeRadio);
 
 		JPanel panel_2 = new JPanel();
@@ -1264,7 +1264,7 @@ public class Interface extends JFrame {
 		panel_2.add(lblRebootFrom);
 
 		JLabel lblRebootTo = new JLabel("Reboot to :");
-		lblRebootTo.setBounds(28, 12, 200, 15);
+		lblRebootTo.setBounds(28, 12, 220, 15);
 		panel_2.add(lblRebootTo);
 
 		JLabel lblNotFor = new JLabel("# Not for Samsung devices");
@@ -1294,7 +1294,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootFromFastboot.setBounds(281, 232, 200, 75);
+		btnRebootFromFastboot.setBounds(281, 232, 220, 75);
 		panel_2.add(btnRebootFromFastboot);
 
 		JButton btnRebootToBootloaderFromFastboot = new JButton("Fastboot to Bootloader *");
@@ -1312,7 +1312,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootToBootloaderFromFastboot.setBounds(532, 232, 240, 75);
+		btnRebootToBootloaderFromFastboot.setBounds(532, 232, 220, 75);
 		panel_2.add(btnRebootToBootloaderFromFastboot);
 
 		JButton btnRebootToRecovery = new JButton("Recovery");
@@ -1330,7 +1330,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootToRecovery.setBounds(785, 55, 200, 75);
+		btnRebootToRecovery.setBounds(785, 55, 220, 75);
 		panel_2.add(btnRebootToRecovery);
 
 		JButton btnRebootToFastboot = new JButton("Fastboot");
@@ -1348,7 +1348,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootToFastboot.setBounds(529, 55, 200, 75);
+		btnRebootToFastboot.setBounds(529, 55, 220, 75);
 		panel_2.add(btnRebootToFastboot);
 
 		JButton btnRebootToBootloader = new JButton("Bootloader #");
@@ -1366,7 +1366,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootToBootloader.setBounds(279, 55, 200, 75);
+		btnRebootToBootloader.setBounds(279, 55, 220, 75);
 		panel_2.add(btnRebootToBootloader);
 
 		JButton btnRebootSystem = new JButton("System");
@@ -1384,7 +1384,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootSystem.setBounds(28, 55, 200, 75);
+		btnRebootSystem.setBounds(28, 55, 220, 75);
 		panel_2.add(btnRebootSystem);
 
 		JButton btnRebooToDownload = new JButton("Download ^");
@@ -1401,7 +1401,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnRebooToDownload.setToolTipText("Reboot android device to download mode");
-		btnRebooToDownload.setBounds(28, 232, 200, 75);
+		btnRebooToDownload.setBounds(28, 232, 220, 75);
 		panel_2.add(btnRebooToDownload);
 
 		JLabel lblForSamsung = new JLabel("^ For Samsung devices only");
@@ -1445,7 +1445,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnUnlockBootloader.setBounds(425, 194, 230, 75);
+		btnUnlockBootloader.setBounds(425, 194, 220, 75);
 		panel_3.add(btnUnlockBootloader);
 
 		JButton btnLockBootloader = new JButton("Lock Bootloader");
@@ -1463,7 +1463,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnLockBootloader.setBounds(425, 57, 230, 75);
+		btnLockBootloader.setBounds(425, 57, 220, 75);
 		panel_3.add(btnLockBootloader);
 
 		JPanel panel_4 = new JPanel();
@@ -1475,8 +1475,7 @@ public class Interface extends JFrame {
 		scrollPane.setBounds(0, 72, 1072, 311);
 		panel_4.add(scrollPane);
 
-		final JTextArea LogViewer = new JTextArea();
-		LogViewer.setText("Click View Logcat");
+		LogViewer = new JTextArea();
 		LogViewer.setEditable(false);
 		scrollPane.setViewportView(LogViewer);
 
@@ -1510,7 +1509,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnSaveAsTextFile.setBounds(420, 13, 200, 47);
+		btnSaveAsTextFile.setBounds(420, 13, 220, 47);
 		panel_4.add(btnSaveAsTextFile);
 
 		JButton btnClearLogact = new JButton("Clear");
@@ -1521,7 +1520,7 @@ public class Interface extends JFrame {
 				AppStatus.setText("Logcat cleared");
 			}
 		});
-		btnClearLogact.setBounds(845, 12, 200, 48);
+		btnClearLogact.setBounds(838, 12, 220, 48);
 		panel_4.add(btnClearLogact);
 
 		JButton btnViewLogcat = new JButton("View Logcat");
@@ -1553,7 +1552,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnViewLogcat.setBounds(37, 13, 200, 47);
+		btnViewLogcat.setBounds(12, 13, 220, 47);
 		panel_4.add(btnViewLogcat);
 
 		JPanel panel_5 = new JPanel();
@@ -1567,11 +1566,11 @@ public class Interface extends JFrame {
 
 		BackupAndRestoreDone = new JLabel("");
 		BackupAndRestoreDone.setText("");
-		BackupAndRestoreDone.setBounds(758, 70, 300, 200);
+		BackupAndRestoreDone.setBounds(758, 70, 300, 220);
 		panel_5.add(BackupAndRestoreDone);
 
 		JLabel lblRestoreOperations = new JLabel("Restore Operations");
-		lblRestoreOperations.setBounds(510, 12, 142, 36);
+		lblRestoreOperations.setBounds(541, 12, 142, 36);
 		panel_5.add(lblRestoreOperations);
 
 		final JButton btnRestoreFromCustomLocationBackup = new JButton("From Custom Location");
@@ -1607,11 +1606,11 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRestoreFromCustomLocationBackup.setBounds(510, 184, 200, 75);
+		btnRestoreFromCustomLocationBackup.setBounds(510, 184, 220, 75);
 		panel_5.add(btnRestoreFromCustomLocationBackup);
 
 		JLabel lblBackup = new JLabel("Backup Operations");
-		lblBackup.setBounds(25, 12, 142, 36);
+		lblBackup.setBounds(192, 12, 142, 36);
 		panel_5.add(lblBackup);
 
 		final JButton btnBackupInternelStorage = new JButton("Internel Storage");
@@ -1639,7 +1638,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupInternelStorage.setBounds(25, 301, 200, 75);
+		btnBackupInternelStorage.setBounds(25, 301, 220, 75);
 		panel_5.add(btnBackupInternelStorage);
 
 		final JButton btnBackupSystem = new JButton("System");
@@ -1667,7 +1666,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupSystem.setBounds(25, 186, 200, 75);
+		btnBackupSystem.setBounds(25, 186, 220, 75);
 		panel_5.add(btnBackupSystem);
 
 		final JButton btnBackupSingleApp = new JButton("Single App");
@@ -1696,7 +1695,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupSingleApp.setBounds(270, 185, 200, 75);
+		btnBackupSingleApp.setBounds(270, 185, 220, 75);
 		panel_5.add(btnBackupSingleApp);
 
 		final JButton btnBackupAppAndAppData = new JButton("App and App Data");
@@ -1724,7 +1723,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupAppAndAppData.setBounds(270, 70, 200, 75);
+		btnBackupAppAndAppData.setBounds(270, 70, 220, 75);
 		panel_5.add(btnBackupAppAndAppData);
 
 		final JButton btnBackupWholeDevice = new JButton("Whole Device");
@@ -1755,7 +1754,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupWholeDevice.setBounds(25, 70, 200, 75);
+		btnBackupWholeDevice.setBounds(25, 70, 220, 75);
 		panel_5.add(btnBackupWholeDevice);
 
 		final JButton btnRestorePreviousBackup = new JButton("Previous Backup");
@@ -1783,7 +1782,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRestorePreviousBackup.setBounds(510, 70, 200, 75);
+		btnRestorePreviousBackup.setBounds(510, 70, 220, 75);
 		panel_5.add(btnRestorePreviousBackup);
 
 		JPanel panel_9 = new JPanel();
@@ -1810,7 +1809,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnPattern.setBounds(200, 75, 240, 75);
+		btnPattern.setBounds(220, 75, 220, 75);
 		panel_9.add(btnPattern);
 
 		JButton btnPasswordPin = new JButton("Password/ PIN #");
@@ -1828,7 +1827,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnPasswordPin.setBounds(630, 75, 240, 75);
+		btnPasswordPin.setBounds(630, 75, 220, 75);
 		panel_9.add(btnPasswordPin);
 
 		JLabel lblMayNot = new JLabel("# Works on Android 4.4.x and lower");
@@ -1859,7 +1858,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnJellyBeanPatternPasswordPin.setBounds(200, 250, 240, 75);
+		btnJellyBeanPatternPasswordPin.setBounds(220, 250, 220, 75);
 		panel_9.add(btnJellyBeanPatternPasswordPin);
 
 		JLabel lblWorksWell = new JLabel("* Works well on Jelly Bean Devices but may or");
@@ -1895,24 +1894,34 @@ public class Interface extends JFrame {
 		btnClearCalculatedCrypto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CalculatedCrypto.setText("");
+				// InputCrypto.setText("");
 			}
 		});
-		btnClearCalculatedCrypto.setBounds(625, 168, 200, 75);
+
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(12, 352, 900, 25);
+		panel_6.add(scrollPane_2);
+
+		InputCrypto = new JTextArea();
+		InputCrypto.setToolTipText("Input sum to be compared with calculated sum");
+		scrollPane_2.setViewportView(InputCrypto);
+		btnClearCalculatedCrypto.setBounds(625, 168, 220, 75);
 		panel_6.add(btnClearCalculatedCrypto);
 
 		JLabel lblLabelCalculatedSum = new JLabel("Calculated Sum :");
-		lblLabelCalculatedSum.setBounds(12, 317, 264, 17);
+		lblLabelCalculatedSum.setBounds(12, 266, 235, 17);
 		panel_6.add(lblLabelCalculatedSum);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scrollPane_1.setBounds(12, 346, 1046, 28);
+		scrollPane_1.setBounds(12, 294, 900, 28);
 		panel_6.add(scrollPane_1);
 
 		CalculatedCrypto = new JTextArea();
+		CalculatedCrypto.setToolTipText("Calclated sum");
 		scrollPane_1.setViewportView(CalculatedCrypto);
 		CalculatedCrypto.setEditable(false);
-		btnSHA512.setBounds(625, 26, 200, 75);
+		btnSHA512.setBounds(625, 26, 220, 75);
 		panel_6.add(btnSHA512);
 
 		JButton btnSHA384 = new JButton("SHA-384");
@@ -1930,7 +1939,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnSHA384.setBounds(325, 168, 200, 75);
+		btnSHA384.setBounds(325, 168, 220, 75);
 		panel_6.add(btnSHA384);
 
 		JButton btnSHA256 = new JButton("SHA-256");
@@ -1948,7 +1957,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnSHA256.setBounds(325, 26, 200, 75);
+		btnSHA256.setBounds(325, 26, 220, 75);
 		panel_6.add(btnSHA256);
 
 		JButton btnSHA1 = new JButton("SHA-1");
@@ -1966,7 +1975,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnSHA1.setBounds(27, 168, 200, 75);
+		btnSHA1.setBounds(27, 168, 220, 75);
 		panel_6.add(btnSHA1);
 
 		JButton btnMD5 = new JButton("MD5");
@@ -1984,8 +1993,33 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnMD5.setBounds(27, 26, 200, 75);
+		btnMD5.setBounds(27, 26, 220, 75);
 		panel_6.add(btnMD5);
+
+		JLabel lblInputSumTo = new JLabel("Input Sum to be compared :");
+		lblInputSumTo.setBounds(12, 328, 235, 15);
+		panel_6.add(lblInputSumTo);
+
+		JButton btnCompare = new JButton("Compare");
+		btnCompare.setToolTipText("Click to compare calculated sum and input sum");
+		btnCompare.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (InputCrypto.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Please select algorithm and a file");
+				}
+				if (CalculatedCrypto.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Please input a sum to be compared");
+				} else {
+					if (InputCrypto.getText().equalsIgnoreCase(CalculatedCrypto.getText())) {
+						JOptionPane.showMessageDialog(null, "Both sums are matched");
+					} else {
+						JOptionPane.showMessageDialog(null, "Sums are not matched!");
+					}
+				}
+			}
+		});
+		btnCompare.setBounds(924, 294, 134, 83);
+		panel_6.add(btnCompare);
 
 		JPanel panel_8 = new JPanel();
 		panel_8.setBackground(Color.WHITE);
@@ -2000,7 +2034,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnMemoryInformation.setToolTipText("View current memory information of android device");
-		btnMemoryInformation.setBounds(548, 134, 220, 72);
+		btnMemoryInformation.setBounds(541, 131, 220, 75);
 		panel_8.add(btnMemoryInformation);
 
 		JButton btnBatteryInformation = new JButton("Battery Information");
@@ -2011,7 +2045,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnBatteryInformation.setToolTipText("View current battery information of android device");
-		btnBatteryInformation.setBounds(548, 27, 220, 75);
+		btnBatteryInformation.setBounds(541, 27, 220, 75);
 		panel_8.add(btnBatteryInformation);
 
 		JButton btnCpuInformation = new JButton("CPU Information");

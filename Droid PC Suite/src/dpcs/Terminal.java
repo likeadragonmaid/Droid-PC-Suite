@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -24,7 +25,7 @@ import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class Terminal extends JFrame {
-	JTextArea TerminalEmulatorScreen;
+	JTextArea TerminalEmulatorDisplay;
 	private JPanel contentPane;
 	private JTextField commandinput;
 
@@ -73,7 +74,7 @@ public class Terminal extends JFrame {
 					URL obj = Terminal.class.getResource("/others/adbhelp.txt");
 					File obj2 = new File(obj.toURI());
 					Reader reader = new FileReader(new File(obj2.toURI()));
-					TerminalEmulatorScreen.read(reader, "");
+					TerminalEmulatorDisplay.read(reader, "");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -94,7 +95,7 @@ public class Terminal extends JFrame {
 					p3.waitFor();
 					try {
 						Reader reader = new FileReader(new File(".androidshellcommands.txt"));
-						TerminalEmulatorScreen.read(reader, "");
+						TerminalEmulatorDisplay.read(reader, "");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -119,12 +120,12 @@ public class Terminal extends JFrame {
 		scrollPane.setBounds(12, 0, 426, 218);
 		contentPane.add(scrollPane);
 
-		TerminalEmulatorScreen = new JTextArea();
-		TerminalEmulatorScreen.setText("ADB terminal emulator is highly experimental! Expect bugs!");
-		TerminalEmulatorScreen.setBackground(Color.BLACK);
-		TerminalEmulatorScreen.setEditable(false);
-		TerminalEmulatorScreen.setForeground(Color.WHITE);
-		scrollPane.setViewportView(TerminalEmulatorScreen);
+		TerminalEmulatorDisplay = new JTextArea();
+		TerminalEmulatorDisplay.setText("ADB terminal emulator is highly experimental! Expect bugs!");
+		TerminalEmulatorDisplay.setBackground(Color.BLACK);
+		TerminalEmulatorDisplay.setEditable(false);
+		TerminalEmulatorDisplay.setForeground(Color.WHITE);
+		scrollPane.setViewportView(TerminalEmulatorDisplay);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(10, 227, 357, 34);
@@ -141,17 +142,45 @@ public class Terminal extends JFrame {
 		Sendcommandbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					String commandcheck = commandinput.getText();
+					if (commandcheck.equalsIgnoreCase("exit")) {
+						dispose();
+					}
+					if (commandcheck.equals("")) {
+						JOptionPane.showMessageDialog(null, "Please input a command!");
+					}
+					if (commandcheck.equals("Start typing command here...")) {
+						JOptionPane.showMessageDialog(null, "Please input a command!");
+					}
+					if (commandcheck.equalsIgnoreCase("adb")) {
+						JOptionPane.showMessageDialog(null, "Command incomplete!");
+					}
+					if (commandcheck.equalsIgnoreCase("fastboot")) {
+						JOptionPane.showMessageDialog(null, "Command incomplete!");
+					}
+					if (commandcheck.equalsIgnoreCase("clear")) {
+						TerminalEmulatorDisplay.setText("");
+					}
+					if (commandcheck.equalsIgnoreCase("cls")) {
+						TerminalEmulatorDisplay.setText("ADB terminal emulator is highly experimental! Expect bugs!"); // Message
+																														// for
+																														// linux
+						TerminalEmulatorDisplay.setText("");
+					}
+					if (commandcheck.equalsIgnoreCase("reset")) {
+						TerminalEmulatorDisplay.setText("");
+					}
 					Process p1 = Runtime.getRuntime().exec(commandinput.getText());
 					p1.waitFor();
 					commandinput.setText("");
 					BufferedReader reader = new BufferedReader(new InputStreamReader(p1.getInputStream()));
 					String line = reader.readLine();
 					while (line != null) {
-						Terminal.this.TerminalEmulatorScreen.append("\n" + line);
+						Terminal.this.TerminalEmulatorDisplay.append("\n" + line);
 						line = reader.readLine();
 					}
 				} catch (Exception e1) {
-					Terminal.this.TerminalEmulatorScreen.append("" + e1);
+					Terminal.this.TerminalEmulatorDisplay.append("" + e1);
 				}
 			}
 		});
@@ -182,7 +211,7 @@ public class Terminal extends JFrame {
 		clearbutton.setToolTipText("Clear the terminal");
 		clearbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TerminalEmulatorScreen.setText("");
+				TerminalEmulatorDisplay.setText("");
 			}
 		});
 		clearbutton.setBounds(319, 273, 117, 25);
