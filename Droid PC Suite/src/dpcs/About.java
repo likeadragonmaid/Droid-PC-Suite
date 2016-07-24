@@ -178,7 +178,7 @@ public class About extends JFrame {
 
 		JLabel label_6 = new JLabel("Special thanks to");
 		label_6.setFont(new Font("Dialog", Font.BOLD, 16));
-		label_6.setBounds(25, 71, 240, 15);
+		label_6.setBounds(25, 61, 240, 25);
 		contentPane.add(label_6);
 
 		JLabel lblGoogle = new JLabel(
