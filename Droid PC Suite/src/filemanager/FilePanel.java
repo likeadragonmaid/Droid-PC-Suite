@@ -1,4 +1,4 @@
-package GUI;
+package filemanager;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import data.DataReciever;
-import data.FileObj;
-import data.LanguageStrings;
-import data.Logger;
+import filemanager.DataReciever;
+import filemanager.FileObj;
+import filemanager.Logger;
 import java.awt.Color;
 
 public class FilePanel extends Panel {
@@ -30,9 +29,8 @@ public class FilePanel extends Panel {
 	public FilePanel(final DataReciever reciever) {
 		setBackground(Color.WHITE);
 		this.reciever = reciever;
-		Button backButton = new Button(LanguageStrings.getProperty("backButton"));
+		Button backButton = new Button("Back");
 		backButton.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				String dir = dirLabel.getText();
 				String[] split = dir.split("/");
@@ -58,37 +56,29 @@ public class FilePanel extends Panel {
 		dirPanel.add(dirLabel);
 
 		model = new MyTableModel();
-		model.addColumn(LanguageStrings.getProperty("filenameString"));
-		model.addColumn(LanguageStrings.getProperty("sizeString"));
-		model.addColumn(LanguageStrings.getProperty("lastEditString"));
+		model.addColumn("Filename");
+		model.addColumn("Size");
+		model.addColumn("Last Modified");
 
 		adbFileTable = new JTable(model);
 		adbFileTable.setColumnSelectionAllowed(false);
 		adbFileTable.setAutoCreateRowSorter(true);
 
 		adbFileTable.addMouseListener(new MouseListener() {
-			@Override
 			public void mouseReleased(MouseEvent e) {
 			}
 
-			@Override
 			public void mousePressed(MouseEvent e) {
 			}
 
-			@Override
 			public void mouseExited(MouseEvent e) {
 			}
 
-			@Override
 			public void mouseEntered(MouseEvent e) {
 			}
 
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				boolean left = (e.getButton() == MouseEvent.BUTTON1);
-				// boolean middle = ( e.getButton() == MouseEvent.BUTTON2) ;
-				// boolean right = ( e.getButton() == MouseEvent.BUTTON3 );
-				// //context menu?
 				boolean doubleClick = e.getClickCount() > 1;
 
 				if (left && doubleClick) {
@@ -129,19 +119,18 @@ public class FilePanel extends Panel {
 	}
 
 	private void openFile(String path) {
-		Logger.writeToLog(LanguageStrings.getProperty("pullingLog"));
+		Logger.writeToLog("pulling file...");
 		File file = null;
 		try {
 			file = reciever.pullFile(path);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
 		try {
 			new ProcessBuilder("explorer", file.getAbsolutePath()).start();
 		} catch (Exception e) {
-			Logger.writeToLog(LanguageStrings.getProperty("openFailedLog"));
+			Logger.writeToLog("failed to open file");
 			e.printStackTrace();
 		}
 	}
@@ -165,5 +154,4 @@ public class FilePanel extends Panel {
 			return false;
 		}
 	}
-
 }

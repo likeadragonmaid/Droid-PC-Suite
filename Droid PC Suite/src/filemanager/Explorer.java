@@ -1,4 +1,4 @@
-package GUI;
+package filemanager;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -17,9 +17,8 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
-import data.DataReciever;
-import data.LanguageStrings;
-import data.Logger;
+import filemanager.DataReciever;
+import filemanager.Logger;
 import java.awt.Color;
 import java.awt.Toolkit;
 
@@ -44,28 +43,24 @@ public class Explorer extends Frame {
 		filePanel = new FilePanel(reciever);
 		deviceList = new List();
 		deviceList.addItemListener(new ItemListener() {
-			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				String selection = reciever.getDevices(false).get(Integer.parseInt(arg0.getItem().toString()));
-
 				if (reciever.setSelectedDevice(selection)) {
 					filePanel.updateADB(reciever.getDirContent("/"), "/");
 				}
 			}
 		});
 
-		Button refreshButton = new Button(LanguageStrings.getProperty("refreshButton"));
+		Button refreshButton = new Button("Refresh");
 		refreshButton.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				updateDevices(reciever.getDevices(true));
 			}
 		});
 
 		connectField = new TextField();
-		Button connectButton = new Button(LanguageStrings.getProperty("connectButton"));
+		Button connectButton = new Button("Connect");
 		connectButton.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				reciever.connectDevice(connectField.getText());
 				updateDevices(reciever.getDevices(false));
@@ -75,10 +70,9 @@ public class Explorer extends Frame {
 		destination = new TextField();
 		destination.setText(reciever.getSaveLocation());
 
-		Button chooseDestination = new Button(LanguageStrings.getProperty("chooseDestButton"));
+		Button chooseDestination = new Button("Choose Location");
 		chooseDestination.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				JFileChooser fc = new JFileChooser();
@@ -87,15 +81,14 @@ public class Explorer extends Frame {
 					File loc = fc.getSelectedFile();
 					reciever.setSaveLocation(loc);
 					destination.setText(reciever.getSaveLocation());
-					Logger.writeToLog(loc.getAbsolutePath() + LanguageStrings.getProperty("destSetLog"));
+					Logger.writeToLog(" - set as save destination");
 				}
 
 			}
 		});
 
-		Button pull = new Button(LanguageStrings.getProperty("pullButton"));
+		Button pull = new Button("Pull");
 		pull.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				String selection = (String) filePanel.getFileTableModel().getValueAt(
 						filePanel.getTable().convertRowIndexToModel(filePanel.getTable().getSelectedRow()), 0);
@@ -108,7 +101,7 @@ public class Explorer extends Frame {
 					new ProcessBuilder("explorer", reciever.getSaveLocation() + selection).start();
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					Logger.writeToLog(LanguageStrings.getProperty("fileOpenFailLog"));
+					Logger.writeToLog("failed to open file or directory");
 				}
 			}
 		});
@@ -116,10 +109,9 @@ public class Explorer extends Frame {
 		source = new TextField();
 		source.setSize(500, source.getHeight());
 
-		Button chooseSource = new Button(LanguageStrings.getProperty("chooseSourceButton"));
+		Button chooseSource = new Button("Choose File");
 		chooseSource.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser fc = new JFileChooser();
 				fc.setFileSelectionMode(fc.FILES_AND_DIRECTORIES);
@@ -131,9 +123,9 @@ public class Explorer extends Frame {
 			}
 		});
 
-		Button pushButton = new Button(LanguageStrings.getProperty("pushButton"));
+		Button pushButton = new Button("Push Files");
 		pushButton.addActionListener(new ActionListener() {
-			@Override
+
 			public void actionPerformed(ActionEvent arg0) {
 				if (source.getText() != null && source.getText().length() > 0) {
 					try {
@@ -144,14 +136,13 @@ public class Explorer extends Frame {
 					filePanel.updateADB(reciever.getDirContent(filePanel.getDirLabel().getText()),
 							filePanel.getDirLabel().getText());
 				} else {
-					Logger.writeToLog(LanguageStrings.getProperty("selectSourceLog"));
+					Logger.writeToLog("Please select a valid pull source");
 				}
 			}
 		});
 
-		Button deleteButton = new Button(LanguageStrings.getProperty("deleteButton"));
+		Button deleteButton = new Button("Delete Selected Files");
 		deleteButton.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					reciever.deleteFile(filePanel.getDirLabel().getText() + filePanel.getFileTableModel().getValueAt(
@@ -174,7 +165,7 @@ public class Explorer extends Frame {
 		Panel connectPanel = new Panel(new BorderLayout());
 		connectPanel.add(subConnectPanel, BorderLayout.NORTH);
 		connectPanel.add(refreshLine, BorderLayout.EAST);
-		connectPanel.add(new Label(LanguageStrings.getProperty("pullDestString")), BorderLayout.SOUTH);
+		connectPanel.add(new Label("Pull Destination"), BorderLayout.SOUTH);
 
 		Panel subSourcePanel = new Panel(new GridLayout(1, 2));
 		subSourcePanel.add(source);
@@ -203,7 +194,7 @@ public class Explorer extends Frame {
 		Panel destinationPanel = new Panel(new BorderLayout());
 		destinationPanel.add(subDestinationPanel, BorderLayout.NORTH);
 		destinationPanel.add(pullPanel, BorderLayout.EAST);
-		destinationPanel.add(new Label(LanguageStrings.getProperty("pushSourceString")), BorderLayout.SOUTH);
+		destinationPanel.add(new Label("Push Source:"), BorderLayout.SOUTH);
 
 		Panel devicePanel = new Panel(new GridLayout(5, 1));
 		devicePanel.add(deviceList);
@@ -243,9 +234,19 @@ public class Explorer extends Frame {
 	}
 
 	private void close() {
-		reciever.close();
 		logger.close();
-		System.exit(0);
+		File file = new File(".explorer.properties");
+		if (file.exists() && !file.isDirectory()) {
+			file.delete();
+		}
+		File file2 = new File(".log.txt");
+		if (file2.exists() && !file2.isDirectory()) {
+			file2.delete();
+		}
+		File file3 = new File(".lastLog.txt");
+		if (file3.exists() && !file3.isDirectory()) {
+			file3.delete();
+		}
+		dispose();
 	}
-
 }

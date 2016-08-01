@@ -113,34 +113,22 @@ public class Interface extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Interface.class.getResource("/graphics/Icon.png")));
 		addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowActivated(WindowEvent e) { // Cache remover
-				File file1 = new File("explorer.properties");
-				if (file1.exists() && !file1.isDirectory()) {
-					file1.delete();
+			public void windowActivated(WindowEvent e) {
+				File file = new File(".logcat.txt");
+				if (file.exists() && !file.isDirectory()) {
+					file.delete();
 				}
-				File file2 = new File("log.txt");
+				File file2 = new File(".userapps.txt");
 				if (file2.exists() && !file2.isDirectory()) {
 					file2.delete();
 				}
-				File file3 = new File("lastLog.txt");
+				File file3 = new File(".privapps.txt");
 				if (file3.exists() && !file3.isDirectory()) {
 					file3.delete();
 				}
-				File file4 = new File(".logcat.txt");
+				File file4 = new File(".systemapps.txt");
 				if (file4.exists() && !file4.isDirectory()) {
-					file3.delete();
-				}
-				File file5 = new File(".userapps.txt");
-				if (file5.exists() && !file5.isDirectory()) {
-					file5.delete();
-				}
-				File file6 = new File(".privapps.txt");
-				if (file6.exists() && !file6.isDirectory()) {
-					file6.delete();
-				}
-				File file7 = new File(".systemapps.txt");
-				if (file7.exists() && !file7.isDirectory()) {
-					file7.delete();
+					file4.delete();
 				}
 			}
 		});
@@ -488,12 +476,7 @@ public class Interface extends JFrame {
 		btnFileManager.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GeneralDone.setText("");
-				try {
-					Process p1 = Runtime.getRuntime().exec("java -jar .filemanager.jar");
-					p1.waitFor();
-				} catch (Exception e1) {
-					System.err.println(e1);
-				}
+				filemanager.FileManager.main(null);
 			}
 		});
 		btnFileManager.setBounds(25, 131, 220, 75);
@@ -1527,6 +1510,10 @@ public class Interface extends JFrame {
 		btnClearLogact.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LogViewer.setText("");
+				File file = new File(".logcat.txt");
+				if (file.exists() && !file.isDirectory()) {
+					file.delete();
+				}
 				AppStatus.setText("Logcat cleared");
 			}
 		});

@@ -1,4 +1,4 @@
-package data;
+package filemanager;
 
 import java.awt.List;
 import java.io.BufferedWriter;
@@ -17,16 +17,16 @@ public class Logger {
 	public Logger(List logList) {
 		this.logList = logList;
 		try {
-			logFile = new File("log.txt");
-			File oldLog = new File("lastLog.txt");
+			logFile = new File(".log.txt");
+			File oldLog = new File(".lastLog.txt");
 			if (oldLog.exists()) {
 				oldLog.delete();
 			}
-			logFile.renameTo(new File("lastLog.txt"));
+			logFile.renameTo(new File(".lastLog.txt"));
 			writer = new BufferedWriter(new FileWriter(logFile));
 
 		} catch (Exception e) {
-			writeLogfile(LanguageStrings.getProperty("loggerFailed"));
+			writeLogfile("cant initialize logger - please manually remove logfile and restart File Manager");
 		}
 	}
 

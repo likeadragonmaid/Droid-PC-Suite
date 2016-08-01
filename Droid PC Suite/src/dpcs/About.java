@@ -78,10 +78,10 @@ public class About extends JFrame {
 		lblMyFriend2.setBounds(25, 217, 242, 24);
 		contentPane.add(lblMyFriend2);
 
-		JLabel lblVersionstable = new JLabel("Version: 1.3");
-		lblVersionstable.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblVersionstable.setBounds(379, 16, 122, 18);
-		contentPane.add(lblVersionstable);
+		JLabel lblVersionInfo = new JLabel("Version: 1.4");
+		lblVersionInfo.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblVersionInfo.setBounds(379, 16, 122, 18);
+		contentPane.add(lblVersionInfo);
 
 		JLabel lblForMyOther = new JLabel("For my other Android stuff visit me on XDA - Developers (@kvsjxd)");
 		lblForMyOther.addMouseListener(new MouseAdapter() {
@@ -111,7 +111,7 @@ public class About extends JFrame {
 		lblForMyOther.setBounds(25, 321, 502, 24);
 		contentPane.add(lblForMyOther);
 
-		JLabel lblMySensei2 = new JLabel("Er. Karun Sensei");
+		JLabel lblMySensei2 = new JLabel("Karun Sensei");
 		lblMySensei2.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblMySensei2.setBounds(25, 120, 242, 24);
 		contentPane.add(lblMySensei2);

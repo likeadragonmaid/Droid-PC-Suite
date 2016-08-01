@@ -1,4 +1,4 @@
-package data;
+package filemanager;
 
 public class FileObj {
 	private String path, name, lastEdit;
@@ -41,5 +41,4 @@ public class FileObj {
 	public Object[] getDataForTable() {
 		return new Object[] { name, size, lastEdit };
 	}
-
 }
