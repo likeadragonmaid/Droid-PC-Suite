@@ -1,7 +1,21 @@
-Version 1.4 Alpha (Build 160801)
+Version 1.4 Beta 2 (Build 160802)
+
+* Attached device(s) list viewer added
+* Device connection limit added for preventing
+  accidental code execution on the device(s)
+  other than targeted
+* Marshmallow connectivity help added
+* Added fastboot help
+* Missing tips added
+* Few things moved here and there
+* Minor UI changes
+* Various minor improvements
+
+Version 1.4 Beta 1 (Build 160801)
 
 * File Manager merged into Droid PC Suite
 * Background information reporting added
+* File Manager speed up while launching
 * Other misc. improvements in File Manager
 * Minor bug fix
 

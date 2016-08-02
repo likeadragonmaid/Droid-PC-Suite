@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 @SuppressWarnings("serial")
 public class About extends JFrame {
@@ -78,7 +79,7 @@ public class About extends JFrame {
 		lblMyFriend2.setBounds(25, 217, 242, 24);
 		contentPane.add(lblMyFriend2);
 
-		JLabel lblVersionInfo = new JLabel("Version: 1.4 Beta 1");
+		JLabel lblVersionInfo = new JLabel("Version: 1.4 Beta 2");
 		lblVersionInfo.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblVersionInfo.setBounds(334, 16, 167, 18);
 		contentPane.add(lblVersionInfo);
@@ -177,8 +178,9 @@ public class About extends JFrame {
 		contentPane.add(lblMyFriend1);
 
 		JLabel label_6 = new JLabel("Special thanks to");
+		label_6.setForeground(UIManager.getColor("OptionPane.questionDialog.titlePane.shadow"));
 		label_6.setFont(new Font("Dialog", Font.BOLD, 16));
-		label_6.setBounds(25, 61, 240, 25);
+		label_6.setBounds(25, 71, 240, 25);
 		contentPane.add(label_6);
 
 		JLabel lblGoogle = new JLabel(

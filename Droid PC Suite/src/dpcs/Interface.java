@@ -58,6 +58,26 @@ public class Interface extends JFrame {
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 						adbconnected = true;
+						JTextArea Devicelistviewer = new JTextArea();
+						Devicelistviewer.setEditable(false);
+						Devicelistviewer.setOpaque(false);
+						Process p5 = Runtime.getRuntime().exec("adb devices -l");
+						p5.waitFor();
+						int i = 0;
+						String line;
+						String[] array = new String[1024];
+						BufferedReader reader = new BufferedReader(new InputStreamReader(p1.getInputStream()));
+						while ((line = reader.readLine()) != null) {
+							array[i] = line;
+							Devicelistviewer.append("\n" + line);
+						}
+						int devicecount = Devicelistviewer.getLineCount() / 4;
+						if (devicecount > 1) {
+							JOptionPane.showMessageDialog(null,
+									devicecount
+											+ " devices detected!\nOnly 1 device is allowed at a time!\nPlease disconnect other devices!",
+									"Error", JOptionPane.ERROR_MESSAGE);
+						}
 						ADBConnectionLabel.setText("Device is connected");
 					} else {
 						adbconnected = false;
@@ -66,7 +86,6 @@ public class Interface extends JFrame {
 				} catch (Exception e1) {
 					System.err.println(e1);
 				}
-
 				try {
 					File file = new File("su");
 					Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
@@ -150,107 +169,9 @@ public class Interface extends JFrame {
 			}
 		});
 
-		mnFile.add(mntmExit);
-		JMenu mnHelp = new JMenu("Help");
-		menuBar.add(mnHelp);
-
-		JMenuItem mntmCommonWorkarounds = new JMenuItem("Common workarounds");
-		mntmCommonWorkarounds
-				.setToolTipText("View solutions and tips to avoid the common problems while using this application");
-		mntmCommonWorkarounds.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Workarounds obj = new Workarounds();
-				obj.setVisible(true);
-			}
-		});
-
-		JMenuItem mntmChangelog = new JMenuItem("Changelog tracker");
-		mntmChangelog.setToolTipText("Track the changes made to this application over the time");
-		mntmChangelog.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Changelog obj = new Changelog();
-				obj.setVisible(true);
-			}
-		});
-
-		JMenuItem mntmAbout = new JMenuItem("About");
-		mntmAbout.setToolTipText("Information about the application");
-		mntmAbout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				About obj = new About();
-				obj.setVisible(true);
-			}
-		});
-		mnHelp.add(mntmAbout);
-
-		JMenu mnADBTools = new JMenu("ADB tools");
-		mnADBTools.setToolTipText("Access various ADB tools");
-		mnHelp.add(mnADBTools);
-
-		JMenuItem mntmForceConnect = new JMenuItem("Force connect");
-		mntmForceConnect.setToolTipText("Force connect android device to computer using ADB protocol");
-		mnADBTools.add(mntmForceConnect);
-		mntmForceConnect.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,
-						"Go to developer options and turn off android debugging and turn it on again");
-				JOptionPane.showMessageDialog(null,
-						"Now tap on Revoke USB debugging authorizations and confirm it by tapping OK on android device");
-				JOptionPane.showMessageDialog(null, "Now disconnect your android device and reconnect it via USB");
-				JOptionPane.showMessageDialog(null, "Reboot your device. After it completely boots up click OK");
-				try {
-					adbconnected = false;
-					Process p1 = Runtime.getRuntime().exec("adb kill-server");
-					p1.waitFor();
-					Process p2 = Runtime.getRuntime().exec("adb devices");
-					p2.waitFor();
-					JOptionPane.showMessageDialog(null, "Check if your device asks to Allow USB debugging");
-					JOptionPane.showMessageDialog(null,
-							"If yes check always allow from this computer checkbox and tap OK on your android device");
-					Process p3 = Runtime.getRuntime().exec("adb shell touch /sdcard/.checkadbconnection");
-					p3.waitFor();
-					Process p4 = Runtime.getRuntime().exec("adb pull /sdcard/.checkadbconnection");
-					p4.waitFor();
-					Process p5 = Runtime.getRuntime().exec("adb shell rm /sdcard/.checkadbconnection");
-					p5.waitFor();
-					File file = new File(".checkadbconnection");
-					if (file.exists() && !file.isDirectory()) {
-						file.delete();
-						adbconnected = true;
-						ADBConnectionLabel.setText("Device is connected");
-						JOptionPane.showMessageDialog(null, "Success!");
-					} else {
-						adbconnected = false;
-						ADBConnectionLabel.setText("");
-						ADBConnectionLabel.setText("Connect your device");
-						JOptionPane.showMessageDialog(null,
-								"Please try again or perhaps try installing your android device adb drivers on PC");
-					}
-				} catch (Exception e1) {
-					System.err.println(e1);
-				}
-				try {
-					File file = new File("su");
-					Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
-					p1.waitFor();
-					if (file.exists() && !file.isDirectory()) {
-						file.delete();
-						rooted = true;
-						RootStatusLabel.setText("Device is rooted");
-					} else {
-						if (adbconnected == true) {
-							rooted = false;
-							RootStatusLabel.setText("Device is not rooted");
-						} else {
-							rooted = false;
-							RootStatusLabel.setText("");
-						}
-					}
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
+		JMenu mnADBandFastbootTools = new JMenu("ADB and Fastboot tools");
+		mnFile.add(mnADBandFastbootTools);
+		mnADBandFastbootTools.setToolTipText("Access various ADB and Fastboot tools");
 
 		JMenuItem mntmDevicestate = new JMenuItem("View device state");
 		mntmDevicestate.setToolTipText("Check android device state");
@@ -290,12 +211,12 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		mnADBTools.add(mntmNoOfUsers);
-		mnADBTools.add(mntmAdbHelp);
+		mnADBandFastbootTools.add(mntmNoOfUsers);
+		mnADBandFastbootTools.add(mntmAdbHelp);
 
 		JMenuItem mntmAdbVersion = new JMenuItem("View ADB version");
 		mntmAdbVersion.setToolTipText("Check the version of ADB installed on your computer");
-		mnADBTools.add(mntmAdbVersion);
+		mnADBandFastbootTools.add(mntmAdbVersion);
 		mntmAdbVersion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -308,11 +229,48 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		mnADBTools.add(mntmDevicestate);
+
+		JMenuItem mntmViewDeviceList = new JMenuItem("View attached device(s)");
+		mntmViewDeviceList.setToolTipText(
+				"View attached device(s) connected via ADB, Remember to connect only one device at a time!");
+		mntmViewDeviceList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					JTextArea Devicelistviewer = new JTextArea();
+					Devicelistviewer.setEditable(false);
+					Devicelistviewer.setOpaque(false);
+					Process p1 = Runtime.getRuntime().exec("adb devices -l");
+					p1.waitFor();
+					int i = 0;
+					String line;
+					String[] array = new String[1024];
+					BufferedReader reader = new BufferedReader(new InputStreamReader(p1.getInputStream()));
+					while ((line = reader.readLine()) != null) {
+						array[i] = line;
+						Devicelistviewer.append("\n" + line);
+					}
+					JOptionPane.showMessageDialog(null, Devicelistviewer);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		mnADBandFastbootTools.add(mntmViewDeviceList);
+		mnADBandFastbootTools.add(mntmDevicestate);
+
+		JMenuItem mntmViewFastbootHelp = new JMenuItem("View fastboot help");
+		mntmViewFastbootHelp.setToolTipText("Get help regarding fastboot");
+		mntmViewFastbootHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FastbootHelp obj = new FastbootHelp();
+				obj.setVisible(true);
+			}
+		});
+		mnADBandFastbootTools.add(mntmViewFastbootHelp);
 
 		JMenuItem mntmSerialNo = new JMenuItem("View serial no.");
 		mntmSerialNo.setToolTipText("Check ADB connectivity serial no. of your android device");
-		mnADBTools.add(mntmSerialNo);
+		mnADBandFastbootTools.add(mntmSerialNo);
 		mntmSerialNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -339,7 +297,50 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		mnADBTools.add(mntmWaitForDevice);
+		mnADBandFastbootTools.add(mntmWaitForDevice);
+
+		JMenuItem mntmDeviceFeatures = new JMenuItem("Device features");
+		mnFile.add(mntmDeviceFeatures);
+		mntmDeviceFeatures.setToolTipText("View list of features supported by the android device");
+		mntmDeviceFeatures.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Devicefeatures obj = new Devicefeatures();
+				obj.setVisible(true);
+			}
+		});
+
+		mnFile.add(mntmExit);
+		JMenu mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
+
+		JMenuItem mntmCommonWorkarounds = new JMenuItem("Common workarounds");
+		mntmCommonWorkarounds
+				.setToolTipText("View solutions and tips to avoid the common problems while using this application");
+		mntmCommonWorkarounds.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Workarounds obj = new Workarounds();
+				obj.setVisible(true);
+			}
+		});
+
+		JMenuItem mntmChangelog = new JMenuItem("Changelog tracker");
+		mntmChangelog.setToolTipText("Track the changes made to this application over the time");
+		mntmChangelog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Changelog obj = new Changelog();
+				obj.setVisible(true);
+			}
+		});
+
+		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.setToolTipText("Information about the application");
+		mntmAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				About obj = new About();
+				obj.setVisible(true);
+			}
+		});
+		mnHelp.add(mntmAbout);
 		mnHelp.add(mntmChangelog);
 
 		JMenuItem mntmCheckForUpdates = new JMenuItem("Check for updates");
@@ -374,16 +375,71 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-
-		JMenuItem mntmDeviceFeatures = new JMenuItem("Device features");
-		mntmDeviceFeatures.setToolTipText("View list of features supported by the android device");
-		mntmDeviceFeatures.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Devicefeatures obj = new Devicefeatures();
-				obj.setVisible(true);
-			}
-		});
-		mnHelp.add(mntmDeviceFeatures);
+		
+				JMenuItem mntmForceConnect = new JMenuItem("Force connect");
+				mnHelp.add(mntmForceConnect);
+				mntmForceConnect.setToolTipText("Force connect android device to computer using ADB protocol");
+				mntmForceConnect.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						JOptionPane.showMessageDialog(null,
+								"Go to developer options and turn off android debugging and turn it on again");
+						JOptionPane.showMessageDialog(null,
+								"Now tap on Revoke USB debugging authorizations and confirm it by tapping OK on android device");
+						JOptionPane.showMessageDialog(null, "Now disconnect your android device and reconnect it via USB");
+						JOptionPane.showMessageDialog(null, "Reboot your device. After it completely boots up click OK");
+						try {
+							adbconnected = false;
+							Process p1 = Runtime.getRuntime().exec("adb kill-server");
+							p1.waitFor();
+							Process p2 = Runtime.getRuntime().exec("adb devices");
+							p2.waitFor();
+							JOptionPane.showMessageDialog(null, "Check if your device asks to Allow USB debugging");
+							JOptionPane.showMessageDialog(null,
+									"If yes check always allow from this computer checkbox and tap OK on your android device");
+							Process p3 = Runtime.getRuntime().exec("adb shell touch /sdcard/.checkadbconnection");
+							p3.waitFor();
+							Process p4 = Runtime.getRuntime().exec("adb pull /sdcard/.checkadbconnection");
+							p4.waitFor();
+							Process p5 = Runtime.getRuntime().exec("adb shell rm /sdcard/.checkadbconnection");
+							p5.waitFor();
+							File file = new File(".checkadbconnection");
+							if (file.exists() && !file.isDirectory()) {
+								file.delete();
+								adbconnected = true;
+								ADBConnectionLabel.setText("Device is connected");
+								JOptionPane.showMessageDialog(null, "Success!");
+							} else {
+								adbconnected = false;
+								ADBConnectionLabel.setText("");
+								ADBConnectionLabel.setText("Connect your device");
+								JOptionPane.showMessageDialog(null,
+										"Please try again or perhaps try installing your android device adb drivers on PC");
+							}
+						} catch (Exception e1) {
+							System.err.println(e1);
+						}
+						try {
+							File file = new File("su");
+							Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
+							p1.waitFor();
+							if (file.exists() && !file.isDirectory()) {
+								file.delete();
+								rooted = true;
+								RootStatusLabel.setText("Device is rooted");
+							} else {
+								if (adbconnected == true) {
+									rooted = false;
+									RootStatusLabel.setText("Device is not rooted");
+								} else {
+									rooted = false;
+									RootStatusLabel.setText("");
+								}
+							}
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+					}
+				});
 
 		JMenu mnLegalInformation = new JMenu("Legal information");
 		mnLegalInformation.setToolTipText("Vew legal information about the application");
@@ -1524,8 +1580,8 @@ public class Interface extends JFrame {
 		btnViewLogcat.setToolTipText("Print android device logcat on screen");
 		btnViewLogcat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				AppStatus.setText("Generating logcat, please wait a moment...");
 				try {
-					AppStatus.setText("Getting logcat...");
 					Process p1 = Runtime.getRuntime().exec("adb logcat -d > /sdcard/.logcat.txt");
 					p1.waitFor();
 					Process p2 = Runtime.getRuntime().exec("adb pull /sdcard/.logcat.txt");
@@ -1535,7 +1591,6 @@ public class Interface extends JFrame {
 					try {
 						Reader reader = new FileReader(new File(".logcat.txt"));
 						LogViewer.read(reader, "");
-						AppStatus.setText("");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -1543,6 +1598,7 @@ public class Interface extends JFrame {
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 					}
+					AppStatus.setText("");
 				} catch (Exception e) {
 					System.err.println(e);
 				}

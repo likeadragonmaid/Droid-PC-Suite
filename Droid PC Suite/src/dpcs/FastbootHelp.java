@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
-public class ADBHelp extends JFrame {
+public class FastbootHelp extends JFrame {
 	JTextArea HelpViewer;
 	private JPanel contentPane;
 
@@ -21,7 +21,7 @@ public class ADBHelp extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ADBHelp frame = new ADBHelp();
+					FastbootHelp frame = new FastbootHelp();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,26 +30,26 @@ public class ADBHelp extends JFrame {
 		});
 	}
 
-	public ADBHelp() {
+	public FastbootHelp() {
 		setResizable(false);
-		setTitle("ADB Help");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ADBHelp.class.getResource("/graphics/Icon.png")));
+		setTitle("Fastboot Help");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FastbootHelp.class.getResource("/graphics/Icon.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 755, 500);
+		setBounds(100, 100, 530, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 747, 468);
+		scrollPane.setBounds(0, 0, 522, 468);
 		contentPane.add(scrollPane);
 
 		HelpViewer = new JTextArea();
 		HelpViewer.setEditable(false);
 		scrollPane.setViewportView(HelpViewer);
 		try {
-			URL helpobj = ADBHelp.class.getResource("/others/adbhelp.txt");
+			URL helpobj = FastbootHelp.class.getResource("/others/fastboothelp.txt");
 			File helpobj2 = new File(helpobj.toURI());
 			Reader reader = new FileReader(new File(helpobj2.toURI()));
 			HelpViewer.read(reader, "");

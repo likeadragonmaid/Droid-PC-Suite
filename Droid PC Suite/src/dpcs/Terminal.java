@@ -66,7 +66,7 @@ public class Terminal extends JFrame {
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 
-		JMenuItem mntmADBCommandList = new JMenuItem("ADB Command list");
+		JMenuItem mntmADBCommandList = new JMenuItem("ADB command list");
 		mntmADBCommandList.setToolTipText("View ADB command list");
 		mntmADBCommandList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -82,8 +82,9 @@ public class Terminal extends JFrame {
 		});
 		mnHelp.add(mntmADBCommandList);
 
-		JMenuItem mntmAndroidShellCommand = new JMenuItem("Android shell command list");
-		mntmAndroidShellCommand.addActionListener(new ActionListener() {
+		JMenuItem mntmAndroidShellCommandList = new JMenuItem("Android shell command list");
+		mntmAndroidShellCommandList.setToolTipText("View Android shell command list");
+		mntmAndroidShellCommandList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					Process p1 = Runtime.getRuntime()
@@ -108,8 +109,24 @@ public class Terminal extends JFrame {
 				}
 			}
 		});
-		mntmAndroidShellCommand.setToolTipText("View list of android shell supported command list");
-		mnHelp.add(mntmAndroidShellCommand);
+		mntmAndroidShellCommandList.setToolTipText("View list of android shell supported command list");
+		mnHelp.add(mntmAndroidShellCommandList);
+		
+		JMenuItem mntmFastbootCommandList = new JMenuItem("Fastboot command list");
+		mntmFastbootCommandList.setToolTipText("View Fastboot command list");
+		mntmFastbootCommandList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					URL obj = Terminal.class.getResource("/others/fastboothelp.txt");
+					File obj2 = new File(obj.toURI());
+					Reader reader = new FileReader(new File(obj2.toURI()));
+					TerminalEmulatorDisplay.read(reader, "");
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		mnHelp.add(mntmFastbootCommandList);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

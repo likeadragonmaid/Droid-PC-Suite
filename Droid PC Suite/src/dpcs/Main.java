@@ -33,8 +33,8 @@ public class Main {
 							file2.delete();
 						}
 					}
-				System.out.println("Connectivity & root detection service started...");
-				System.out.println("Looking for connected devices...");
+					System.out.println("Connectivity and root detection service started...");
+					System.out.println("Looking for connected devices...");
 				} catch (Exception e) {
 					System.err.println(e);
 				}
