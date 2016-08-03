@@ -1,3 +1,8 @@
+Version 1.4 Beta 3 (Build 160803)
+
+* Device connection limit detection algorithm
+  improvements
+  
 Version 1.4 Beta 2 (Build 160802)
 
 * Attached device(s) list viewer added

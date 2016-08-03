@@ -55,7 +55,7 @@ public class About extends JFrame {
 		btnGitHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Desktop.getDesktop().browse(new URL("https://github.com/kvsjxd/Droid-PC-Suite").toURI());
+					Desktop.getDesktop().browse(new URL("https://kvsjxd.github.io/Droid-PC-Suite/").toURI());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

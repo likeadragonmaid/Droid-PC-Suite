@@ -69,12 +69,11 @@ public class Interface extends JFrame {
 						BufferedReader reader = new BufferedReader(new InputStreamReader(p1.getInputStream()));
 						while ((line = reader.readLine()) != null) {
 							array[i] = line;
-							Devicelistviewer.append("\n" + line);
+							Devicelistviewer.append(line);
 						}
-						int devicecount = Devicelistviewer.getLineCount() / 4;
-						if (devicecount > 1) {
+						if (Devicelistviewer.getLineCount() > 1) {
 							JOptionPane.showMessageDialog(null,
-									devicecount
+									Devicelistviewer.getLineCount()
 											+ " devices detected!\nOnly 1 device is allowed at a time!\nPlease disconnect other devices!",
 									"Error", JOptionPane.ERROR_MESSAGE);
 						}
@@ -347,12 +346,9 @@ public class Interface extends JFrame {
 		mntmCheckForUpdates.setToolTipText("Check for the new updates of this application");
 		mntmCheckForUpdates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Please checkout downloads section in XDA-Developers thread");
+				JOptionPane.showMessageDialog(null, "Please download latest release from Github");
 				try {
-					Desktop.getDesktop()
-							.browse(new URL(
-									"http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599")
-											.toURI());
+					Desktop.getDesktop().browse(new URL("https://github.com/kvsjxd/Droid-PC-Suite/releases").toURI());
 				} catch (Exception e1) {
 				}
 			}
@@ -375,71 +371,71 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		
-				JMenuItem mntmForceConnect = new JMenuItem("Force connect");
-				mnHelp.add(mntmForceConnect);
-				mntmForceConnect.setToolTipText("Force connect android device to computer using ADB protocol");
-				mntmForceConnect.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+
+		JMenuItem mntmForceConnect = new JMenuItem("Force connect");
+		mnHelp.add(mntmForceConnect);
+		mntmForceConnect.setToolTipText("Force connect android device to computer using ADB protocol");
+		mntmForceConnect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"Go to developer options and turn off android debugging and turn it on again");
+				JOptionPane.showMessageDialog(null,
+						"Now tap on Revoke USB debugging authorizations and confirm it by tapping OK on android device");
+				JOptionPane.showMessageDialog(null, "Now disconnect your android device and reconnect it via USB");
+				JOptionPane.showMessageDialog(null, "Reboot your device. After it completely boots up click OK");
+				try {
+					adbconnected = false;
+					Process p1 = Runtime.getRuntime().exec("adb kill-server");
+					p1.waitFor();
+					Process p2 = Runtime.getRuntime().exec("adb devices");
+					p2.waitFor();
+					JOptionPane.showMessageDialog(null, "Check if your device asks to Allow USB debugging");
+					JOptionPane.showMessageDialog(null,
+							"If yes check always allow from this computer checkbox and tap OK on your android device");
+					Process p3 = Runtime.getRuntime().exec("adb shell touch /sdcard/.checkadbconnection");
+					p3.waitFor();
+					Process p4 = Runtime.getRuntime().exec("adb pull /sdcard/.checkadbconnection");
+					p4.waitFor();
+					Process p5 = Runtime.getRuntime().exec("adb shell rm /sdcard/.checkadbconnection");
+					p5.waitFor();
+					File file = new File(".checkadbconnection");
+					if (file.exists() && !file.isDirectory()) {
+						file.delete();
+						adbconnected = true;
+						ADBConnectionLabel.setText("Device is connected");
+						JOptionPane.showMessageDialog(null, "Success!");
+					} else {
+						adbconnected = false;
+						ADBConnectionLabel.setText("");
+						ADBConnectionLabel.setText("Connect your device");
 						JOptionPane.showMessageDialog(null,
-								"Go to developer options and turn off android debugging and turn it on again");
-						JOptionPane.showMessageDialog(null,
-								"Now tap on Revoke USB debugging authorizations and confirm it by tapping OK on android device");
-						JOptionPane.showMessageDialog(null, "Now disconnect your android device and reconnect it via USB");
-						JOptionPane.showMessageDialog(null, "Reboot your device. After it completely boots up click OK");
-						try {
-							adbconnected = false;
-							Process p1 = Runtime.getRuntime().exec("adb kill-server");
-							p1.waitFor();
-							Process p2 = Runtime.getRuntime().exec("adb devices");
-							p2.waitFor();
-							JOptionPane.showMessageDialog(null, "Check if your device asks to Allow USB debugging");
-							JOptionPane.showMessageDialog(null,
-									"If yes check always allow from this computer checkbox and tap OK on your android device");
-							Process p3 = Runtime.getRuntime().exec("adb shell touch /sdcard/.checkadbconnection");
-							p3.waitFor();
-							Process p4 = Runtime.getRuntime().exec("adb pull /sdcard/.checkadbconnection");
-							p4.waitFor();
-							Process p5 = Runtime.getRuntime().exec("adb shell rm /sdcard/.checkadbconnection");
-							p5.waitFor();
-							File file = new File(".checkadbconnection");
-							if (file.exists() && !file.isDirectory()) {
-								file.delete();
-								adbconnected = true;
-								ADBConnectionLabel.setText("Device is connected");
-								JOptionPane.showMessageDialog(null, "Success!");
-							} else {
-								adbconnected = false;
-								ADBConnectionLabel.setText("");
-								ADBConnectionLabel.setText("Connect your device");
-								JOptionPane.showMessageDialog(null,
-										"Please try again or perhaps try installing your android device adb drivers on PC");
-							}
-						} catch (Exception e1) {
-							System.err.println(e1);
-						}
-						try {
-							File file = new File("su");
-							Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
-							p1.waitFor();
-							if (file.exists() && !file.isDirectory()) {
-								file.delete();
-								rooted = true;
-								RootStatusLabel.setText("Device is rooted");
-							} else {
-								if (adbconnected == true) {
-									rooted = false;
-									RootStatusLabel.setText("Device is not rooted");
-								} else {
-									rooted = false;
-									RootStatusLabel.setText("");
-								}
-							}
-						} catch (Exception e1) {
-							e1.printStackTrace();
+								"Please try again or perhaps try installing your android device adb drivers on PC");
+					}
+				} catch (Exception e1) {
+					System.err.println(e1);
+				}
+				try {
+					File file = new File("su");
+					Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
+					p1.waitFor();
+					if (file.exists() && !file.isDirectory()) {
+						file.delete();
+						rooted = true;
+						RootStatusLabel.setText("Device is rooted");
+					} else {
+						if (adbconnected == true) {
+							rooted = false;
+							RootStatusLabel.setText("Device is not rooted");
+						} else {
+							rooted = false;
+							RootStatusLabel.setText("");
 						}
 					}
-				});
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		JMenu mnLegalInformation = new JMenu("Legal information");
 		mnLegalInformation.setToolTipText("Vew legal information about the application");
@@ -2180,7 +2176,7 @@ public class Interface extends JFrame {
 		label_2.setBounds(50, 0, 1038, 256);
 		contentPane.add(label_2);
 
-		Thread t = new Thread(r); // Connection service
+		Thread t = new Thread(r); // Background services
 		t.start();
 	}
 }
