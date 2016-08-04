@@ -1,5 +1,7 @@
-Version 1.4 Beta 3 (Build 160803)
+Version 1.4 Beta 3 (Build 160804)
 
+* Cache cleaning while exit added
+* Improvements to view connected device
 * Device connection limit detection algorithm
   improvements
   

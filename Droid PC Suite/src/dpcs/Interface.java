@@ -229,14 +229,15 @@ public class Interface extends JFrame {
 			}
 		});
 
-		JMenuItem mntmViewDeviceList = new JMenuItem("View attached device(s)");
+		JMenuItem mntmViewDeviceList = new JMenuItem("View connected device");
 		mntmViewDeviceList.setToolTipText(
-				"View attached device(s) connected via ADB, Remember to connect only one device at a time!");
+				"Displays connected device, it will show name and serial no. of the only connected device because of connectivity limit");
 		mntmViewDeviceList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					JTextArea Devicelistviewer = new JTextArea();
 					Devicelistviewer.setEditable(false);
+					Devicelistviewer.setForeground(Color.BLACK);
 					Devicelistviewer.setOpaque(false);
 					Process p1 = Runtime.getRuntime().exec("adb devices -l");
 					p1.waitFor();
@@ -246,7 +247,7 @@ public class Interface extends JFrame {
 					BufferedReader reader = new BufferedReader(new InputStreamReader(p1.getInputStream()));
 					while ((line = reader.readLine()) != null) {
 						array[i] = line;
-						Devicelistviewer.append("\n" + line);
+						Devicelistviewer.append(line + "\n");
 					}
 					JOptionPane.showMessageDialog(null, Devicelistviewer);
 				} catch (Exception e1) {
@@ -2178,5 +2179,27 @@ public class Interface extends JFrame {
 
 		Thread t = new Thread(r); // Background services
 		t.start();
+
+		Runtime.getRuntime().addShutdownHook(new Thread() { // Exit sequence
+			public void run() {
+				try {
+					System.out.println("Killing ADB instance...");
+					Process p1 = Runtime.getRuntime().exec("adb kill-server");
+					p1.waitFor();
+					System.out.println("Cleaning cache...");
+					File file2 = new File(".checkadbconnection");
+					if (file2.exists() && !file2.isDirectory()) {
+						file2.delete();
+					}
+					File file = new File("su");
+					if (file.exists() && !file.isDirectory()) {
+						file.delete();
+					}
+					System.out.println("Droid PC Suite terminated");
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 }
