@@ -1,6 +1,9 @@
-Version 1.4 Beta 3 (Build 160804)
+Version 1.4 Beta 3 (Build 160806)
 
+* Added Contacts backup feature
+* Logger speedup
 * Cache cleaning while exit added
+* Logger speedup
 * Improvements to view connected device
 * Device connection limit detection algorithm
   improvements

@@ -31,6 +31,7 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 @SuppressWarnings("serial")
@@ -1512,7 +1513,7 @@ public class Interface extends JFrame {
 		panel_4.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 72, 1072, 311);
+		scrollPane.setBounds(0, 72, 1072, 285);
 		panel_4.add(scrollPane);
 
 		LogViewer = new JTextArea();
@@ -1558,9 +1559,9 @@ public class Interface extends JFrame {
 		btnSaveAsTextFile.setBounds(420, 13, 220, 47);
 		panel_4.add(btnSaveAsTextFile);
 
-		JButton btnClearLogact = new JButton("Clear");
-		btnClearLogact.setToolTipText("Clean the printed logcat from the screen");
-		btnClearLogact.addActionListener(new ActionListener() {
+		JButton btnClearLogcat = new JButton("Clear");
+		btnClearLogcat.setToolTipText("Clean the printed logcat from the screen");
+		btnClearLogcat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LogViewer.setText("");
 				File file = new File(".logcat.txt");
@@ -1570,8 +1571,8 @@ public class Interface extends JFrame {
 				AppStatus.setText("Logcat cleared");
 			}
 		});
-		btnClearLogact.setBounds(12, 13, 220, 48);
-		panel_4.add(btnClearLogact);
+		btnClearLogcat.setBounds(12, 13, 220, 48);
+		panel_4.add(btnClearLogcat);
 
 		JButton btnViewLogcat = new JButton("View Logcat");
 		btnViewLogcat.setToolTipText("Print android device logcat on screen");
@@ -1581,10 +1582,12 @@ public class Interface extends JFrame {
 				try {
 					Process p1 = Runtime.getRuntime().exec("adb logcat -d > /sdcard/.logcat.txt");
 					p1.waitFor();
-					Process p2 = Runtime.getRuntime().exec("adb pull /sdcard/.logcat.txt");
+					Process p2 = Runtime.getRuntime().exec("adb logcat -c");
 					p2.waitFor();
-					Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/.logcat.txt");
+					Process p3 = Runtime.getRuntime().exec("adb pull /sdcard/.logcat.txt");
 					p3.waitFor();
+					Process p4 = Runtime.getRuntime().exec("adb shell rm /sdcard/.logcat.txt");
+					p4.waitFor();
 					try {
 						Reader reader = new FileReader(new File(".logcat.txt"));
 						LogViewer.read(reader, "");
@@ -1605,9 +1608,14 @@ public class Interface extends JFrame {
 		btnViewLogcat.setBounds(838, 13, 220, 47);
 		panel_4.add(btnViewLogcat);
 
+		JLabel lblNoteLogcatG = new JLabel(
+				"Note: Logcat generation takes some time, program may not respond for a few moments");
+		lblNoteLogcatG.setBounds(12, 364, 1046, 15);
+		panel_4.add(lblNoteLogcatG);
+
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.WHITE);
-		tabbedPane.addTab("Backup and Restore", null, panel_5, null);
+		tabbedPane.addTab("Backup & Restore", null, panel_5, null);
 		panel_5.setLayout(null);
 
 		BackupAndRestoreDone = new JLabel("");
@@ -1684,7 +1692,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupInternelStorage.setBounds(270, 70, 220, 75);
+		btnBackupInternelStorage.setBounds(25, 184, 220, 75);
 		panel_5.add(btnBackupInternelStorage);
 
 		final JButton btnBackupSingleApp = new JButton("Single App");
@@ -1713,7 +1721,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupSingleApp.setBounds(25, 185, 220, 75);
+		btnBackupSingleApp.setBounds(270, 184, 220, 75);
 		panel_5.add(btnBackupSingleApp);
 
 		final JButton btnBackupAppAndAppData = new JButton("App and App Data");
@@ -1772,7 +1780,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupWholeDevice.setBounds(25, 301, 220, 75);
+		btnBackupWholeDevice.setBounds(270, 303, 220, 75);
 		panel_5.add(btnBackupWholeDevice);
 
 		final JButton btnRestorePreviousBackup = new JButton("Previous Backup");
@@ -1828,8 +1836,40 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupSystem.setBounds(270, 185, 220, 75);
+		btnBackupSystem.setBounds(25, 303, 220, 75);
 		panel_5.add(btnBackupSystem);
+
+		JButton btnBackupContacts = new JButton("Contacts *");
+		btnBackupContacts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BackupAndRestoreDone.setText("");
+				try {
+					AppStatus.setText("Performing backup...");
+					String command = null;
+					BufferedReader txtReader = new BufferedReader(
+							new InputStreamReader(getClass().getResourceAsStream("/others/contactsbackupscript.txt")));
+					BufferedReader in = new BufferedReader(txtReader);
+					for (String line; (line = in.readLine()) != null;) {
+						command = line;
+					}
+					Process p1 = Runtime.getRuntime().exec(command);
+					p1.waitFor();
+					AppStatus.setText("Backup completed successfully!");
+					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
+					JOptionPane.showMessageDialog(null, "Contacts have been saved to DPCS directory");
+					btnBackupSingleApp.setSelected(false);
+				} catch (Exception e1) {
+					System.err.println(e1);
+				}
+			}
+		});
+		btnBackupContacts.setToolTipText("Backup contacts from android device");
+		btnBackupContacts.setBounds(270, 70, 220, 75);
+		panel_5.add(btnBackupContacts);
+		
+		JLabel lblNotTested = new JLabel("* Not tested");
+		lblNotTested.setBounds(588, 363, 142, 15);
+		panel_5.add(lblNotTested);
 
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(Color.WHITE);
