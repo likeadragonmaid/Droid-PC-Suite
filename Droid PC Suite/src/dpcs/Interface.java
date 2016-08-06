@@ -363,7 +363,7 @@ public class Interface extends JFrame {
 		mntmNeedHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					JOptionPane.showMessageDialog(null, "Post your question on XDA-Developers thread");
+					JOptionPane.showMessageDialog(null, "Post your queries on XDA-Developers thread");
 					Desktop.getDesktop()
 							.browse(new URL(
 									"http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599")
@@ -1692,7 +1692,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupInternelStorage.setBounds(25, 184, 220, 75);
+		btnBackupInternelStorage.setBounds(270, 70, 220, 75);
 		panel_5.add(btnBackupInternelStorage);
 
 		final JButton btnBackupSingleApp = new JButton("Single App");
@@ -1721,7 +1721,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupSingleApp.setBounds(270, 184, 220, 75);
+		btnBackupSingleApp.setBounds(25, 184, 220, 75);
 		panel_5.add(btnBackupSingleApp);
 
 		final JButton btnBackupAppAndAppData = new JButton("App and App Data");
@@ -1780,7 +1780,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupWholeDevice.setBounds(270, 303, 220, 75);
+		btnBackupWholeDevice.setBounds(25, 303, 220, 75);
 		panel_5.add(btnBackupWholeDevice);
 
 		final JButton btnRestorePreviousBackup = new JButton("Previous Backup");
@@ -1836,36 +1836,8 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnBackupSystem.setBounds(25, 303, 220, 75);
+		btnBackupSystem.setBounds(270, 184, 220, 75);
 		panel_5.add(btnBackupSystem);
-
-		JButton btnBackupContacts = new JButton("Contacts *");
-		btnBackupContacts.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BackupAndRestoreDone.setText("");
-				try {
-					AppStatus.setText("Performing backup...");
-					String command = null;
-					BufferedReader txtReader = new BufferedReader(
-							new InputStreamReader(getClass().getResourceAsStream("/others/contactsbackupscript.txt")));
-					BufferedReader in = new BufferedReader(txtReader);
-					for (String line; (line = in.readLine()) != null;) {
-						command = line;
-					}
-					Process p1 = Runtime.getRuntime().exec(command);
-					p1.waitFor();
-					AppStatus.setText("Backup completed successfully!");
-					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-					JOptionPane.showMessageDialog(null, "Contacts have been saved to DPCS directory");
-					btnBackupSingleApp.setSelected(false);
-				} catch (Exception e1) {
-					System.err.println(e1);
-				}
-			}
-		});
-		btnBackupContacts.setToolTipText("Backup contacts from android device");
-		btnBackupContacts.setBounds(270, 70, 220, 75);
-		panel_5.add(btnBackupContacts);
 		
 		JLabel lblNotTested = new JLabel("* Not tested");
 		lblNotTested.setBounds(588, 363, 142, 15);
