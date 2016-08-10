@@ -20,7 +20,7 @@ public class Main {
 				new Interface().setVisible(true);
 				try {
 					System.out.println("Droid PC Suite loaded");
-					System.out.println("Killing old running adb instance, if running...");
+					System.out.println("Killing old running ADB instance, if running...");
 					Process p1 = Runtime.getRuntime().exec("adb kill-server");
 					p1.waitFor();
 					File file1 = new File(".checkadbconnection");
