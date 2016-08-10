@@ -18,3 +18,5 @@ Features:
 * build.prop Editor
 * ADB Terminal
 * Cyptographic hash sums comparing and calculator
+
+Note: Please use latest java to use this application or appication may not work as expected!
