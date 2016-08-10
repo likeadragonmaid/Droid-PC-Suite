@@ -13,18 +13,18 @@ public class Main {
 		image.getContentPane().setBackground(Color.WHITE);
 		image.setVisible(true);
 		Thread thread = Thread.currentThread();
-		thread.sleep(5000);
+		thread.sleep(2500);
 		image.dispose();
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new Interface().setVisible(true);
 				try {
 					System.out.println("Droid PC Suite loaded");
-					System.out.println("Killing old running adb instance, if any...");
+					System.out.println("Killing old running adb instance, if running...");
 					Process p1 = Runtime.getRuntime().exec("adb kill-server");
 					p1.waitFor();
 					File file1 = new File(".checkadbconnection");
-					System.out.println("Resetting connectivity service...");
+					System.out.println("Starting connectivity service...");
 					if (file1.exists() && !file1.isDirectory()) {
 						file1.delete();
 						File file2 = new File("su");
@@ -34,7 +34,6 @@ public class Main {
 						}
 					}
 					System.out.println("Connectivity and root detection service started...");
-					System.out.println("Looking for connected devices...");
 				} catch (Exception e) {
 					System.err.println(e);
 				}

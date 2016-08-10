@@ -79,9 +79,9 @@ public class About extends JFrame {
 		lblMyFriend2.setBounds(25, 217, 242, 24);
 		contentPane.add(lblMyFriend2);
 
-		JLabel lblVersionInfo = new JLabel("Version: 1.4 Beta 2");
+		JLabel lblVersionInfo = new JLabel("Version: 1.4 Stable");
 		lblVersionInfo.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblVersionInfo.setBounds(334, 16, 167, 18);
+		lblVersionInfo.setBounds(355, 16, 172, 18);
 		contentPane.add(lblVersionInfo);
 
 		JLabel lblForMyOther = new JLabel("For my other Android stuff visit me on XDA - Developers (@kvsjxd)");
@@ -122,7 +122,7 @@ public class About extends JFrame {
 		lblMySensei1.setBounds(25, 98, 242, 24);
 		contentPane.add(lblMySensei1);
 
-		JLabel lblDaretobe = new JLabel("@D4r3T0B3 (github)");
+		JLabel lblDaretobe = new JLabel("D4r3T0B3");
 		lblDaretobe.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblDaretobe.setBounds(25, 194, 242, 24);
 		contentPane.add(lblDaretobe);
