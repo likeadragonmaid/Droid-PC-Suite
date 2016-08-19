@@ -19,4 +19,4 @@ Features:
 * ADB Terminal
 * Cyptographic hash sums comparing and calculator
 
-Note: Please use latest java to use this application or application may not work as expected!
+Note: Please use latest java to use this application or this application may not work as expected!
