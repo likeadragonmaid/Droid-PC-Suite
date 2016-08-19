@@ -357,7 +357,7 @@ public class Interface extends JFrame {
 		});
 
 		JMenuItem mntmBootloaderRelatedInfo = new JMenuItem("Bootloader related info");
-		mntmBootloaderRelatedInfo.setToolTipText("View CID No.,Main-ver, bootloader info Etc. ");
+		mntmBootloaderRelatedInfo.setToolTipText("View CID No.,Main-ver, bootloader info Etc.");
 		mntmBootloaderRelatedInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -398,6 +398,27 @@ public class Interface extends JFrame {
 			}
 		});
 		mnHTC.add(mntmWriteSuperCIDNo);
+
+		JMenu mnSamsung = new JMenu("Samsung");
+		mnSamsung.setToolTipText("View list of tools which only work with Samsung devices");
+		mnDeviceSpecificTools.add(mnSamsung);
+
+		JMenuItem mntmDownloadMode = new JMenuItem("Download Mode");
+		mntmDownloadMode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					AppStatus.setText("Rebooting...");
+					Process p1 = Runtime.getRuntime().exec("adb reboot download");
+					p1.waitFor();
+					AppStatus.setText("Done");
+				} catch (Exception e1) {
+					System.err.println(e1);
+				}
+			}
+		});
+		mntmDownloadMode.setToolTipText(
+				"Reboot to Download Mode for flashing firmware to samsung device using Odin or Heimdall");
+		mnSamsung.add(mntmDownloadMode);
 
 		mnMenu.add(mntmExit);
 		JMenu mnHelp = new JMenu("Help");
@@ -1195,7 +1216,7 @@ public class Interface extends JFrame {
 		panel_2.setLayout(null);
 
 		JLabel lblRebootFrom = new JLabel("Reboot from :");
-		lblRebootFrom.setBounds(25, 181, 220, 15);
+		lblRebootFrom.setBounds(25, 180, 220, 15);
 		panel_2.add(lblRebootFrom);
 
 		JLabel lblRebootTo = new JLabel("Reboot to :");
@@ -1229,7 +1250,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootFromFastboot.setBounds(281, 232, 220, 75);
+		btnRebootFromFastboot.setBounds(28, 232, 220, 75);
 		panel_2.add(btnRebootFromFastboot);
 
 		JButton btnRebootToBootloaderFromFastboot = new JButton("Fastboot to Bootloader *");
@@ -1247,7 +1268,7 @@ public class Interface extends JFrame {
 			}
 		});
 
-		btnRebootToBootloaderFromFastboot.setBounds(532, 232, 220, 75);
+		btnRebootToBootloaderFromFastboot.setBounds(281, 232, 220, 75);
 		panel_2.add(btnRebootToBootloaderFromFastboot);
 
 		JButton btnRebootToFastboot = new JButton("Fastboot");
@@ -1285,27 +1306,6 @@ public class Interface extends JFrame {
 
 		btnRebootToBootloader.setBounds(28, 55, 220, 75);
 		panel_2.add(btnRebootToBootloader);
-
-		JButton btnRebooToDownload = new JButton("Download ^");
-		btnRebooToDownload.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					AppStatus.setText("Rebooting...");
-					Process p1 = Runtime.getRuntime().exec("adb reboot download");
-					p1.waitFor();
-					AppStatus.setText("Done");
-				} catch (Exception e1) {
-					System.err.println(e1);
-				}
-			}
-		});
-		btnRebooToDownload.setToolTipText("Reboot android device to download mode");
-		btnRebooToDownload.setBounds(28, 232, 220, 75);
-		panel_2.add(btnRebooToDownload);
-
-		JLabel lblForSamsung = new JLabel("^ For Samsung devices only");
-		lblForSamsung.setBounds(749, 359, 238, 19);
-		panel_2.add(lblForSamsung);
 
 		JButton btnRebootToRecovery = new JButton("Recovery");
 		btnRebootToRecovery.setToolTipText("Reboot android device to recovery mode");

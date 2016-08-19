@@ -1,3 +1,8 @@
+Version 1.5 Beta 1 (Build 160819)
+
+* Moved reboot to download mode to Device specific tools > Samsung
+* Added license to every java source file
+
 Version 1.4 Stable (Build 160810)
 
 * HTC device specific tools (3) added
