@@ -1,3 +1,23 @@
+/*****************************************************************************
+ * filemanager/FilePanel.java: FilePanel class for Droid PC Suite
+ *****************************************************************************
+ * Copyright (C) 2016 Karanvir Singh
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *****************************************************************************/
+
 package filemanager;
 
 import java.awt.BorderLayout;
@@ -14,7 +34,7 @@ import java.util.ArrayList;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import filemanager.DataReciever;
+import filemanager.DataReceiver;
 import filemanager.FileObj;
 import filemanager.Logger;
 import java.awt.Color;
@@ -23,12 +43,12 @@ public class FilePanel extends Panel {
 	private static final long serialVersionUID = -4692855035526278691L;
 	private Label dirLabel;
 	private JTable adbFileTable;
-	private DataReciever reciever;
+	private DataReceiver receiver;
 	private MyTableModel model;
 
-	public FilePanel(final DataReciever reciever) {
+	public FilePanel(final DataReceiver receiver) {
 		setBackground(Color.WHITE);
-		this.reciever = reciever;
+		this.receiver = receiver;
 		Button backButton = new Button("Back");
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -39,9 +59,9 @@ public class FilePanel extends Panel {
 					for (int i = 0; i < split.length - 1; i++) {
 						value += split[i] + "/";
 					}
-					updateADB(reciever.getDirContent(value), value);
+					updateADB(receiver.getDirContent(value), value);
 				} else {
-					updateADB(reciever.getDirContent("/"), "/");
+					updateADB(receiver.getDirContent("/"), "/");
 				}
 			}
 		});
@@ -92,7 +112,7 @@ public class FilePanel extends Panel {
 					} else {
 						value = dirLabel.getText() + value + "/";
 					}
-					updateADB(reciever.getDirContent(value), value);
+					updateADB(receiver.getDirContent(value), value);
 				}
 			}
 		});
@@ -122,7 +142,7 @@ public class FilePanel extends Panel {
 		Logger.writeToLog("pulling file...");
 		File file = null;
 		try {
-			file = reciever.pullFile(path);
+			file = receiver.pullFile(path);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

@@ -1,3 +1,23 @@
+/*****************************************************************************
+ * dpcs/Interface.java: The main interface for Droid PC Suite
+ *****************************************************************************
+ * Copyright (C) 2016 Karanvir Singh
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *****************************************************************************/
+
 package dpcs;
 
 import java.awt.Color;
@@ -938,7 +958,8 @@ public class Interface extends JFrame {
 		btnAppPackageList.setBounds(282, 27, 220, 75);
 		panel_8.add(btnAppPackageList);
 
-		JLabel lblAdvancedToolsNote = new JLabel("Note: All of the above tools are not supported by every device or ROM");
+		JLabel lblAdvancedToolsNote = new JLabel(
+				"Note: All of the above tools are not supported by every device or ROM");
 		lblAdvancedToolsNote.setBounds(25, 345, 736, 15);
 		panel_8.add(lblAdvancedToolsNote);
 

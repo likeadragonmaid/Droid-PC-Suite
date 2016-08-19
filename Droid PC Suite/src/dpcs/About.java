@@ -1,3 +1,23 @@
+/*****************************************************************************
+ * dpcs/About.java: About JFrame for Droid PC Suite
+ *****************************************************************************
+ * Copyright (C) 2016 Karanvir Singh
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *****************************************************************************/
+
 package dpcs;
 
 import java.awt.Color;
@@ -55,7 +75,7 @@ public class About extends JFrame {
 		btnGitHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Desktop.getDesktop().browse(new URL("https://kvsjxd.github.io/Droid-PC-Suite/").toURI());
+					Desktop.getDesktop().browse(new URL("https://kvsjxd.github.io/CryptoCalc").toURI());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
