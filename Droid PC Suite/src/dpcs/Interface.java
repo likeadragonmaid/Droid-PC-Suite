@@ -21,6 +21,7 @@
 package dpcs;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -30,11 +31,18 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.net.URL;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -52,6 +60,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 
 @SuppressWarnings("serial")
 public class Interface extends JFrame {
@@ -68,13 +77,13 @@ public class Interface extends JFrame {
 					adbconnected = false;
 					Process p1 = Runtime.getRuntime().exec("adb devices");
 					p1.waitFor();
-					Process p2 = Runtime.getRuntime().exec("adb shell touch /sdcard/.checkadbconnection");
+					Process p2 = Runtime.getRuntime().exec("adb shell touch /sdcard/.CheckADBConnection");
 					p2.waitFor();
-					Process p3 = Runtime.getRuntime().exec("adb pull /sdcard/.checkadbconnection");
+					Process p3 = Runtime.getRuntime().exec("adb pull /sdcard/.CheckADBConnection");
 					p3.waitFor();
-					Process p4 = Runtime.getRuntime().exec("adb shell rm /sdcard/.checkadbconnection");
+					Process p4 = Runtime.getRuntime().exec("adb shell rm /sdcard/.CheckADBConnection");
 					p4.waitFor();
-					File file = new File(".checkadbconnection");
+					File file = new File(".CheckADBConnection");
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 						adbconnected = true;
@@ -494,13 +503,13 @@ public class Interface extends JFrame {
 					JOptionPane.showMessageDialog(null, "Check if your device asks to Allow USB debugging");
 					JOptionPane.showMessageDialog(null,
 							"If yes check always allow from this computer checkbox and tap OK on your android device");
-					Process p3 = Runtime.getRuntime().exec("adb shell touch /sdcard/.checkadbconnection");
+					Process p3 = Runtime.getRuntime().exec("adb shell touch /sdcard/.CheckADBConnection");
 					p3.waitFor();
-					Process p4 = Runtime.getRuntime().exec("adb pull /sdcard/.checkadbconnection");
+					Process p4 = Runtime.getRuntime().exec("adb pull /sdcard/.CheckADBConnection");
 					p4.waitFor();
-					Process p5 = Runtime.getRuntime().exec("adb shell rm /sdcard/.checkadbconnection");
+					Process p5 = Runtime.getRuntime().exec("adb shell rm /sdcard/.CheckADBConnection");
 					p5.waitFor();
-					File file = new File(".checkadbconnection");
+					File file = new File(".CheckADBConnection");
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 						adbconnected = true;
@@ -575,13 +584,13 @@ public class Interface extends JFrame {
 		contentPane.add(AppStatus);
 
 		RootStatusLabel = new JLabel("");
-		RootStatusLabel.setForeground(Color.RED);
 		RootStatusLabel.setBounds(921, 12, 153, 17);
+		RootStatusLabel.setForeground(Color.RED);
 		contentPane.add(RootStatusLabel);
 
 		ADBConnectionLabel = new JLabel("");
-		ADBConnectionLabel.setForeground(Color.GREEN);
 		ADBConnectionLabel.setBounds(921, 0, 152, 17);
+		ADBConnectionLabel.setForeground(Color.GREEN);
 		contentPane.add(ADBConnectionLabel);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -2260,10 +2269,71 @@ public class Interface extends JFrame {
 		});
 		btnClearCalculatedCrypto.setBounds(25, 27, 220, 75);
 		panel_6.add(btnClearCalculatedCrypto);
-
+		
+		JPanel panel_10 = new JPanel();
+		panel_10.setBackground(Color.WHITE);
+		tabbedPane.addTab("Developer", null, panel_10, null);
+		panel_10.setLayout(null);
+		
+		JButton btnUnpackAPKs = new JButton("Unpack APKs");
+		btnUnpackAPKs.addActionListener(new ActionListener() {
+			private Component parentFrame;
+			public void actionPerformed(ActionEvent e) {
+				File path = null;
+				JFileChooser chooser1 = new JFileChooser();
+				chooser1.setDialogTitle("Select an APK file to extract");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
+				chooser1.setCurrentDirectory(new java.io.File("."));
+				chooser1.setFileFilter(filter);
+				int returnVal = chooser1.showOpenDialog(getParent());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = chooser1.getSelectedFile();
+					String filename = chooser1.getSelectedFile().getName();
+					JFileChooser chooser2 = new JFileChooser();
+					chooser2.setDialogTitle("Extract APK file to");
+					chooser2.setCurrentDirectory(new java.io.File("."));
+					chooser2.setAcceptAllFileFilterUsed(false);
+					chooser2.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					int userSelection = chooser2.showSaveDialog(parentFrame);
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+						path = chooser2.getSelectedFile();
+					}
+					String outputDir = path.getAbsolutePath();
+					java.util.zip.ZipFile zipFile = null;
+					try {
+						zipFile = new ZipFile(file);
+						Enumeration<? extends ZipEntry> entries = zipFile.entries();
+						while (entries.hasMoreElements()) {
+							ZipEntry entry = entries.nextElement();
+							File entryDestination = new File(outputDir, entry.getName());
+							if (entry.isDirectory()) {
+								entryDestination.mkdirs();
+							} else {
+								entryDestination.getParentFile().mkdirs();
+								InputStream in = zipFile.getInputStream(entry);
+								OutputStream out = null;
+								out = new FileOutputStream(entryDestination);
+								IOUtils.copy(in, out);
+								IOUtils.closeQuietly(in);
+								out.close();
+							}
+						}
+						zipFile.close();
+						JOptionPane.showMessageDialog(null, filename + " has been successfully extracted");
+					} catch (Exception e1) {
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "An error occured");
+					}
+				}
+			}
+		});
+		btnUnpackAPKs.setToolTipText("Unpack APKs stored on disk");
+		btnUnpackAPKs.setBounds(25, 27, 220, 75);
+		panel_10.add(btnUnpackAPKs);
+		
 		JLabel label_2 = new JLabel("");
-		label_2.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Interface_logo.png")));
 		label_2.setBounds(50, 0, 1038, 256);
+		label_2.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Interface_logo.png")));
 		contentPane.add(label_2);
 
 		Thread t = new Thread(r); // Background services
@@ -2276,7 +2346,7 @@ public class Interface extends JFrame {
 					Process p1 = Runtime.getRuntime().exec("adb kill-server");
 					p1.waitFor();
 					System.out.println("Cleaning cache...");
-					File file2 = new File(".checkadbconnection");
+					File file2 = new File(".CheckADBConnection");
 					if (file2.exists() && !file2.isDirectory()) {
 						file2.delete();
 					}

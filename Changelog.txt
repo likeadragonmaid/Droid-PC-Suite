@@ -1,5 +1,6 @@
-Version 1.5 Beta 1 (Build 160819)
+Version 1.5 Beta 1 (Build 160830)
 
+* Added APK unpacker
 * Moved reboot to download mode to Device specific tools > Samsung
 * Added license to every java source file
 
