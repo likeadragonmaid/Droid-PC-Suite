@@ -99,9 +99,9 @@ public class About extends JFrame {
 		lblMyFriend2.setBounds(25, 217, 242, 24);
 		contentPane.add(lblMyFriend2);
 
-		JLabel lblVersionInfo = new JLabel("Version: 1.4 Stable");
+		JLabel lblVersionInfo = new JLabel("Version: 1.5");
 		lblVersionInfo.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblVersionInfo.setBounds(355, 16, 172, 18);
+		lblVersionInfo.setBounds(382, 16, 132, 18);
 		contentPane.add(lblVersionInfo);
 
 		JLabel lblForMyOther = new JLabel("For my other Android stuff visit me on XDA - Developers (@kvsjxd)");

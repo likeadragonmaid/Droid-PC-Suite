@@ -65,7 +65,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.SystemUtils;
 
 @SuppressWarnings("serial")
 public class Interface extends JFrame {
@@ -997,6 +999,225 @@ public class Interface extends JFrame {
 				"Note: All of the above tools are not supported by every device or ROM");
 		lblAdvancedToolsNote.setBounds(25, 345, 736, 15);
 		panel_8.add(lblAdvancedToolsNote);
+
+		JPanel panel_10 = new JPanel();
+		panel_10.setBackground(Color.WHITE);
+		tabbedPane.addTab("Developer", null, panel_10, null);
+		panel_10.setLayout(null);
+
+		JButton btnUnpackAPKs = new JButton("Unpack APKs");
+		btnUnpackAPKs.addActionListener(new ActionListener() {
+			private Component parentFrame;
+
+			public void actionPerformed(ActionEvent e) {
+				File path = null;
+				JFileChooser chooser1 = new JFileChooser();
+				chooser1.setDialogTitle("Select an APK file to extract");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
+				chooser1.setCurrentDirectory(new java.io.File("."));
+				chooser1.setFileFilter(filter);
+				int returnVal = chooser1.showOpenDialog(getParent());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = chooser1.getSelectedFile();
+					String filename = chooser1.getSelectedFile().getName();
+					JFileChooser chooser2 = new JFileChooser();
+					chooser2.setDialogTitle("Extract APK file to");
+					chooser2.setCurrentDirectory(new java.io.File("."));
+					chooser2.setAcceptAllFileFilterUsed(false);
+					chooser2.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					int userSelection = chooser2.showSaveDialog(parentFrame);
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+						path = chooser2.getSelectedFile();
+					}
+					String outputDir = path.getAbsolutePath();
+					java.util.zip.ZipFile zipFile = null;
+					try {
+						zipFile = new ZipFile(file);
+						Enumeration<? extends ZipEntry> entries = zipFile.entries();
+						while (entries.hasMoreElements()) {
+							ZipEntry entry = entries.nextElement();
+							File entryDestination = new File(outputDir, entry.getName());
+							if (entry.isDirectory()) {
+								entryDestination.mkdirs();
+							} else {
+								entryDestination.getParentFile().mkdirs();
+								InputStream in = zipFile.getInputStream(entry);
+								OutputStream out = null;
+								out = new FileOutputStream(entryDestination);
+								IOUtils.copy(in, out);
+								IOUtils.closeQuietly(in);
+								out.close();
+							}
+						}
+						zipFile.close();
+						JOptionPane.showMessageDialog(null, filename + " has been successfully extracted");
+					} catch (Exception e1) {
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "An error occured");
+					}
+				}
+			}
+		});
+		btnUnpackAPKs.setToolTipText("Unpack APKs stored on disk");
+		btnUnpackAPKs.setBounds(25, 27, 220, 75);
+		panel_10.add(btnUnpackAPKs);
+
+		JButton btnUnRoot = new JButton("Unroot Device");
+		btnUnRoot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					File file1 = new File(".events");
+					if (!file1.exists()) {
+						List<String> lines = Arrays.asList("Unroot_Warning_Shown = True");
+						Path file = Paths.get(".events");
+						Files.write(file, lines, Charset.forName("UTF-8"));
+						JOptionPane.showMessageDialog(null,
+								"Only the SU Binary will get removed since there are lot of different root management\napplications for android available, I can't regularly search for them and add their\nsupport to this application. If you think this concerns you, you can help me by sending\nme a list of root management applicationsfor android like supersu, kingroot, kingoroot,\netc. But I can't promise that I will add support for each of them. Cheers! :)");
+					}
+					JOptionPane.showMessageDialog(null, "Unrooting work only on non-production builds of android");
+					Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
+					p1.waitFor();
+					File file2 = new File("su");
+					if (file2.exists() && !file2.isDirectory()) {
+						file2.delete();
+						Process p2 = Runtime.getRuntime().exec("adb remount");
+						p2.waitFor();
+						Process p3 = Runtime.getRuntime().exec("adb shell su -c rm -r /system/xbin/su");
+						p3.waitFor();
+						JOptionPane.showMessageDialog(null, "Operation completed");
+					} else {
+						JOptionPane.showMessageDialog(null, "This device is not rooted");
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnUnRoot.setToolTipText("Unroot device by removing SU binary from the device");
+		btnUnRoot.setBounds(541, 27, 220, 75);
+		panel_10.add(btnUnRoot);
+
+		JButton btnRepackAPKs = new JButton("Repack APKs");
+		btnRepackAPKs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Repacker();
+			}
+		});
+		btnRepackAPKs.setToolTipText("Repack previously unpacked APKs and save to them to disk");
+		btnRepackAPKs.setBounds(282, 27, 220, 75);
+		panel_10.add(btnRepackAPKs);
+
+		JButton btnZipAlignApks = new JButton("Zip Align APKs");
+		btnZipAlignApks.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				File file = null;
+				JFileChooser chooser1 = new JFileChooser();
+				chooser1.setDialogTitle("Select an APK file to align");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
+				chooser1.setCurrentDirectory(new java.io.File("."));
+				chooser1.setFileFilter(filter);
+				int returnVal = chooser1.showOpenDialog(getParent());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					file = chooser1.getSelectedFile();
+				}
+				String zipalignpath = System.getProperty("user.dir") + "/tools/zipalign/";
+				if (SystemUtils.IS_OS_WINDOWS) {
+					try {
+						Process p1 = Runtime.getRuntime()
+								.exec(zipalignpath + "zipalign.exe -f -v 4 " + file + file + "_aligned.apk");
+						p1.waitFor();
+						JOptionPane.showMessageDialog(null, file.getName() + " aligned successfully!");
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+				if (SystemUtils.IS_OS_LINUX) {
+					try {
+						Process p1 = Runtime.getRuntime()
+								.exec(zipalignpath + "./zipalign -f -v 4 " + file + " " + file + "_aligned");
+						p1.waitFor();
+						JOptionPane.showMessageDialog(null, file.getName() + " aligned successfully!");
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		btnZipAlignApks.setToolTipText("Zip Align APK files stored on disk to improve their performance");
+		btnZipAlignApks.setBounds(25, 131, 220, 75);
+		panel_10.add(btnZipAlignApks);
+
+		JButton btnSignAPKsAndZips = new JButton("Sign APKs and Zips");
+		btnSignAPKsAndZips.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				File file = null;
+				JFileChooser chooser1 = new JFileChooser();
+				chooser1.setDialogTitle("Select an APK or Zip file to sign");
+				chooser1.setCurrentDirectory(new java.io.File("."));
+				int returnVal = chooser1.showOpenDialog(getParent());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					file = chooser1.getSelectedFile();
+				}
+				String APKAndZipSignerPath = System.getProperty("user.dir") + "/tools/APKAndZipSign/";
+				try {
+					Process p1 = Runtime.getRuntime().exec(APKAndZipSignerPath
+							+ "java -jar signapk.jar testkey.x509.pem testkey.pk8 " + file + " " + file + "_signed");
+					p1.waitFor();
+					JOptionPane.showMessageDialog(null, file.getName() + " signed successfully!");
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnSignAPKsAndZips.setToolTipText("Repack previously unpacked APKs and save to them to disk");
+		btnSignAPKsAndZips.setBounds(282, 131, 220, 75);
+		panel_10.add(btnSignAPKsAndZips);
+
+		JButton btnDeodexer = new JButton("Deodexer");
+		btnDeodexer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				File file = null;
+				String filetype = null;
+				JFileChooser chooser1 = new JFileChooser();
+				chooser1.setDialogTitle("Select an APK or Zip file to sign");
+				chooser1.setCurrentDirectory(new java.io.File("."));
+				int returnVal = chooser1.showOpenDialog(getParent());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					file = chooser1.getSelectedFile();
+					filetype = FilenameUtils.getExtension(file.getName());
+				}
+				String DexToolsPath = System.getProperty("user.dir") + "/dex/";
+				try {
+					Process p1 = Runtime.getRuntime()
+							.exec(DexToolsPath
+									+ "java -Xmx1024m -jar baksmali.jar -c :core.jar:bouncycastle.jar:ext.jar:framework.jar:android.policy.jar:services.jar:core-junit.jar -x "
+									+ file);
+					p1.waitFor();
+					Process p2 = Runtime.getRuntime().exec("java -Xmx1024m -jar smali.jar out -o classes.dex");
+					p2.waitFor();
+					JOptionPane.showMessageDialog(null,
+							"Check the new out folder in\n" + System.getProperty("user.dir"));
+					if (filetype.equals("apk")) {
+						if (SystemUtils.IS_OS_WINDOWS) {
+							Process p3 = Runtime.getRuntime()
+									.exec(DexToolsPath + "zipalign.exe -f -v 4 " + file + " " + file + "_aligned");
+							p3.waitFor();
+						}
+						if (SystemUtils.IS_OS_LINUX) {
+							Process p3 = Runtime.getRuntime()
+									.exec(DexToolsPath + "./zipalign -f -v 4 " + file + " " + file + "_aligned");
+							p3.waitFor();
+						}
+					}
+					JOptionPane.showMessageDialog(null, file + " deodexed successfully!");
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnDeodexer.setToolTipText("Unroot device by removing SU binary from the device");
+		btnDeodexer.setBounds(541, 131, 220, 75);
+		panel_10.add(btnDeodexer);
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.WHITE);
@@ -2070,16 +2291,16 @@ public class Interface extends JFrame {
 		panel_3.setLayout(null);
 
 		JLabel label_17 = new JLabel("Note: Don't worry if the app says to connect your device while");
-		label_17.setBounds(25, 320, 580, 19);
+		label_17.setBounds(66, 320, 600, 19);
 		panel_3.add(label_17);
 
 		JLabel label_18 = new JLabel("android is not booted ex. fastboot, bootloader, booting etc.");
-		label_18.setBounds(66, 337, 580, 19);
+		label_18.setBounds(66, 337, 600, 19);
 		panel_3.add(label_18);
 
 		JLabel lblOnlyForNexus = new JLabel(
 				"Works only with specific devices ex. Nexus, Android One, FEW MTK devices etc.");
-		lblOnlyForNexus.setBounds(66, 358, 580, 19);
+		lblOnlyForNexus.setBounds(66, 351, 600, 24);
 		panel_3.add(lblOnlyForNexus);
 
 		JButton btnUnlockBootloader = new JButton("Unlock Bootloader");
@@ -2274,112 +2495,7 @@ public class Interface extends JFrame {
 		});
 		btnClearCalculatedCrypto.setBounds(25, 27, 220, 75);
 		panel_6.add(btnClearCalculatedCrypto);
-		
-		JPanel panel_10 = new JPanel();
-		panel_10.setBackground(Color.WHITE);
-		tabbedPane.addTab("Developer", null, panel_10, null);
-		panel_10.setLayout(null);
-		
-		JButton btnUnpackAPKs = new JButton("Unpack APKs");
-		btnUnpackAPKs.addActionListener(new ActionListener() {
-			private Component parentFrame;
-			public void actionPerformed(ActionEvent e) {
-				File path = null;
-				JFileChooser chooser1 = new JFileChooser();
-				chooser1.setDialogTitle("Select an APK file to extract");
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
-				chooser1.setCurrentDirectory(new java.io.File("."));
-				chooser1.setFileFilter(filter);
-				int returnVal = chooser1.showOpenDialog(getParent());
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = chooser1.getSelectedFile();
-					String filename = chooser1.getSelectedFile().getName();
-					JFileChooser chooser2 = new JFileChooser();
-					chooser2.setDialogTitle("Extract APK file to");
-					chooser2.setCurrentDirectory(new java.io.File("."));
-					chooser2.setAcceptAllFileFilterUsed(false);
-					chooser2.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					int userSelection = chooser2.showSaveDialog(parentFrame);
-					if (userSelection == JFileChooser.APPROVE_OPTION) {
-						path = chooser2.getSelectedFile();
-					}
-					String outputDir = path.getAbsolutePath();
-					java.util.zip.ZipFile zipFile = null;
-					try {
-						zipFile = new ZipFile(file);
-						Enumeration<? extends ZipEntry> entries = zipFile.entries();
-						while (entries.hasMoreElements()) {
-							ZipEntry entry = entries.nextElement();
-							File entryDestination = new File(outputDir, entry.getName());
-							if (entry.isDirectory()) {
-								entryDestination.mkdirs();
-							} else {
-								entryDestination.getParentFile().mkdirs();
-								InputStream in = zipFile.getInputStream(entry);
-								OutputStream out = null;
-								out = new FileOutputStream(entryDestination);
-								IOUtils.copy(in, out);
-								IOUtils.closeQuietly(in);
-								out.close();
-							}
-						}
-						zipFile.close();
-						JOptionPane.showMessageDialog(null, filename + " has been successfully extracted");
-					} catch (Exception e1) {
-						e1.printStackTrace();
-						JOptionPane.showMessageDialog(null, "An error occured");
-					}
-				}
-			}
-		});
-		btnUnpackAPKs.setToolTipText("Unpack APKs stored on disk");
-		btnUnpackAPKs.setBounds(25, 27, 220, 75);
-		panel_10.add(btnUnpackAPKs);
-		
-		JButton btnUnRoot = new JButton("Unroot Device");
-		btnUnRoot.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					File file1 = new File(".events");
-					if (!file1.exists()) {
-						List<String> lines = Arrays.asList("Unroot_Warning_Shown = True");
-						Path file = Paths.get(".events");
-						Files.write(file, lines, Charset.forName("UTF-8"));
-						JOptionPane.showMessageDialog(null,
-								"Only the SU Binary will get removed since there are lot of different root management\napplications for android available, I can't regularly search for them and add their\nsupport to this application. If you think this concerns you, you can help me by sending\nme a list of root management applicationsfor android like supersu, kingroot, kingoroot,\netc. But I can't promise that I will add support for each of them. Cheers! :)");
-					}
-					JOptionPane.showMessageDialog(null, "Unrooting work only on non-production builds of android");
-					Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
-					p1.waitFor();
-					File file2 = new File("su");
-					if (file2.exists() && !file2.isDirectory()) {
-						file2.delete();
-						Process p2 = Runtime.getRuntime().exec("adb remount");
-						p2.waitFor();
-						Process p3 = Runtime.getRuntime().exec("adb shell su -c rm -r /system/xbin/su");
-						p3.waitFor();
-					} else {
-						JOptionPane.showMessageDialog(null, "This device is not rooted");
-					}
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnUnRoot.setToolTipText("Unroot device by removing SU binary from the device");
-		btnUnRoot.setBounds(541, 27, 220, 75);
-		panel_10.add(btnUnRoot);
-		
-		JButton btnRepackAPKs = new JButton("Repack APKs");
-		btnRepackAPKs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new Repacker();
-			}
-		});
-		btnRepackAPKs.setToolTipText("Repack previously unpacked APKs and save to them to disk");
-		btnRepackAPKs.setBounds(282, 27, 220, 75);
-		panel_10.add(btnRepackAPKs);
-		
+
 		JLabel label_2 = new JLabel("");
 		label_2.setBounds(50, 0, 1038, 256);
 		label_2.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Interface_logo.png")));
