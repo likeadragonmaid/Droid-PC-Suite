@@ -1186,7 +1186,8 @@ public class Interface extends JFrame {
 					file = chooser1.getSelectedFile();
 					filetype = FilenameUtils.getExtension(file.getName());
 				}
-				String DexToolsPath = System.getProperty("user.dir") + "/dex/";
+				String DexToolsPath = System.getProperty("user.dir") + "/tools/dex/";
+				String ZipAlignPath = System.getProperty("user.dir") + "/tools/zipalign/";
 				try {
 					Process p1 = Runtime.getRuntime()
 							.exec(DexToolsPath
@@ -1200,12 +1201,12 @@ public class Interface extends JFrame {
 					if (filetype.equals("apk")) {
 						if (SystemUtils.IS_OS_WINDOWS) {
 							Process p3 = Runtime.getRuntime()
-									.exec(DexToolsPath + "zipalign.exe -f -v 4 " + file + " " + file + "_aligned");
+									.exec(ZipAlignPath + "zipalign.exe -f -v 4 " + file + " " + file + "_aligned");
 							p3.waitFor();
 						}
 						if (SystemUtils.IS_OS_LINUX) {
 							Process p3 = Runtime.getRuntime()
-									.exec(DexToolsPath + "./zipalign -f -v 4 " + file + " " + file + "_aligned");
+									.exec(ZipAlignPath + "./zipalign -f -v 4 " + file + " " + file + "_aligned");
 							p3.waitFor();
 						}
 					}
@@ -1215,7 +1216,7 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		btnDeodexer.setToolTipText("Unroot device by removing SU binary from the device");
+		btnDeodexer.setToolTipText("Deodex APKs and Zips to save ram while their manipulation on device");
 		btnDeodexer.setBounds(541, 131, 220, 75);
 		panel_10.add(btnDeodexer);
 

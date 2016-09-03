@@ -1,6 +1,6 @@
 Version 1.5 Beta (Build 160903)
 
-* Added Deodexer
+* Added Deodexer for APKs and Jars
 * Added Signer for APKs and Zips
 * Added Zip Align for APKs
 * Added APK Unpacker
