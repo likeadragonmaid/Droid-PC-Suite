@@ -1,5 +1,6 @@
 Version 1.5 Beta (Build 160903)
 
+* License for zip4j library listed in licenses
 * Added APK Unpacker
 * Added APK Repacker
 * Added Unroot

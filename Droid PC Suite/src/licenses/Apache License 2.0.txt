@@ -1,7 +1,8 @@
 Notices for files(s):
 
 /libs/commons-codec-1.10.jar   (Src http://mirror.fibergrid.in/apache//commons/codec/source/commons-codec-1.10-src.tar.gz)
-/libs/commons-io-2.5.jar            (Src http://mirror.fibergrid.in/apache//commons/io/source/commons-io-2.5-src.tar.gz)
+/libs/commons-io-2.5.jar       (Src http://mirror.fibergrid.in/apache//commons/io/source/commons-io-2.5-src.tar.gz)
+/libs/zip4j_1.3.2.jar          (Src http://www.lingala.net/zip4j/includes/downloadzip4j.php?option=sources&fmt=zip)
 
 Apache License
 
