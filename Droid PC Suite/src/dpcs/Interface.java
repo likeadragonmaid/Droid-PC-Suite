@@ -2367,7 +2367,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnUnRoot.setToolTipText("Unroot device by removing SU binary from the device");
-		btnUnRoot.setBounds(588, 27, 220, 75);
+		btnUnRoot.setBounds(541, 27, 220, 75);
 		panel_10.add(btnUnRoot);
 		
 		JButton btnRepackAPKs = new JButton("Repack APKs");
@@ -2377,7 +2377,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnRepackAPKs.setToolTipText("Repack previously unpacked APKs and save to them to disk");
-		btnRepackAPKs.setBounds(296, 27, 220, 75);
+		btnRepackAPKs.setBounds(282, 27, 220, 75);
 		panel_10.add(btnRepackAPKs);
 		
 		JLabel label_2 = new JLabel("");
