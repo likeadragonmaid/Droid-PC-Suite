@@ -39,7 +39,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -2330,6 +2336,40 @@ public class Interface extends JFrame {
 		btnUnpackAPKs.setToolTipText("Unpack APKs stored on disk");
 		btnUnpackAPKs.setBounds(25, 27, 220, 75);
 		panel_10.add(btnUnpackAPKs);
+		
+		JButton btnUnRoot = new JButton("Unroot Device");
+		btnUnRoot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					File file1 = new File(".events");
+					if (!file1.exists()) {
+						List<String> lines = Arrays.asList("Unroot_Warning_Shown = True");
+						Path file = Paths.get(".events");
+						Files.write(file, lines, Charset.forName("UTF-8"));
+						JOptionPane.showMessageDialog(null,
+								"Only the SU Binary will get removed since there are lot of different root management\napplications for android available, I can't regularly search for them and add their\nsupport to this application. If you think this concerns you, you can help me by sending\nme a list of root management applicationsfor android like supersu, kingroot, kingoroot,\netc. But I can't promise that I will add support for each of them. Cheers! :)");
+					}
+					JOptionPane.showMessageDialog(null, "Unrooting work only on non-production builds of android");
+					Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
+					p1.waitFor();
+					File file2 = new File("su");
+					if (file2.exists() && !file2.isDirectory()) {
+						file2.delete();
+						Process p2 = Runtime.getRuntime().exec("adb remount");
+						p2.waitFor();
+						Process p3 = Runtime.getRuntime().exec("adb shell su -c rm -r /system/xbin/su");
+						p3.waitFor();
+					} else {
+						JOptionPane.showMessageDialog(null, "This device is not rooted");
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnUnRoot.setToolTipText("Unroot device by removing SU binary from the device");
+		btnUnRoot.setBounds(282, 27, 220, 75);
+		panel_10.add(btnUnRoot);
 		
 		JLabel label_2 = new JLabel("");
 		label_2.setBounds(50, 0, 1038, 256);

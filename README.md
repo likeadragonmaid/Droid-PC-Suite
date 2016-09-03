@@ -9,6 +9,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 * Record android device screen
 * Flash any file using flasher
 * Wipe partitions
+* Unroot
 * Reboot to different modes
 * Unlock/ Lock bootloader
 * View and save logcat
@@ -17,6 +18,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 * Bypass “your” device security
 * build.prop Editor
 * ADB Terminal
+* Unpack APKs
 * Cyptographic hash sums comparing and calculator
 
 ## How to build from source using eclipse:
