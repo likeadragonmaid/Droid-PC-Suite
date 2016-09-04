@@ -5,7 +5,7 @@ Version 1.5 Beta (Build 160904)
 * Added Zip Align for APKs
 * Added APK Unpacker
 * Added APK Repacker
-* Added Unroot
+* Added Unroot to Advanced tab
 * License for zip4j library listed in licenses
 * Moved reboot to download mode to Device specific tools > Samsung
 * Added license to every java source file

@@ -981,7 +981,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnWifiInformation.setToolTipText("View current wifi information of android device");
-		btnWifiInformation.setBounds(25, 236, 220, 75);
+		btnWifiInformation.setBounds(282, 236, 220, 75);
 		panel_8.add(btnWifiInformation);
 
 		JButton btnAppPackageList = new JButton("App Packages List");
@@ -999,6 +999,41 @@ public class Interface extends JFrame {
 				"Note: All of the above tools are not supported by every device or ROM");
 		lblAdvancedToolsNote.setBounds(25, 345, 736, 15);
 		panel_8.add(lblAdvancedToolsNote);
+		
+		JButton btnUnroot = new JButton("Unroot Device");
+		btnUnroot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					File file1 = new File(".events");
+					if (!file1.exists()) {
+						List<String> lines = Arrays.asList("Unroot_Warning_Shown = True");
+						Path file = Paths.get(".events");
+						Files.write(file, lines, Charset.forName("UTF-8"));
+						JOptionPane.showMessageDialog(null,
+								"Only the SU Binary will get removed since there are lot of different root management\napplications for android available, I can't regularly search for them and add their\nsupport to this application. If you think this concerns you, you can help me by sending\nme a list of root management applicationsfor android like supersu, kingroot, kingoroot,\netc. But I can't promise that I will add support for each of them. Cheers! :)");
+					}
+					JOptionPane.showMessageDialog(null, "Unrooting work only on non-production builds of android");
+					Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
+					p1.waitFor();
+					File file2 = new File("su");
+					if (file2.exists() && !file2.isDirectory()) {
+						file2.delete();
+						Process p2 = Runtime.getRuntime().exec("adb remount");
+						p2.waitFor();
+						Process p3 = Runtime.getRuntime().exec("adb shell su -c rm -r /system/xbin/su");
+						p3.waitFor();
+						JOptionPane.showMessageDialog(null, "Operation completed");
+					} else {
+						JOptionPane.showMessageDialog(null, "This device is not rooted");
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnUnroot.setToolTipText("Unroot device by removing SU binary from the device");
+		btnUnroot.setBounds(25, 236, 220, 75);
+		panel_8.add(btnUnroot);
 
 		JPanel panel_10 = new JPanel();
 		panel_10.setBackground(Color.WHITE);
@@ -1059,43 +1094,8 @@ public class Interface extends JFrame {
 			}
 		});
 		btnUnpackAPKs.setToolTipText("Unpack APKs stored on disk");
-		btnUnpackAPKs.setBounds(25, 27, 220, 75);
+		btnUnpackAPKs.setBounds(25, 131, 220, 75);
 		panel_10.add(btnUnpackAPKs);
-
-		JButton btnUnRoot = new JButton("Unroot Device");
-		btnUnRoot.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					File file1 = new File(".events");
-					if (!file1.exists()) {
-						List<String> lines = Arrays.asList("Unroot_Warning_Shown = True");
-						Path file = Paths.get(".events");
-						Files.write(file, lines, Charset.forName("UTF-8"));
-						JOptionPane.showMessageDialog(null,
-								"Only the SU Binary will get removed since there are lot of different root management\napplications for android available, I can't regularly search for them and add their\nsupport to this application. If you think this concerns you, you can help me by sending\nme a list of root management applicationsfor android like supersu, kingroot, kingoroot,\netc. But I can't promise that I will add support for each of them. Cheers! :)");
-					}
-					JOptionPane.showMessageDialog(null, "Unrooting work only on non-production builds of android");
-					Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
-					p1.waitFor();
-					File file2 = new File("su");
-					if (file2.exists() && !file2.isDirectory()) {
-						file2.delete();
-						Process p2 = Runtime.getRuntime().exec("adb remount");
-						p2.waitFor();
-						Process p3 = Runtime.getRuntime().exec("adb shell su -c rm -r /system/xbin/su");
-						p3.waitFor();
-						JOptionPane.showMessageDialog(null, "Operation completed");
-					} else {
-						JOptionPane.showMessageDialog(null, "This device is not rooted");
-					}
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnUnRoot.setToolTipText("Unroot device by removing SU binary from the device");
-		btnUnRoot.setBounds(541, 27, 220, 75);
-		panel_10.add(btnUnRoot);
 
 		JButton btnRepackAPKs = new JButton("Repack APKs");
 		btnRepackAPKs.addActionListener(new ActionListener() {
@@ -1144,7 +1144,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnZipAlignApks.setToolTipText("Zip Align APK files stored on disk to improve their performance");
-		btnZipAlignApks.setBounds(25, 131, 220, 75);
+		btnZipAlignApks.setBounds(282, 131, 220, 75);
 		panel_10.add(btnZipAlignApks);
 
 		JButton btnSignAPKsAndZips = new JButton("Sign APKs and Zips");
@@ -1170,7 +1170,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnSignAPKsAndZips.setToolTipText("Repack previously unpacked APKs and save to them to disk");
-		btnSignAPKsAndZips.setBounds(282, 131, 220, 75);
+		btnSignAPKsAndZips.setBounds(541, 27, 220, 75);
 		panel_10.add(btnSignAPKsAndZips);
 
 		JButton btnDeodexer = new JButton("Deodexer");
@@ -1217,7 +1217,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnDeodexer.setToolTipText("Deodex APKs and Zips to save ram while their manipulation on device");
-		btnDeodexer.setBounds(541, 131, 220, 75);
+		btnDeodexer.setBounds(25, 27, 220, 75);
 		panel_10.add(btnDeodexer);
 
 		JPanel panel_5 = new JPanel();
