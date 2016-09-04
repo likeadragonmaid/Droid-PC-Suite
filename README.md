@@ -37,7 +37,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 8. Click finish
 
 ### Windows
-> After following all building steps, copy all adb and fastboot files to same directory as of exported Droid PC Suite binary.Then copy tools folder to Droid PC Suite directory.
+> After following all building steps, copy all adb and fastboot files to same directory as of exported Droid PC Suite binary.Then copy tools directory to Droid PC Suite directory.
 
 ### Linux/ MacOS/ BSD (Any Unix-Like OS)
 > Make sure android-tools-adb and android-tools-fastboot are installed on your workstation (These packages can have different name for different distros or operating systems). After following all building steps, set Droid PC Suite binary as executable. Also copy tools directory to Droid PC Suite directory.
