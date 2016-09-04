@@ -1124,7 +1124,7 @@ public class Interface extends JFrame {
 				if (SystemUtils.IS_OS_WINDOWS) {
 					try {
 						Process p1 = Runtime.getRuntime()
-								.exec(zipalignpath + "zipalign.exe -f -v 4 " + file + file + "_aligned.apk");
+								.exec(zipalignpath + "zipalign.exe -f -v 4 " + file + " " + file + "_aligned.apk");
 						p1.waitFor();
 						JOptionPane.showMessageDialog(null, file.getName() + " aligned successfully!");
 					} catch (Exception e1) {
