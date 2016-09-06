@@ -34,7 +34,8 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 5. Add all the files to build path which are stored in /src/libs/
 6. Run Main.java
 7. Export the whole project as runnable JAR and package all the libraries
-8. Click finish
+8. Copy the tools directory and paste it in the sae directory as of exported jar, or some features will not work as expected!
+9. Click finish
 
 ### Windows
 > After following all building steps, copy all adb and fastboot files to same directory as of exported Droid PC Suite binary. Then copy tools directory to Droid PC Suite directory.
