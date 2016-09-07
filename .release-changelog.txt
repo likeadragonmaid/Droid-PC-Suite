@@ -1,0 +1,13 @@
+Version 1.4 Stable (Build 160810)
+
+* HTC device specific tools (3) added
+  They can be accessed from :
+  "Menu > Device specific tools > HTC >..."
+  [THEY ARE "NOT" TESTED, as I don't have a HTC device,
+  please report bugs if you encounter them.]
+* "File" in menu bar renamed to "Menu"
+* "Dev. Tools" renamed to "Advanced"
+* Splash screen duration reduced to 2.5 seconds
+* Tabs re-arranged
+* Changelog tracker removed from application to reduce size
+* Other minor UI changes 
