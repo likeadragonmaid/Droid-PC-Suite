@@ -43,4 +43,4 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 ### Linux/ MacOS/ BSD (Any Unix-Like OS)
 > Make sure android-tools-adb and android-tools-fastboot are installed on your workstation (These packages can have different name for different distros or operating systems). After following all building steps, set Droid PC Suite binary as executable. Also copy tools directory to Droid PC Suite directory.
 
-Note: Please use latest java to use this application or this application may not work as expected!
+## Note: This project is compiled against "openjdk version 1.8.0_102" and requires Java 8 to work properly!
