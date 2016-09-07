@@ -1,14 +1,17 @@
 Version 1.5 Beta (Build 160904)
 
-* Added Deodexer for APKs and Jars
-* Added Signer for APKs and Zips
-* Added Zip Align for APKs
+#EXPERIMENTAL
+
+# Added Deodexer for APKs and Jars
+# Added Signer for APKs and Zips
+# Added Zip Align for APKs
 * Added APK Unpacker
 * Added APK Repacker
 * Added Unroot to Advanced tab
 * License for zip4j library listed in licenses
 * Moved reboot to download mode to Device specific tools > Samsung
 * Added license to every java source file
+* Bug fixes
 
 Version 1.4 Stable (Build 160810)
 
