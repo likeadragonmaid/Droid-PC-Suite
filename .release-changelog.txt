@@ -10,4 +10,4 @@ Version 1.4 Stable (Build 160810)
 * Splash screen duration reduced to 2.5 seconds
 * Tabs re-arranged
 * Changelog tracker removed from application to reduce size
-* Other minor UI changes 
+* Other minor UI changes
