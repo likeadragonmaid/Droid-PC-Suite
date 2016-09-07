@@ -232,8 +232,8 @@ public class Interface extends JFrame {
 			}
 		});
 
-		JMenuItem mntmNoOfUsers = new JMenuItem("Max users supported?");
-		mntmNoOfUsers.setToolTipText("Max no. of users supported by android device");
+		JMenuItem mntmNoOfUsers = new JMenuItem("Max user(s) supported?");
+		mntmNoOfUsers.setToolTipText("Max no. of user(s) supported by android device");
 		mntmNoOfUsers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {

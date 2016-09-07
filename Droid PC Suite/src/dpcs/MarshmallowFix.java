@@ -26,11 +26,8 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.InputStreamReader;
 import java.net.URL;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -72,10 +69,9 @@ public class MarshmallowFix extends JFrame {
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Desktop.getDesktop()
-							.browse(new URL(
-									"http://forum.xda-developers.com/attachment.php?attachmentid=3761901&d=1464187904")
-											.toURI());
+					Desktop.getDesktop().browse(
+							new URL("http://forum.xda-developers.com/attachment.php?attachmentid=3761901&d=1464187904")
+									.toURI());
 				} catch (Exception e1) {
 					System.err.println(e1);
 				}
@@ -93,9 +89,8 @@ public class MarshmallowFix extends JFrame {
 		scrollPane.setViewportView(MarshmallowFixviewer);
 
 		try {
-			URL helpobj = ADBHelp.class.getResource("/others/marshmallow-fix.txt");
-			File helpobj2 = new File(helpobj.toURI());
-			Reader reader = new FileReader(new File(helpobj2.toURI()));
+			InputStreamReader reader = new InputStreamReader(
+					getClass().getResourceAsStream("/others/marshmallow-fix.txt"));
 			MarshmallowFixviewer.read(reader, "");
 		} catch (Exception e1) {
 			System.err.println(e1);

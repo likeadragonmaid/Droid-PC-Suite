@@ -30,7 +30,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -91,9 +90,8 @@ public class Terminal extends JFrame {
 		mntmADBCommandList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					URL obj = Terminal.class.getResource("/others/adbhelp.txt");
-					File obj2 = new File(obj.toURI());
-					Reader reader = new FileReader(new File(obj2.toURI()));
+					InputStreamReader reader = new InputStreamReader(
+							getClass().getResourceAsStream("/others/adbhelp.txt"));
 					TerminalEmulatorDisplay.read(reader, "");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -137,9 +135,8 @@ public class Terminal extends JFrame {
 		mntmFastbootCommandList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					URL obj = Terminal.class.getResource("/others/fastboothelp.txt");
-					File obj2 = new File(obj.toURI());
-					Reader reader = new FileReader(new File(obj2.toURI()));
+					InputStreamReader reader = new InputStreamReader(
+							getClass().getResourceAsStream("/others/fastboothelp.txt"));
 					TerminalEmulatorDisplay.read(reader, "");
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -199,9 +196,7 @@ public class Terminal extends JFrame {
 						TerminalEmulatorDisplay.setText("");
 					}
 					if (commandcheck.equalsIgnoreCase("cls")) {
-						TerminalEmulatorDisplay.setText("ADB terminal emulator is highly experimental! Expect bugs!"); // Message
-																														// for
-																														// linux
+						TerminalEmulatorDisplay.setText("ADB terminal emulator is highly experimental! Expect bugs!");
 						TerminalEmulatorDisplay.setText("");
 					}
 					if (commandcheck.equalsIgnoreCase("reset")) {

@@ -22,10 +22,7 @@ package dpcs;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileReader;
-import java.io.Reader;
-import java.net.URL;
+import java.io.InputStreamReader;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -69,9 +66,8 @@ public class ApacheLicense extends JFrame {
 		LicenseViewer.setEditable(false);
 		scrollPane.setViewportView(LicenseViewer);
 		try {
-			URL licenseobj = ApacheLicense.class.getResource("/licenses/Apache License 2.0.txt");
-			File licenseobj2 = new File(licenseobj.toURI());
-			Reader reader = new FileReader(new File(licenseobj2.toURI()));
+			InputStreamReader reader = new InputStreamReader(
+					getClass().getResourceAsStream("/licenses/Apache License 2.0.txt"));
 			LicenseViewer.read(reader, "");
 		} catch (Exception e) {
 			e.printStackTrace();

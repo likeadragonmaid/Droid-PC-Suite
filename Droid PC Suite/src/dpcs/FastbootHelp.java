@@ -22,10 +22,7 @@ package dpcs;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileReader;
-import java.io.Reader;
-import java.net.URL;
+import java.io.InputStreamReader;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -69,9 +66,7 @@ public class FastbootHelp extends JFrame {
 		HelpViewer.setEditable(false);
 		scrollPane.setViewportView(HelpViewer);
 		try {
-			URL helpobj = FastbootHelp.class.getResource("/others/fastboothelp.txt");
-			File helpobj2 = new File(helpobj.toURI());
-			Reader reader = new FileReader(new File(helpobj2.toURI()));
+			InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/others/fastboothelp.txt"));
 			HelpViewer.read(reader, "");
 		} catch (Exception e) {
 			e.printStackTrace();
