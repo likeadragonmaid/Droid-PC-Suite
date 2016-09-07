@@ -1,4 +1,4 @@
-Version 1.5 Beta (Build 160904)
+Version 1.5 Beta (Build 160907)
 
 #EXPERIMENTAL
 
