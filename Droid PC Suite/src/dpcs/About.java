@@ -29,6 +29,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,6 +38,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.commons.io.IOUtils;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -43,6 +48,7 @@ import javax.swing.UIManager;
 public class About extends JFrame {
 
 	private JPanel contentPane;
+	double AppVersion;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -70,12 +76,21 @@ public class About extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		try {
+			InputStreamReader reader2 = new InputStreamReader(
+					getClass().getResourceAsStream("/others/app-version.txt"));
+			String tmp = IOUtils.toString(reader2);
+			AppVersion = Double.parseDouble(tmp);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
 		JButton btnGitHub = new JButton("GitHub");
 		btnGitHub.setToolTipText("Access Droid PC Suite github repository");
 		btnGitHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Desktop.getDesktop().browse(new URL("https://kvsjxd.github.io/CryptoCalc").toURI());
+					Desktop.getDesktop().browse(new URL("https://github.com/kvsjxd/Droid-PC-Suite/").toURI());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -99,7 +114,7 @@ public class About extends JFrame {
 		lblMyFriend2.setBounds(25, 217, 242, 24);
 		contentPane.add(lblMyFriend2);
 
-		JLabel lblVersionInfo = new JLabel("Version: 1.5");
+		JLabel lblVersionInfo = new JLabel("Version: " + AppVersion);
 		lblVersionInfo.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblVersionInfo.setBounds(382, 16, 132, 18);
 		contentPane.add(lblVersionInfo);
@@ -109,10 +124,9 @@ public class About extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					Desktop.getDesktop()
-							.browse(new URL(
-									"http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
-											.toURI());
+					Desktop.getDesktop().browse(
+							new URL("http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
+									.toURI());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -168,10 +182,9 @@ public class About extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					Desktop.getDesktop()
-							.browse(new URL(
-									"http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
-											.toURI());
+					Desktop.getDesktop().browse(
+							new URL("http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
+									.toURI());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -192,7 +205,7 @@ public class About extends JFrame {
 		lblMyname.setBounds(25, 36, 242, 24);
 		contentPane.add(lblMyname);
 
-		JLabel lblMyFriend1 = new JLabel("My friend - Chetan-san");
+		JLabel lblMyFriend1 = new JLabel("My friend - Chetan-kun");
 		lblMyFriend1.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblMyFriend1.setBounds(25, 145, 242, 24);
 		contentPane.add(lblMyFriend1);
@@ -204,7 +217,7 @@ public class About extends JFrame {
 		contentPane.add(label_6);
 
 		JLabel lblGoogle = new JLabel(
-				"Android, android green colored robot are trademarks of Google, Inc. We are not afliated with Google, Inc in any way.");
+				"Android, android green colored robot are trademarks of Google, Inc. We are not affliated with Google, Inc in any way.");
 		lblGoogle.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGoogle.setFont(new Font("Dialog", Font.PLAIN, 8));
 		lblGoogle.setBounds(25, 341, 514, 24);

@@ -27,8 +27,6 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -68,6 +66,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.SystemUtils;
+import updater.Updater;
 
 @SuppressWarnings("serial")
 public class Interface extends JFrame {
@@ -165,27 +164,6 @@ public class Interface extends JFrame {
 
 	public Interface() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Interface.class.getResource("/graphics/Icon.png")));
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowActivated(WindowEvent e) {
-				File file = new File(".logcat.txt");
-				if (file.exists() && !file.isDirectory()) {
-					file.delete();
-				}
-				File file2 = new File(".userapps.txt");
-				if (file2.exists() && !file2.isDirectory()) {
-					file2.delete();
-				}
-				File file3 = new File(".privapps.txt");
-				if (file3.exists() && !file3.isDirectory()) {
-					file3.delete();
-				}
-				File file4 = new File(".systemapps.txt");
-				if (file4.exists() && !file4.isDirectory()) {
-					file4.delete();
-				}
-			}
-		});
 
 		setTitle("Droid PC Suite");
 		setResizable(false);
@@ -464,13 +442,18 @@ public class Interface extends JFrame {
 		mntmCheckForUpdates.setToolTipText("Check for the new updates of this application");
 		mntmCheckForUpdates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Please download latest release from Github");
-				try {
-					Desktop.getDesktop().browse(new URL("https://github.com/kvsjxd/Droid-PC-Suite/releases").toURI());
-				} catch (Exception e1) {
-				}
+				new Updater();
 			}
 		});
+		
+		JMenuItem mntmChangelog = new JMenuItem("Changelog");
+		mntmChangelog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Changelog obj = new Changelog();
+				obj.setVisible(true);
+			}
+		});
+		mnHelp.add(mntmChangelog);
 		mnHelp.add(mntmCheckForUpdates);
 		mnHelp.add(mntmCommonWorkarounds);
 
@@ -999,7 +982,7 @@ public class Interface extends JFrame {
 				"Note: All of the above tools are not supported by every device or ROM");
 		lblAdvancedToolsNote.setBounds(25, 345, 736, 15);
 		panel_8.add(lblAdvancedToolsNote);
-		
+
 		JButton btnUnroot = new JButton("Unroot Device");
 		btnUnroot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2502,6 +2485,8 @@ public class Interface extends JFrame {
 		label_2.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Interface_logo.png")));
 		contentPane.add(label_2);
 
+		new Updater();
+
 		Thread t = new Thread(r); // Background services
 		t.start();
 
@@ -2516,9 +2501,25 @@ public class Interface extends JFrame {
 					if (file2.exists() && !file2.isDirectory()) {
 						file2.delete();
 					}
-					File file = new File("su");
-					if (file.exists() && !file.isDirectory()) {
-						file.delete();
+					File file3 = new File("su");
+					if (file3.exists() && !file3.isDirectory()) {
+						file3.delete();
+					}
+					File file4 = new File(".logcat.txt");
+					if (file4.exists() && !file4.isDirectory()) {
+						file4.delete();
+					}
+					File file5 = new File(".userapps.txt");
+					if (file5.exists() && !file5.isDirectory()) {
+						file5.delete();
+					}
+					File file6 = new File(".privapps.txt");
+					if (file6.exists() && !file6.isDirectory()) {
+						file6.delete();
+					}
+					File file7 = new File(".systemapps.txt");
+					if (file7.exists() && !file7.isDirectory()) {
+						file4.delete();
 					}
 					System.out.println("Droid PC Suite terminated");
 				} catch (Exception e1) {
