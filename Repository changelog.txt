@@ -8,6 +8,7 @@ Version 1.6
 * Few changes to UI
 * License added to updater src files
 * Typos fixed
+* Appication Status Clear bug fixed
 
 Version 1.5 (Build 160908)
 
