@@ -1,3 +1,13 @@
+Version 1.6
+
+* Added Deodexer for APKs and Jars
+* Added Signer for APKs and Zips
+* Added Zip Align for APKs
+* Click Application status to clear status
+* Application version now shown with the banner
+* Few changes to UI
+* License added to updater src files
+
 Version 1.5 (Build 160908)
 
 * Windows and Linux versions are merged

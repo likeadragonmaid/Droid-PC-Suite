@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -63,14 +64,19 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.SystemUtils;
 import updater.Updater;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class Interface extends JFrame {
 	JLabel FlasherDone, GeneralDone, WiperDone, BackupAndRestoreDone, ADBConnectionLabel, RootStatusLabel, AppStatus;
 	JTextArea LogViewer, CalculatedCrypto, InputCrypto;
 	boolean adbconnected = false, rooted = false;
+	double AppVersion;
 	private JPanel contentPane;
 
 	volatile boolean flag = true;
@@ -113,7 +119,7 @@ public class Interface extends JFrame {
 						ADBConnectionLabel.setText("Device is connected");
 					} else {
 						adbconnected = false;
-						ADBConnectionLabel.setText("Connect your device");
+						ADBConnectionLabel.setText("Connect your device...");
 					}
 				} catch (Exception e1) {
 					System.err.println(e1);
@@ -162,12 +168,18 @@ public class Interface extends JFrame {
 
 	public Interface() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Interface.class.getResource("/graphics/Icon.png")));
-
 		setTitle("Droid PC Suite");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1088, 715);
-
+		try {
+			InputStreamReader reader2 = new InputStreamReader(
+					getClass().getResourceAsStream("/others/app-version.txt"));
+			String tmp = IOUtils.toString(reader2);
+			AppVersion = Double.parseDouble(tmp);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		JMenu mnMenu = new JMenu("Menu");
@@ -506,7 +518,7 @@ public class Interface extends JFrame {
 					} else {
 						adbconnected = false;
 						ADBConnectionLabel.setText("");
-						ADBConnectionLabel.setText("Connect your device");
+						ADBConnectionLabel.setText("Connect your device...");
 						JOptionPane.showMessageDialog(null,
 								"Please try again or perhaps try installing your android device adb drivers on PC");
 					}
@@ -568,6 +580,21 @@ public class Interface extends JFrame {
 		contentPane.setLayout(null);
 
 		AppStatus = new JLabel("");
+		AppStatus.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+				int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to clear application status?",
+						"Application status", dialogButton);
+				if (dialogResult == 0) {
+					AppStatus.setText("");
+				}
+			}
+		});
+
+		JLabel lblAppVersion = new JLabel("Version: " + AppVersion);
+		lblAppVersion.setBounds(818, 150, 135, 22);
+		contentPane.add(lblAppVersion);
 		AppStatus.setBounds(12, 230, 1062, 17);
 		contentPane.add(AppStatus);
 
@@ -577,7 +604,7 @@ public class Interface extends JFrame {
 		contentPane.add(RootStatusLabel);
 
 		ADBConnectionLabel = new JLabel("");
-		ADBConnectionLabel.setBounds(921, 0, 152, 17);
+		ADBConnectionLabel.setBounds(900, 0, 175, 17);
 		ADBConnectionLabel.setForeground(Color.GREEN);
 		contentPane.add(ADBConnectionLabel);
 
@@ -614,7 +641,7 @@ public class Interface extends JFrame {
 		panel_7.add(btnADBTerminal);
 
 		JLabel lblNoteInstallationTo = new JLabel("# Only for android 4.4.x and higher");
-		lblNoteInstallationTo.setBounds(25, 284, 1046, 15);
+		lblNoteInstallationTo.setBounds(20, 311, 1046, 15);
 		panel_7.add(lblNoteInstallationTo);
 
 		GeneralDone = new JLabel("");
@@ -635,7 +662,7 @@ public class Interface extends JFrame {
 
 		JLabel lblNeedsRoot = new JLabel(
 				"* Needs root access, also may not work with some devices regardless of root access");
-		lblNeedsRoot.setBounds(25, 311, 1046, 15);
+		lblNeedsRoot.setBounds(20, 326, 1046, 15);
 		panel_7.add(lblNeedsRoot);
 
 		JButton btnScreenshot = new JButton("Screenshot");
@@ -867,12 +894,12 @@ public class Interface extends JFrame {
 
 		JLabel lblInstallationAndUninstallation = new JLabel(
 				"Installation and Uninstallation of apps to Priv-app is only for android 4.4 and higher, requires root and even simply may no work on your device!");
-		lblInstallationAndUninstallation.setBounds(25, 365, 1046, 15);
+		lblInstallationAndUninstallation.setBounds(20, 356, 1046, 15);
 		panel_7.add(lblInstallationAndUninstallation);
 
 		JLabel lblInstallationAndUninstallation_1 = new JLabel(
 				"Installation and Uninstallation of apps to System requires root, and may not work for your device!");
-		lblInstallationAndUninstallation_1.setBounds(25, 338, 1046, 15);
+		lblInstallationAndUninstallation_1.setBounds(20, 341, 1046, 15);
 		panel_7.add(lblInstallationAndUninstallation_1);
 
 		JPanel panel_8 = new JPanel();
@@ -1075,7 +1102,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnUnpackAPKs.setToolTipText("Unpack APKs stored on disk");
-		btnUnpackAPKs.setBounds(282, 27, 220, 75);
+		btnUnpackAPKs.setBounds(25, 131, 220, 75);
 		panel_10.add(btnUnpackAPKs);
 
 		JButton btnRepackAPKs = new JButton("Repack APKs");
@@ -1085,8 +1112,121 @@ public class Interface extends JFrame {
 			}
 		});
 		btnRepackAPKs.setToolTipText("Repack previously unpacked APKs and save to them to disk");
-		btnRepackAPKs.setBounds(25, 27, 220, 75);
+		btnRepackAPKs.setBounds(282, 27, 220, 75);
 		panel_10.add(btnRepackAPKs);
+
+		JButton btnZipAlignApks = new JButton("Zip Align APKs");
+		btnZipAlignApks.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				File file = null;
+				JFileChooser chooser1 = new JFileChooser();
+				chooser1.setDialogTitle("Select an APK file to align");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
+				chooser1.setCurrentDirectory(new java.io.File("."));
+				chooser1.setFileFilter(filter);
+				int returnVal = chooser1.showOpenDialog(getParent());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					file = chooser1.getSelectedFile();
+				}
+				String zipalignpath = System.getProperty("user.dir") + "/tools/zipalign/";
+				if (SystemUtils.IS_OS_WINDOWS) {
+					try {
+						Process p1 = Runtime.getRuntime()
+								.exec(zipalignpath + "zipalign.exe -f -v 4 " + file + " " + file + "_aligned.apk");
+						p1.waitFor();
+						JOptionPane.showMessageDialog(null, file.getName() + " aligned successfully!");
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+				if (SystemUtils.IS_OS_LINUX) {
+					try {
+						Process p1 = Runtime.getRuntime()
+								.exec(zipalignpath + "./zipalign -f -v 4 " + file + " " + file + "_aligned");
+						p1.waitFor();
+						JOptionPane.showMessageDialog(null, file.getName() + " aligned successfully!");
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		btnZipAlignApks.setToolTipText("Zip Align APK files stored on disk to improve their performance");
+		btnZipAlignApks.setBounds(282, 131, 220, 75);
+		panel_10.add(btnZipAlignApks);
+
+		JButton btnSignAPKsAndZips = new JButton("Sign APKs and Zips");
+		btnSignAPKsAndZips.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				File file = null;
+				JFileChooser chooser1 = new JFileChooser();
+				chooser1.setDialogTitle("Select an APK or Zip file to sign");
+				chooser1.setCurrentDirectory(new java.io.File("."));
+				int returnVal = chooser1.showOpenDialog(getParent());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					file = chooser1.getSelectedFile();
+				}
+				String APKAndZipSignerPath = System.getProperty("user.dir") + "/tools/APKAndZipSign/";
+				try {
+					Process p1 = Runtime.getRuntime().exec(APKAndZipSignerPath
+							+ "java -jar signapk.jar testkey.x509.pem testkey.pk8 " + file + " " + file + "_signed");
+					p1.waitFor();
+					JOptionPane.showMessageDialog(null, file.getName() + " signed successfully!");
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnSignAPKsAndZips.setToolTipText("Repack previously unpacked APKs and save to them to disk");
+		btnSignAPKsAndZips.setBounds(541, 27, 220, 75);
+		panel_10.add(btnSignAPKsAndZips);
+
+		JButton btnDeodexer = new JButton("Deodexer");
+		btnDeodexer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				File file = null;
+				String filetype = null;
+				JFileChooser chooser1 = new JFileChooser();
+				chooser1.setDialogTitle("Select an APK or Zip file to sign");
+				chooser1.setCurrentDirectory(new java.io.File("."));
+				int returnVal = chooser1.showOpenDialog(getParent());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					file = chooser1.getSelectedFile();
+					filetype = FilenameUtils.getExtension(file.getName());
+				}
+				String DexToolsPath = System.getProperty("user.dir") + "/tools/dex/";
+				String ZipAlignPath = System.getProperty("user.dir") + "/tools/zipalign/";
+				try {
+					Process p1 = Runtime.getRuntime()
+							.exec(DexToolsPath
+									+ "java -Xmx1024m -jar baksmali.jar -c :core.jar:bouncycastle.jar:ext.jar:framework.jar:android.policy.jar:services.jar:core-junit.jar -x "
+									+ file);
+					p1.waitFor();
+					Process p2 = Runtime.getRuntime().exec("java -Xmx1024m -jar smali.jar out -o classes.dex");
+					p2.waitFor();
+					JOptionPane.showMessageDialog(null,
+							"Check the new out folder in\n" + System.getProperty("user.dir"));
+					if (filetype.equals("apk")) {
+						if (SystemUtils.IS_OS_WINDOWS) {
+							Process p3 = Runtime.getRuntime()
+									.exec(ZipAlignPath + "zipalign.exe -f -v 4 " + file + " " + file + "_aligned");
+							p3.waitFor();
+						}
+						if (SystemUtils.IS_OS_LINUX) {
+							Process p3 = Runtime.getRuntime()
+									.exec(ZipAlignPath + "./zipalign -f -v 4 " + file + " " + file + "_aligned");
+							p3.waitFor();
+						}
+					}
+					JOptionPane.showMessageDialog(null, file + " deodexed successfully!");
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnDeodexer.setToolTipText("Deodex APKs and Zips to save ram while running on device");
+		btnDeodexer.setBounds(25, 27, 220, 75);
+		panel_10.add(btnDeodexer);
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.WHITE);
