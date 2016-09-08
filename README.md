@@ -22,6 +22,9 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 * Repack APKs
 * Cyptographic hash sums comparing and calculator
 
+### Note: (Skip if you use only one OS)
+>Once you run "Launcher for Microsoft Windows.exe" it will make Droid PC Suite compatible only with Microsoft Windows and if you run "Dependencies_Installer_for_Linux.sh" it will make Droid PC Suite compatible only with GNU/ Linux or any Unix-Like OS! Both the scenarios are irreversible! To run this software on another type of OS you will "NEED" to download new copy of Droid PC Suite once you run it on your current OS! To avoid this problem you can make a backup of DPCS archive somewhere on you computer.
+
 ## How to build from source using eclipse:
 
 1. Make sure that you are latest version of Java on your workstation
