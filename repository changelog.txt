@@ -1,10 +1,6 @@
-Version 1.5 Beta (Build 160907)
+Version 1.5 (Build 160908)
 
-#EXPERIMENTAL
-
-# Added Deodexer for APKs and Jars
-# Added Signer for APKs and Zips
-# Added Zip Align for APKs
+* Windows and Linux versions are merged
 * Added APK Unpacker
 * Added APK Repacker
 * Added Unroot to Advanced tab

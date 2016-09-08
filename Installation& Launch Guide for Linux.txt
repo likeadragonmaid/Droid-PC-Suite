@@ -1,0 +1,8 @@
+How to install and run on Linux?
+
+(1) Install Dependencies first using Dependencies_Installer_for_Linux.sh
+(2) Run application using Launcher_for_Linux.sh
+
+NOTE: Dependencies_Installer_for_Linux.sh currently only supports linux distros such as Debian, Ubuntu, Linux Mint etc. Actually it supports all linux distros which use APT package manager. You need to modify Dependencies_Installer_for_Linux.sh to install on Distros like Fedora, Red Hat Enterprise Linux, Arch Linux, etc.
+
+Developer and maintainer: Karanvir Singh

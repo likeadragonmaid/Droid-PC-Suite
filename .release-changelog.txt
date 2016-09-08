@@ -1,13 +1,14 @@
-Version 1.4 Stable (Build 160810)
+Version 1.5 (Build 160908)
 
-* HTC device specific tools (3) added
-  They can be accessed from :
-  "Menu > Device specific tools > HTC >..."
-  [THEY ARE "NOT" TESTED, as I don't have a HTC device,
-  please report bugs if you encounter them.]
-* "File" in menu bar renamed to "Menu"
-* "Dev. Tools" renamed to "Advanced"
-* Splash screen duration reduced to 2.5 seconds
-* Tabs re-arranged
-* Changelog tracker removed from application to reduce size
-* Other minor UI changes
+* Windows and Linux versions are merged
+* Added APK Unpacker
+* Added APK Repacker
+* Added Unroot to Advanced tab
+* License for zip4j library listed in licenses
+* Moved reboot to download mode to Device specific tools > Samsung
+* Added license to every java source file
+* Auto updater added
+* Changelog viewer added again
+* Lots of improvements
+* Typos fixed
+* Bug fixes

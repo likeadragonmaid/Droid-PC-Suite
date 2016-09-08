@@ -20,9 +20,6 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 * ADB Terminal
 * Unpack APKs
 * Repack APKs
-* Deodex APKs and Jars
-* Sign APKs and Zips
-* Zip Align APKs
 * Cyptographic hash sums comparing and calculator
 
 ## How to build from source using eclipse:
