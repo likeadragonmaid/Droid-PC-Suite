@@ -1,3 +1,7 @@
+Version 1.6
+
+* License added to updater src files
+
 Version 1.5 (Build 160908)
 
 * Windows and Linux versions are merged
