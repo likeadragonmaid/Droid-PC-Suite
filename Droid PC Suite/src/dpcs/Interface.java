@@ -73,7 +73,8 @@ import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class Interface extends JFrame {
-	JLabel FlasherDone, GeneralDone, WiperDone, BackupAndRestoreDone, ADBConnectionLabel, RootStatusLabel, AppStatus;
+	JLabel FlasherDone, GeneralDone, WiperDone, BackupAndRestoreDone, ADBConnectionLabel, RootStatusLabel,
+			ApplicationStatus;
 	JTextArea LogViewer, CalculatedCrypto, InputCrypto;
 	boolean adbconnected = false, rooted = false;
 	double AppVersion;
@@ -411,10 +412,10 @@ public class Interface extends JFrame {
 		mntmDownloadMode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					AppStatus.setText("Rebooting...");
+					ApplicationStatus.setText("Rebooting...");
 					Process p1 = Runtime.getRuntime().exec("adb reboot download");
 					p1.waitFor();
-					AppStatus.setText("Done");
+					ApplicationStatus.setText("Done");
 				} catch (Exception e1) {
 					System.err.println(e1);
 				}
@@ -579,24 +580,26 @@ public class Interface extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		AppStatus = new JLabel("");
-		AppStatus.addMouseListener(new MouseAdapter() {
+		ApplicationStatus = new JLabel("");
+		ApplicationStatus.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				int dialogButton = JOptionPane.YES_NO_OPTION;
-				int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to clear application status?",
-						"Application status", dialogButton);
-				if (dialogResult == 0) {
-					AppStatus.setText("");
+				if (!ApplicationStatus.getText().equals("")) {
+					int dialogButton = JOptionPane.YES_NO_OPTION;
+					int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to clear application status?",
+							"Application status", dialogButton);
+					if (dialogResult == 0) {
+						ApplicationStatus.setText("");
+					}
 				}
 			}
 		});
 
-		JLabel lblAppVersion = new JLabel("Version: " + AppVersion);
-		lblAppVersion.setBounds(818, 150, 135, 22);
-		contentPane.add(lblAppVersion);
-		AppStatus.setBounds(12, 230, 1062, 17);
-		contentPane.add(AppStatus);
+		JLabel lblApplicationVersion = new JLabel("Version: " + AppVersion);
+		lblApplicationVersion.setBounds(818, 150, 135, 22);
+		contentPane.add(lblApplicationVersion);
+		ApplicationStatus.setBounds(12, 230, 1062, 17);
+		contentPane.add(ApplicationStatus);
 
 		RootStatusLabel = new JLabel("");
 		RootStatusLabel.setBounds(921, 12, 153, 17);
@@ -772,15 +775,15 @@ public class Interface extends JFrame {
 									File file = chooser.getSelectedFile();
 									String filename = chooser.getSelectedFile().getName();
 									try {
-										AppStatus.setText("Installing...");
+										ApplicationStatus.setText("Installing...");
 										String[] commands = new String[3];
 										commands[0] = "adb";
 										commands[1] = "install";
 										commands[2] = file.getAbsolutePath();
-										AppStatus.setText("Installing App...");
+										ApplicationStatus.setText("Installing App...");
 										Process p1 = Runtime.getRuntime().exec(commands, null);
 										p1.waitFor();
-										AppStatus.setText(
+										ApplicationStatus.setText(
 												filename + " has been successfully installed on your android device!");
 										GeneralDone.setIcon(
 												new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
@@ -800,7 +803,7 @@ public class Interface extends JFrame {
 							if (returnVal == JFileChooser.APPROVE_OPTION) {
 								File file = chooser.getSelectedFile();
 								try {
-									AppStatus.setText("Installing...");
+									ApplicationStatus.setText("Installing...");
 									Process p1 = Runtime.getRuntime().exec("adb remount");
 									p1.waitFor();
 									String[] pushcommand = new String[4];
@@ -808,13 +811,13 @@ public class Interface extends JFrame {
 									pushcommand[1] = "push";
 									pushcommand[2] = file.getAbsolutePath();
 									pushcommand[3] = "/system/priv-app/";
-									AppStatus.setText("Installing App...");
+									ApplicationStatus.setText("Installing App...");
 									Process p2 = Runtime.getRuntime().exec(pushcommand, null);
 									p2.waitFor();
-									AppStatus.setText("Rebooting your android device");
+									ApplicationStatus.setText("Rebooting your android device");
 									Process p3 = Runtime.getRuntime().exec("adb reboot");
 									p3.waitFor();
-									AppStatus.setText("");
+									ApplicationStatus.setText("");
 									GeneralDone
 											.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 								} catch (Exception e1) {
@@ -831,7 +834,7 @@ public class Interface extends JFrame {
 							if (returnVal == JFileChooser.APPROVE_OPTION) {
 								File file = chooser.getSelectedFile();
 								try {
-									AppStatus.setText("Installing...");
+									ApplicationStatus.setText("Installing...");
 									Process p1 = Runtime.getRuntime().exec("adb remount");
 									p1.waitFor();
 									String[] pushcommand = new String[4];
@@ -841,10 +844,10 @@ public class Interface extends JFrame {
 									pushcommand[3] = "/system/app/";
 									Process p2 = Runtime.getRuntime().exec(pushcommand, null);
 									p2.waitFor();
-									AppStatus.setText("Rebooting your android device");
+									ApplicationStatus.setText("Rebooting your android device");
 									Process p3 = Runtime.getRuntime().exec("adb reboot");
 									p3.waitFor();
-									AppStatus.setText("");
+									ApplicationStatus.setText("");
 									GeneralDone
 											.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 								} catch (Exception e1) {
@@ -1255,17 +1258,17 @@ public class Interface extends JFrame {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = chooser.getSelectedFile();
 					try {
-						AppStatus.setText("Restoring may take upto several minutes, please be patient...");
+						ApplicationStatus.setText("Restoring may take upto several minutes, please be patient...");
 						JOptionPane.showMessageDialog(null,
 								"Unlock your device and confirm the restore operation when asked");
 						String[] commands = new String[3];
 						commands[0] = "adb";
 						commands[1] = "restore";
 						commands[2] = file.getAbsolutePath();
-						AppStatus.setText("Restoring...");
+						ApplicationStatus.setText("Restoring...");
 						Process p1 = Runtime.getRuntime().exec(commands, null);
 						p1.waitFor();
-						AppStatus.setText("Restore completed successfully!");
+						ApplicationStatus.setText("Restore completed successfully!");
 						BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnRestoreFromCustomLocationBackup.setSelected(false);
 					} catch (Exception e1) {
@@ -1288,17 +1291,17 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
 				try {
-					AppStatus.setText("Backup can take upto several minutes, please be patient...");
+					ApplicationStatus.setText("Backup can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
 							"Unlock your device and confirm the backup operation when asked");
 					String[] commands = new String[3];
 					commands[0] = "adb";
 					commands[1] = "backup";
 					commands[2] = "-shared";
-					AppStatus.setText("Performing backup...");
+					ApplicationStatus.setText("Performing backup...");
 					Process p1 = Runtime.getRuntime().exec(commands, null);
 					p1.waitFor();
-					AppStatus.setText("Backup completed successfully!");
+					ApplicationStatus.setText("Backup completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupInternelStorage.setSelected(false);
 				} catch (Exception e1) {
@@ -1317,17 +1320,17 @@ public class Interface extends JFrame {
 				BackupAndRestoreDone.setText("");
 				try {
 					String message = JOptionPane.showInputDialog(null, "Please specify a package name to backup");
-					AppStatus.setText("Backup can take upto several minutes, please be patient...");
+					ApplicationStatus.setText("Backup can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
 							"Unlock your device and confirm the backup operation when asked");
 					String[] commands = new String[3];
 					commands[0] = "adb";
 					commands[1] = "backup";
 					commands[2] = message;
-					AppStatus.setText("Performing backup...");
+					ApplicationStatus.setText("Performing backup...");
 					Process p1 = Runtime.getRuntime().exec(commands, null);
 					p1.waitFor();
-					AppStatus.setText("Backup completed successfully!");
+					ApplicationStatus.setText("Backup completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupSingleApp.setSelected(false);
 				} catch (Exception e1) {
@@ -1345,17 +1348,17 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
 				try {
-					AppStatus.setText("Backup can take upto several minutes, please be patient...");
+					ApplicationStatus.setText("Backup can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
 							"Unlock your device and confirm the backup operation when asked");
 					String[] commands = new String[3];
 					commands[0] = "adb";
 					commands[1] = "backup";
 					commands[2] = "-all";
-					AppStatus.setText("Performing backup...");
+					ApplicationStatus.setText("Performing backup...");
 					Process p1 = Runtime.getRuntime().exec(commands, null);
 					p1.waitFor();
-					AppStatus.setText("Backup completed successfully!");
+					ApplicationStatus.setText("Backup completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupAppAndAppData.setSelected(false);
 				} catch (Exception e1) {
@@ -1373,7 +1376,7 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
 				try {
-					AppStatus.setText("Backup can take upto several minutes, please be patient...");
+					ApplicationStatus.setText("Backup can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
 							"Unlock your device and confirm the backup operation when asked");
 					String[] commands = new String[6];
@@ -1383,10 +1386,10 @@ public class Interface extends JFrame {
 					commands[3] = "-apk";
 					commands[4] = "-shared";
 					commands[5] = "-system";
-					AppStatus.setText("Performing backup...");
+					ApplicationStatus.setText("Performing backup...");
 					Process p1 = Runtime.getRuntime().exec(commands, null);
 					p1.waitFor();
-					AppStatus.setText("Backup completed successfully");
+					ApplicationStatus.setText("Backup completed successfully");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupWholeDevice.setSelected(false);
 				} catch (Exception e1) {
@@ -1404,17 +1407,17 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
 				try {
-					AppStatus.setText("Restoring can take upto several minutes, please be patient...");
+					ApplicationStatus.setText("Restoring can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
 							"Unlock your device and confirm the restore operation when asked");
 					String[] commands = new String[3];
 					commands[0] = "adb";
 					commands[1] = "restore";
 					commands[2] = "backup.ab";
-					AppStatus.setText("Restoring...");
+					ApplicationStatus.setText("Restoring...");
 					Process p1 = Runtime.getRuntime().exec(commands, null);
 					p1.waitFor();
-					AppStatus.setText("Restore completed successfully!");
+					ApplicationStatus.setText("Restore completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnRestorePreviousBackup.setSelected(false);
 				} catch (Exception e1) {
@@ -1432,17 +1435,17 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				BackupAndRestoreDone.setText("");
 				try {
-					AppStatus.setText("Backup can take upto several minutes, please be patient...");
+					ApplicationStatus.setText("Backup can take upto several minutes, please be patient...");
 					JOptionPane.showMessageDialog(null,
 							"Unlock your device and confirm the backup operation when asked");
 					String[] commands = new String[3];
 					commands[0] = "adb";
 					commands[1] = "backup";
 					commands[2] = "-system";
-					AppStatus.setText("Performing backup...");
+					ApplicationStatus.setText("Performing backup...");
 					Process p1 = Runtime.getRuntime().exec(commands, null);
 					p1.waitFor();
-					AppStatus.setText("Backup completed successfully!");
+					ApplicationStatus.setText("Backup completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupSystem.setSelected(false);
 				} catch (Exception e1) {
@@ -1484,10 +1487,10 @@ public class Interface extends JFrame {
 		btnRebootFromFastboot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					AppStatus.setText("Rebooting...");
+					ApplicationStatus.setText("Rebooting...");
 					Process p1 = Runtime.getRuntime().exec("fastboot reboot");
 					p1.waitFor();
-					AppStatus.setText("Done");
+					ApplicationStatus.setText("Done");
 				} catch (Exception e1) {
 					System.err.println(e1);
 				}
@@ -1502,10 +1505,10 @@ public class Interface extends JFrame {
 		btnRebootToBootloaderFromFastboot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					AppStatus.setText("Rebooting...");
+					ApplicationStatus.setText("Rebooting...");
 					Process p1 = Runtime.getRuntime().exec("fasboot reboot-bootloader");
 					p1.waitFor();
-					AppStatus.setText("Done");
+					ApplicationStatus.setText("Done");
 				} catch (Exception e1) {
 					System.err.println(e1);
 				}
@@ -1520,10 +1523,10 @@ public class Interface extends JFrame {
 		btnRebootToFastboot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					AppStatus.setText("Rebooting...");
+					ApplicationStatus.setText("Rebooting...");
 					Process p1 = Runtime.getRuntime().exec("adb reboot fastboot");
 					p1.waitFor();
-					AppStatus.setText("Done");
+					ApplicationStatus.setText("Done");
 				} catch (Exception e1) {
 					System.err.println(e1);
 				}
@@ -1538,10 +1541,10 @@ public class Interface extends JFrame {
 		btnRebootToBootloader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					AppStatus.setText("Rebooting...");
+					ApplicationStatus.setText("Rebooting...");
 					Process p1 = Runtime.getRuntime().exec("adb reboot bootloader");
 					p1.waitFor();
-					AppStatus.setText("Done");
+					ApplicationStatus.setText("Done");
 				} catch (Exception e1) {
 					System.err.println(e1);
 				}
@@ -1556,10 +1559,10 @@ public class Interface extends JFrame {
 		btnRebootToRecovery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					AppStatus.setText("Rebooting...");
+					ApplicationStatus.setText("Rebooting...");
 					Process p1 = Runtime.getRuntime().exec("adb reboot recovery");
 					p1.waitFor();
-					AppStatus.setText("Done");
+					ApplicationStatus.setText("Done");
 				} catch (Exception e1) {
 					System.err.println(e1);
 				}
@@ -1574,10 +1577,10 @@ public class Interface extends JFrame {
 		btnRebootSystem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					AppStatus.setText("Rebooting...");
+					ApplicationStatus.setText("Rebooting...");
 					Process p1 = Runtime.getRuntime().exec("adb reboot");
 					p1.waitFor();
-					AppStatus.setText("Done");
+					ApplicationStatus.setText("Done");
 				} catch (Exception e1) {
 					System.err.println(e1);
 				}
@@ -1601,10 +1604,10 @@ public class Interface extends JFrame {
 		btnPattern.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					AppStatus.setText("Trying to break into security...");
+					ApplicationStatus.setText("Trying to break into security...");
 					Process p1 = Runtime.getRuntime().exec("adb shell su -c rm /data/system/gesture.key");
 					p1.waitFor();
-					AppStatus.setText(
+					ApplicationStatus.setText(
 							"Done, now try to unlock the device with a random pattern then change security manually from settings");
 				} catch (Exception e1) {
 				}
@@ -1619,10 +1622,10 @@ public class Interface extends JFrame {
 		btnPasswordPin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					AppStatus.setText("Trying to break into security...");
+					ApplicationStatus.setText("Trying to break into security...");
 					Process p1 = Runtime.getRuntime().exec("adb shell su -c rm /data/system/password.key");
 					p1.waitFor();
-					AppStatus.setText("Done, check your device...");
+					ApplicationStatus.setText("Done, check your device...");
 				} catch (Exception e1) {
 					System.err.println(e1);
 				}
@@ -1646,14 +1649,14 @@ public class Interface extends JFrame {
 		btnJellyBeanPatternPinPassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					AppStatus.setText("Trying to break into security...");
+					ApplicationStatus.setText("Trying to break into security...");
 					Process p1 = Runtime.getRuntime().exec(
 							"adb shell am start -n com.android.settings/com.android.settings.ChooseLockGeneric --ez confirm_credentials false --ei lockscreen.password_type 0 --activity-clear-task");
 					p1.waitFor();
-					AppStatus.setText("Rebooting...");
+					ApplicationStatus.setText("Rebooting...");
 					Process p2 = Runtime.getRuntime().exec("adb reboot");
 					p2.waitFor();
-					AppStatus.setText("Done, check your device...");
+					ApplicationStatus.setText("Done, check your device...");
 				} catch (Exception e1) {
 					System.err.println(e1);
 				}
@@ -1691,7 +1694,7 @@ public class Interface extends JFrame {
 				if (LogViewer.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "No log found, please click view log");
 				} else {
-					AppStatus.setText("");
+					ApplicationStatus.setText("");
 					JFrame parentFrame = new JFrame();
 					JFileChooser fileChooser = new JFileChooser();
 					FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
@@ -1704,7 +1707,7 @@ public class Interface extends JFrame {
 						try {
 							write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
 							LogViewer.write(write);
-							AppStatus.setText("Logcat saved");
+							ApplicationStatus.setText("Logcat saved");
 						} catch (Exception e) {
 							e.printStackTrace();
 						} finally {
@@ -1732,7 +1735,7 @@ public class Interface extends JFrame {
 				if (file.exists() && !file.isDirectory()) {
 					file.delete();
 				}
-				AppStatus.setText("Logcat cleared");
+				ApplicationStatus.setText("Logcat cleared");
 			}
 		});
 		btnClearLogcat.setBounds(12, 13, 220, 48);
@@ -1742,7 +1745,7 @@ public class Interface extends JFrame {
 		btnViewLogcat.setToolTipText("Print android device logcat on screen");
 		btnViewLogcat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AppStatus.setText("Generating logcat, please wait a moment...");
+				ApplicationStatus.setText("Generating logcat, please wait a moment...");
 				try {
 					Process p1 = Runtime.getRuntime().exec("adb logcat -d > /sdcard/.logcat.txt");
 					p1.waitFor();
@@ -1762,7 +1765,7 @@ public class Interface extends JFrame {
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 					}
-					AppStatus.setText("");
+					ApplicationStatus.setText("");
 				} catch (Exception e) {
 					System.err.println(e);
 				}
@@ -1795,7 +1798,7 @@ public class Interface extends JFrame {
 					File file = chooser.getSelectedFile();
 					String filename = chooser.getSelectedFile().getName();
 					try {
-						AppStatus.setText("Flashing...");
+						ApplicationStatus.setText("Flashing...");
 						Process p1 = Runtime.getRuntime().exec("fastboot erase system");
 						p1.waitFor();
 						String[] commands = new String[4];
@@ -1805,7 +1808,7 @@ public class Interface extends JFrame {
 						commands[3] = file.getAbsolutePath();
 						Process p2 = Runtime.getRuntime().exec(commands, null);
 						p2.waitFor();
-						AppStatus.setText(filename + "has been successfully flashed on your android device");
+						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashSystem.setSelected(false);
 					} catch (Exception e1) {
@@ -1829,7 +1832,7 @@ public class Interface extends JFrame {
 					File file = chooser.getSelectedFile();
 					String filename = chooser.getSelectedFile().getName();
 					try {
-						AppStatus.setText("Flashing...");
+						ApplicationStatus.setText("Flashing...");
 						Process p1 = Runtime.getRuntime().exec("fastboot erase data");
 						p1.waitFor();
 						String[] commands = new String[4];
@@ -1839,7 +1842,7 @@ public class Interface extends JFrame {
 						commands[3] = file.getAbsolutePath();
 						Process p2 = Runtime.getRuntime().exec(commands, null);
 						p2.waitFor();
-						AppStatus.setText(filename + "has been successfully flashed on your android device");
+						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashData.setSelected(false);
 					} catch (Exception e1) {
@@ -1867,10 +1870,10 @@ public class Interface extends JFrame {
 						commands[0] = "adb";
 						commands[1] = "sideload";
 						commands[2] = file.getAbsolutePath();
-						AppStatus.setText("Flashing...");
+						ApplicationStatus.setText("Flashing...");
 						Process p1 = Runtime.getRuntime().exec(commands, null);
 						p1.waitFor();
-						AppStatus.setText("Sideloaded...");
+						ApplicationStatus.setText("Sideloaded...");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashViaRecovery.setSelected(false);
 					} catch (Exception e1) {
@@ -1904,7 +1907,7 @@ public class Interface extends JFrame {
 					File file = chooser.getSelectedFile();
 					String filename = chooser.getSelectedFile().getName();
 					try {
-						AppStatus.setText("Flashing...");
+						ApplicationStatus.setText("Flashing...");
 						Process p1 = Runtime.getRuntime().exec("fastboot erase cache");
 						p1.waitFor();
 						String[] commands = new String[4];
@@ -1914,7 +1917,7 @@ public class Interface extends JFrame {
 						commands[3] = file.getAbsolutePath();
 						Process p2 = Runtime.getRuntime().exec(commands, null);
 						p2.waitFor();
-						AppStatus.setText(filename + "has been successfully flashed on your android device");
+						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashCache.setSelected(false);
 					} catch (Exception e1) {
@@ -1940,7 +1943,7 @@ public class Interface extends JFrame {
 					File file = chooser.getSelectedFile();
 					String filename = chooser.getSelectedFile().getName();
 					try {
-						AppStatus.setText("Flashing...");
+						ApplicationStatus.setText("Flashing...");
 						Process p1 = Runtime.getRuntime().exec("fastboot erase boot");
 						p1.waitFor();
 						String[] commands = new String[4];
@@ -1950,7 +1953,7 @@ public class Interface extends JFrame {
 						commands[3] = file.getAbsolutePath();
 						Process p2 = Runtime.getRuntime().exec(commands, null);
 						p2.waitFor();
-						AppStatus.setText(filename + "has been successfully flashed on your android device");
+						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnBootImage.setSelected(false);
 					} catch (Exception e1) {
@@ -1976,14 +1979,14 @@ public class Interface extends JFrame {
 					File file = chooser.getSelectedFile();
 					String filename = chooser.getSelectedFile().getName();
 					try {
-						AppStatus.setText("Flashing...");
+						ApplicationStatus.setText("Flashing...");
 						String[] commands = new String[3];
 						commands[0] = "fastboot";
 						commands[1] = "flash";
 						commands[2] = file.getAbsolutePath();
 						Process p1 = Runtime.getRuntime().exec(commands, null);
 						p1.waitFor();
-						AppStatus.setText(filename + "has been successfully flashed on your android device");
+						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashZipArchive.setSelected(false);
 					} catch (Exception e1) {
@@ -2009,7 +2012,7 @@ public class Interface extends JFrame {
 					File file = chooser.getSelectedFile();
 					String filename = chooser.getSelectedFile().getName();
 					try {
-						AppStatus.setText("Flashing...");
+						ApplicationStatus.setText("Flashing...");
 						Process p1 = Runtime.getRuntime().exec("fastboot erase recovery");
 						p1.waitFor();
 						String[] commands = new String[4];
@@ -2019,7 +2022,7 @@ public class Interface extends JFrame {
 						commands[3] = file.getAbsolutePath();
 						Process p2 = Runtime.getRuntime().exec(commands, null);
 						p2.waitFor();
-						AppStatus.setText(filename + "has been successfully flashed on your android device");
+						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashRecovery.setSelected(false);
 					} catch (Exception e1) {
@@ -2050,7 +2053,7 @@ public class Interface extends JFrame {
 					File file = chooser.getSelectedFile();
 					String filename = chooser.getSelectedFile().getName();
 					try {
-						AppStatus.setText("Flashing...");
+						ApplicationStatus.setText("Flashing...");
 						Process p1 = Runtime.getRuntime().exec("fastboot erase splash");
 						p1.waitFor();
 						String[] commands = new String[4];
@@ -2060,7 +2063,7 @@ public class Interface extends JFrame {
 						commands[3] = file.getAbsolutePath();
 						Process p2 = Runtime.getRuntime().exec(commands, null);
 						p2.waitFor();
-						AppStatus.setText(filename + "has been successfully flashed on your android device");
+						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashSplash.setSelected(false);
 					} catch (Exception e1) {
@@ -2085,7 +2088,7 @@ public class Interface extends JFrame {
 					File file = chooser.getSelectedFile();
 					String filename = chooser.getSelectedFile().getName();
 					try {
-						AppStatus.setText("Flashing...");
+						ApplicationStatus.setText("Flashing...");
 						Process p1 = Runtime.getRuntime().exec("fastboot erase radio");
 						p1.waitFor();
 						String[] commands = new String[4];
@@ -2095,7 +2098,7 @@ public class Interface extends JFrame {
 						commands[3] = file.getAbsolutePath();
 						Process p2 = Runtime.getRuntime().exec(commands, null);
 						p2.waitFor();
-						AppStatus.setText(filename + "has been successfully flashed on your android device");
+						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashSplash.setSelected(false);
 					} catch (Exception e1) {
@@ -2128,10 +2131,10 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				WiperDone.setText("");
 				try {
-					AppStatus.setText("Wiping...");
+					ApplicationStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase cache");
 					p1.waitFor();
-					AppStatus.setText("Recovery has been wiped");
+					ApplicationStatus.setText("Recovery has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 				} catch (Exception e1) {
 					System.err.println(e1);
@@ -2148,10 +2151,10 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				WiperDone.setText("");
 				try {
-					AppStatus.setText("Wiping...");
+					ApplicationStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase boot");
 					p1.waitFor();
-					AppStatus.setText("Boot has been wiped");
+					ApplicationStatus.setText("Boot has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 				} catch (Exception e1) {
 					System.err.println(e1);
@@ -2168,10 +2171,10 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				WiperDone.setText("");
 				try {
-					AppStatus.setText("Wiping...");
+					ApplicationStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase system");
 					p1.waitFor();
-					AppStatus.setText("System has been wiped");
+					ApplicationStatus.setText("System has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 				} catch (Exception e1) {
 					System.err.println(e1);
@@ -2188,10 +2191,10 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				WiperDone.setText("");
 				try {
-					AppStatus.setText("Wiping...");
+					ApplicationStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase splash");
 					p1.waitFor();
-					AppStatus.setText("Splash has been wiped");
+					ApplicationStatus.setText("Splash has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 				} catch (Exception e1) {
 					System.err.println(e1);
@@ -2208,10 +2211,10 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				WiperDone.setText("");
 				try {
-					AppStatus.setText("Wiping...");
+					ApplicationStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase data");
 					p1.waitFor();
-					AppStatus.setText("Data has been wiped");
+					ApplicationStatus.setText("Data has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 				} catch (Exception e1) {
 					System.err.println(e1);
@@ -2228,15 +2231,15 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				WiperDone.setText("");
 				try {
-					AppStatus.setText("Wiping...");
+					ApplicationStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("adb shell su -c rm * /data/dalvik-cache");
 					p1.waitFor();
 					Process p2 = Runtime.getRuntime().exec("adb shell su -c rm * /cache/dalvik-cache");
 					p2.waitFor();
-					AppStatus.setText("Dalvik Cache has been wiped! Now rebooting device...");
+					ApplicationStatus.setText("Dalvik Cache has been wiped! Now rebooting device...");
 					Process p3 = Runtime.getRuntime().exec("adb reboot");
 					p3.waitFor();
-					AppStatus.setText("Done");
+					ApplicationStatus.setText("Done");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 				} catch (Exception e1) {
 					System.err.println(e1);
@@ -2253,13 +2256,13 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				WiperDone.setText("");
 				try {
-					AppStatus.setText("Wiping...");
+					ApplicationStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase cache");
 					p1.waitFor();
-					AppStatus.setText("Cache has been wiped! Now rebooting device...");
+					ApplicationStatus.setText("Cache has been wiped! Now rebooting device...");
 					Process p2 = Runtime.getRuntime().exec("adb reboot");
 					p2.waitFor();
-					AppStatus.setText("Done");
+					ApplicationStatus.setText("Done");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 				} catch (Exception e1) {
 					System.err.println(e1);
@@ -2275,10 +2278,10 @@ public class Interface extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				WiperDone.setText("");
 				try {
-					AppStatus.setText("Wiping...");
+					ApplicationStatus.setText("Wiping...");
 					Process p1 = Runtime.getRuntime().exec("fastboot erase radio");
 					p1.waitFor();
-					AppStatus.setText("Radio has been wiped");
+					ApplicationStatus.setText("Radio has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 				} catch (Exception e1) {
 					System.err.println(e1);
@@ -2317,7 +2320,7 @@ public class Interface extends JFrame {
 		btnUnlockBootloader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					AppStatus.setText(
+					ApplicationStatus.setText(
 							"Unlocking bootloader will factory reset your device and may void your device warranty!");
 					JOptionPane.showMessageDialog(null,
 							"You will need to re-enable USB debugging later as your device will get factory reset");
@@ -2365,9 +2368,9 @@ public class Interface extends JFrame {
 				int returnVal = chooser.showOpenDialog(getParent());
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = new File("");
-					AppStatus.setText("Calculating...");
+					ApplicationStatus.setText("Calculating...");
 					CalculatedCrypto.setText(DigestUtils.sha512Hex(file.getAbsolutePath()));
-					AppStatus.setText("");
+					ApplicationStatus.setText("");
 				}
 			}
 		});
@@ -2405,9 +2408,9 @@ public class Interface extends JFrame {
 				int returnVal = chooser.showOpenDialog(getParent());
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = new File("");
-					AppStatus.setText("Calculating...");
+					ApplicationStatus.setText("Calculating...");
 					CalculatedCrypto.setText(DigestUtils.sha384Hex(file.getAbsolutePath()));
-					AppStatus.setText("");
+					ApplicationStatus.setText("");
 				}
 			}
 		});
@@ -2423,9 +2426,9 @@ public class Interface extends JFrame {
 				int returnVal = chooser.showOpenDialog(getParent());
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = new File("");
-					AppStatus.setText("Calculating...");
+					ApplicationStatus.setText("Calculating...");
 					CalculatedCrypto.setText(DigestUtils.sha256Hex(file.getAbsolutePath()));
-					AppStatus.setText("");
+					ApplicationStatus.setText("");
 				}
 			}
 		});
@@ -2441,9 +2444,9 @@ public class Interface extends JFrame {
 				int returnVal = chooser.showOpenDialog(getParent());
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = new File("");
-					AppStatus.setText("Calculating...");
+					ApplicationStatus.setText("Calculating...");
 					CalculatedCrypto.setText(DigestUtils.sha1Hex(file.getAbsolutePath()));
-					AppStatus.setText("");
+					ApplicationStatus.setText("");
 				}
 			}
 		});
@@ -2459,9 +2462,9 @@ public class Interface extends JFrame {
 				int returnVal = chooser.showOpenDialog(getParent());
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = new File("");
-					AppStatus.setText("Calculating...");
+					ApplicationStatus.setText("Calculating...");
 					CalculatedCrypto.setText(DigestUtils.md5Hex(file.getAbsolutePath()));
-					AppStatus.setText("");
+					ApplicationStatus.setText("");
 				}
 			}
 		});

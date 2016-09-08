@@ -112,10 +112,10 @@ public class About extends JFrame {
 		lblMyFriend2.setBounds(25, 217, 242, 24);
 		contentPane.add(lblMyFriend2);
 
-		JLabel lblVersionInfo = new JLabel("Version: " + AppVersion);
-		lblVersionInfo.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblVersionInfo.setBounds(382, 16, 132, 18);
-		contentPane.add(lblVersionInfo);
+		JLabel lblApplicationVersion = new JLabel("Version: " + AppVersion);
+		lblApplicationVersion.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblApplicationVersion.setBounds(382, 16, 132, 18);
+		contentPane.add(lblApplicationVersion);
 
 		JLabel lblForMyOther = new JLabel("For my other Android stuff visit me on XDA - Developers (@kvsjxd)");
 		lblForMyOther.addMouseListener(new MouseAdapter() {
@@ -217,7 +217,7 @@ public class About extends JFrame {
 		contentPane.add(label_6);
 
 		JLabel lblGoogle = new JLabel(
-				"Android, android green colored robot are trademarks of Google, Inc. We are not affliated with Google, Inc in any way.");
+				"Android, android green colored robot are trademarks of Google, Inc. We are not affliated with Google, Inc. in any way.");
 		lblGoogle.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGoogle.setFont(new Font("Dialog", Font.PLAIN, 8));
 		lblGoogle.setBounds(25, 341, 514, 24);

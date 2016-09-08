@@ -49,7 +49,7 @@ import org.apache.commons.io.IOUtils;
 public class UpdaterGUI extends JFrame {
 
 	private JPanel contentPane;
-	Double AvailableUpdate, AppVersion;
+	Double AvailableUpdate, ApplicationVersion;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -86,7 +86,7 @@ public class UpdaterGUI extends JFrame {
 			InputStreamReader reader2 = new InputStreamReader(
 					getClass().getResourceAsStream("/others/app-version.txt"));
 			String tmp = IOUtils.toString(reader2);
-			AppVersion = Double.parseDouble(tmp);
+			ApplicationVersion = Double.parseDouble(tmp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -102,9 +102,9 @@ public class UpdaterGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblAppVersion = new JLabel("App Version: v" + AppVersion);
-		lblAppVersion.setBounds(12, 12, 222, 15);
-		contentPane.add(lblAppVersion);
+		JLabel lblApplicationVersion = new JLabel("App Version: v" + ApplicationVersion);
+		lblApplicationVersion.setBounds(12, 12, 222, 15);
+		contentPane.add(lblApplicationVersion);
 
 		JLabel lblUpdateVersion = new JLabel("Update Version: v" + AvailableUpdate);
 		lblUpdateVersion.setBounds(12, 30, 222, 15);

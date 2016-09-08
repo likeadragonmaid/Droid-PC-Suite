@@ -51,9 +51,9 @@ public class Updater {
 			InputStreamReader reader2 = new InputStreamReader(
 					getClass().getResourceAsStream("/others/app-version.txt"));
 			String tmp = IOUtils.toString(reader2);
-			double AppVersion = Double.parseDouble(tmp);
-			if (AvailableUpdate > AppVersion) {
-				System.out.println("Your Droid PC Suite version: V" + AppVersion);
+			double ApplicationVersion = Double.parseDouble(tmp);
+			if (AvailableUpdate > ApplicationVersion) {
+				System.out.println("Your Droid PC Suite version: V" + ApplicationVersion);
 				System.out.println(
 						"New update V" + AvailableUpdate + " is available! Please download latest version now!");
 				URL url2 = new URL(
