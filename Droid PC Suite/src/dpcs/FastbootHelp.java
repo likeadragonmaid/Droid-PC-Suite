@@ -66,7 +66,8 @@ public class FastbootHelp extends JFrame {
 		HelpViewer.setEditable(false);
 		scrollPane.setViewportView(HelpViewer);
 		try {
-			InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/others/fastboothelp.txt"));
+			InputStreamReader reader = new InputStreamReader(
+					getClass().getResourceAsStream("/others/fastboothelp.txt"));
 			HelpViewer.read(reader, "");
 		} catch (Exception e) {
 			e.printStackTrace();

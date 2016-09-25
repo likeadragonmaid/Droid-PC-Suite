@@ -122,10 +122,9 @@ public class About extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					Desktop.getDesktop()
-							.browse(new URL(
-									"http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
-											.toURI());
+					Desktop.getDesktop().browse(
+							new URL("http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
+									.toURI());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -181,10 +180,9 @@ public class About extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					Desktop.getDesktop()
-							.browse(new URL(
-									"http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
-											.toURI());
+					Desktop.getDesktop().browse(
+							new URL("http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
+									.toURI());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

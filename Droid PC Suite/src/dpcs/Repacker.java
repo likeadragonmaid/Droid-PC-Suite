@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *****************************************************************************/
 
- package dpcs;
+package dpcs;
 
 import java.io.File;
 import javax.swing.JFileChooser;

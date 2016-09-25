@@ -64,9 +64,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.SystemUtils;
 import updater.Updater;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -1105,7 +1103,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnUnpackAPKs.setToolTipText("Unpack APKs stored on disk");
-		btnUnpackAPKs.setBounds(25, 131, 220, 75);
+		btnUnpackAPKs.setBounds(282, 27, 220, 75);
 		panel_10.add(btnUnpackAPKs);
 
 		JButton btnRepackAPKs = new JButton("Repack APKs");
@@ -1115,121 +1113,8 @@ public class Interface extends JFrame {
 			}
 		});
 		btnRepackAPKs.setToolTipText("Repack previously unpacked APKs and save to them to disk");
-		btnRepackAPKs.setBounds(282, 27, 220, 75);
+		btnRepackAPKs.setBounds(25, 27, 220, 75);
 		panel_10.add(btnRepackAPKs);
-
-		JButton btnZipAlignApks = new JButton("Zip Align APKs");
-		btnZipAlignApks.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				File file = null;
-				JFileChooser chooser1 = new JFileChooser();
-				chooser1.setDialogTitle("Select an APK file to align");
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
-				chooser1.setCurrentDirectory(new java.io.File("."));
-				chooser1.setFileFilter(filter);
-				int returnVal = chooser1.showOpenDialog(getParent());
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					file = chooser1.getSelectedFile();
-				}
-				String zipalignpath = System.getProperty("user.dir") + "/tools/zipalign/";
-				if (SystemUtils.IS_OS_WINDOWS) {
-					try {
-						Process p1 = Runtime.getRuntime()
-								.exec(zipalignpath + "zipalign.exe -f -v 4 " + file + " " + file + "_aligned.apk");
-						p1.waitFor();
-						JOptionPane.showMessageDialog(null, file.getName() + " aligned successfully!");
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-				}
-				if (SystemUtils.IS_OS_LINUX) {
-					try {
-						Process p1 = Runtime.getRuntime()
-								.exec(zipalignpath + "./zipalign -f -v 4 " + file + " " + file + "_aligned");
-						p1.waitFor();
-						JOptionPane.showMessageDialog(null, file.getName() + " aligned successfully!");
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-				}
-			}
-		});
-		btnZipAlignApks.setToolTipText("Zip Align APK files stored on disk to improve their performance");
-		btnZipAlignApks.setBounds(282, 131, 220, 75);
-		panel_10.add(btnZipAlignApks);
-
-		JButton btnSignAPKsAndZips = new JButton("Sign APKs and Zips");
-		btnSignAPKsAndZips.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				File file = null;
-				JFileChooser chooser1 = new JFileChooser();
-				chooser1.setDialogTitle("Select an APK or Zip file to sign");
-				chooser1.setCurrentDirectory(new java.io.File("."));
-				int returnVal = chooser1.showOpenDialog(getParent());
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					file = chooser1.getSelectedFile();
-				}
-				String APKAndZipSignerPath = System.getProperty("user.dir") + "/tools/APKAndZipSign/";
-				try {
-					Process p1 = Runtime.getRuntime().exec(APKAndZipSignerPath
-							+ "java -jar signapk.jar testkey.x509.pem testkey.pk8 " + file + " " + file + "_signed");
-					p1.waitFor();
-					JOptionPane.showMessageDialog(null, file.getName() + " signed successfully!");
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnSignAPKsAndZips.setToolTipText("Repack previously unpacked APKs and save to them to disk");
-		btnSignAPKsAndZips.setBounds(541, 27, 220, 75);
-		panel_10.add(btnSignAPKsAndZips);
-
-		JButton btnDeodexer = new JButton("Deodexer");
-		btnDeodexer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				File file = null;
-				String filetype = null;
-				JFileChooser chooser1 = new JFileChooser();
-				chooser1.setDialogTitle("Select an APK or Zip file to sign");
-				chooser1.setCurrentDirectory(new java.io.File("."));
-				int returnVal = chooser1.showOpenDialog(getParent());
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					file = chooser1.getSelectedFile();
-					filetype = FilenameUtils.getExtension(file.getName());
-				}
-				String DexToolsPath = System.getProperty("user.dir") + "/tools/dex/";
-				String ZipAlignPath = System.getProperty("user.dir") + "/tools/zipalign/";
-				try {
-					Process p1 = Runtime.getRuntime()
-							.exec(DexToolsPath
-									+ "java -Xmx1024m -jar baksmali.jar -c :core.jar:bouncycastle.jar:ext.jar:framework.jar:android.policy.jar:services.jar:core-junit.jar -x "
-									+ file);
-					p1.waitFor();
-					Process p2 = Runtime.getRuntime().exec("java -Xmx1024m -jar smali.jar out -o classes.dex");
-					p2.waitFor();
-					JOptionPane.showMessageDialog(null,
-							"Check the new out folder in\n" + System.getProperty("user.dir"));
-					if (filetype.equals("apk")) {
-						if (SystemUtils.IS_OS_WINDOWS) {
-							Process p3 = Runtime.getRuntime()
-									.exec(ZipAlignPath + "zipalign.exe -f -v 4 " + file + " " + file + "_aligned");
-							p3.waitFor();
-						}
-						if (SystemUtils.IS_OS_LINUX) {
-							Process p3 = Runtime.getRuntime()
-									.exec(ZipAlignPath + "./zipalign -f -v 4 " + file + " " + file + "_aligned");
-							p3.waitFor();
-						}
-					}
-					JOptionPane.showMessageDialog(null, file + " deodexed successfully!");
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnDeodexer.setToolTipText("Deodex APKs and Zips to save ram while running on device");
-		btnDeodexer.setBounds(25, 27, 220, 75);
-		panel_10.add(btnDeodexer);
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.WHITE);

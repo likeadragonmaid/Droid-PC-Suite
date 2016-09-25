@@ -37,6 +37,7 @@ public class DataReceiver {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd.MM.yyyy");
 	private File saveLocation;
 	private static Properties probs;
+
 	public DataReceiver() {
 		probs = new Properties();
 		try {
@@ -47,7 +48,7 @@ public class DataReceiver {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		BufferedReader reader = null;
 		InputStream processIn = null;
 		try {

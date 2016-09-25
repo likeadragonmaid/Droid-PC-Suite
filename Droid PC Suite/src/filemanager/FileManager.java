@@ -28,7 +28,8 @@ import java.awt.Toolkit;
 public class FileManager {
 	public static void main(String[] args) {
 		Explorer explorer = new Explorer();
-		explorer.setIconImage(Toolkit.getDefaultToolkit().getImage(FileManager.class.getResource("/graphics/Icon.png")));
+		explorer.setIconImage(
+				Toolkit.getDefaultToolkit().getImage(FileManager.class.getResource("/graphics/Icon.png")));
 	}
 
 	public static void restartApplication() throws Exception {
