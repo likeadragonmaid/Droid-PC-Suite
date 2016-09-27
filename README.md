@@ -44,4 +44,4 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 
 ## Note: This project is compiled against "openjdk version 1.8.0_102" and requires Java 8 to be installed on computer to work properly.
 ### Support
-Having trouble with Droid PC Suite? [Check out our XDA-Developers thread](http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599)
+Having trouble with Droid PC Suite? [Check out XDA-Developers forum](http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599)
