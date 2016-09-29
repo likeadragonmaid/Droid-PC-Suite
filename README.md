@@ -31,7 +31,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 2. Git clone this project
 3. Select a workspace and create a new java project using eclipse
 4. Add the source to project
-5. Add all the files to build path which are stored in /src/libs/
+5. Add all the files to build path which are stored in /.../src/libs/
 6. Run Main.java
 7. Export the whole project as runnable JAR and package all the libraries
 8. Click finish
