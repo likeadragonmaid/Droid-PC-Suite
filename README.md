@@ -22,7 +22,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 * Repack APKs
 * Cyptographic hash sums comparing and calculator
 
-### Note: (Skip if you use only one OS)
+### Note: (Skip if you have installed only 1 OS)
 >Once you run "Launcher for Microsoft Windows.exe" it will make Droid PC Suite compatible only with Microsoft Windows and if you run "Dependencies_Installer_for_Linux.sh" it will make Droid PC Suite compatible only with GNU/ Linux or any Unix-Like OS! Both the scenarios are irreversible! To run this software on another type of OS you will "NEED" to download new copy of Droid PC Suite once you run it on your current OS! To avoid this problem you can make a backup of DPCS archive somewhere on your computer.
 
 ## How to build from source using eclipse:
@@ -42,6 +42,6 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 ### GNU/ Linux or MacOS (Any Unix-Like OS)
 > Make sure android-tools-adb and android-tools-fastboot are installed on your workstation (These packages can have different name for different distros or operating systems). After following all building steps, set Droid PC Suite binary as executable.
 
-## Note: This project is compiled against "openjdk version 1.8.0_102" and requires Java 8 to be installed on computer to work properly.
+## Note: This project's releases are compiled against "openjdk version 1.8.0_102" and requires Java 8 to be installed on your computer to work properly.
 ### Support
-Having trouble with Droid PC Suite? [Check out XDA-Developers forum](http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599)
+Having trouble with /suggestions for/tips for/tricks with Droid PC Suite? Or just want to say Hi or Thanks? [Check out XDA-Developers forum](http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599)
