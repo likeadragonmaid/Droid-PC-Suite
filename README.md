@@ -15,7 +15,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 * View and save logcat
 * Advanced backups
 * Restore from backups
-* Bypass “your” device security
+* Bypass 'your' device security (Android 4.4 and below)
 * build.prop Editor
 * ADB Terminal
 * Unpack APKs
