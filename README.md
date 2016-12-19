@@ -1,7 +1,11 @@
-![Droid PC Suite Logo](https://imagizer.imageshack.us/v2/xq90/922/jccKMG.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kvsjxd/Droid-PC-Suite/master/Droid%20PC%20Suite/src/graphics/Splash.png">
+</p>
 Droid PC Suite contains set of tools for administration of android smartphones or tablets that supports communication over USB using Android Debug Bridge Technology. It works on all major operating systems.
 
-![Screenshot](https://raw.githubusercontent.com/kvsjxd/Droid-PC-Suite/gh-pages/images/Screenshot.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kvsjxd/Droid-PC-Suite/gh-pages/images/Screenshot.png">
+</p>
 
 ## Features:
 * App Manager (Install/ Uninstall Apps & Bloatware)
