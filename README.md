@@ -41,7 +41,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 
 ### Windows
 > After following all building steps, copy all adb and fastboot files to same directory as of exported Droid PC Suite binary.
-[Download latest adb and fastboot directly from google](https://dl.google.com/android/repository/platform-tools-latest-windows.zip)
+[You may like to download latest adb and fastboot directly from google](https://dl.google.com/android/repository/platform-tools-latest-windows.zip)
 
 ### GNU/Linux (any unix-like OS)
 > Make sure that android-tools-adb and android-tools-fastboot are installed on your workstation (These packages can have different name for different distros or operating systems). After following all building steps, set Droid PC Suite binary as executable. [You may like to download latest adb and fastboot for GNU/Linux directly from google](https://dl.google.com/android/repository/platform-tools-latest-linux.zip)
