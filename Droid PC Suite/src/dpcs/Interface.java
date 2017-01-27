@@ -894,7 +894,7 @@ public class Interface extends JFrame {
 		panel_7.add(btnAppManager);
 
 		JLabel lblInstallationAndUninstallation = new JLabel(
-				"Installation and Uninstallation of apps to Priv-app is only for android 4.4 and higher, requires root and even simply may no work on your device!");
+				"Installation and Uninstallation of apps to Priv-app is only for android 4.4 and higher, requires root and even simply may not work on your device!");
 		lblInstallationAndUninstallation.setBounds(20, 356, 1046, 15);
 		panel_7.add(lblInstallationAndUninstallation);
 
@@ -915,12 +915,41 @@ public class Interface extends JFrame {
 				obj.setVisible(true);
 			}
 		});
+
+		JButton btnClearBatteryStats = new JButton("Clear Battery Stats *");
+		btnClearBatteryStats.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Process p1 = Runtime.getRuntime().exec("adb remount");
+					p1.waitFor();
+					Process p2 = Runtime.getRuntime().exec("adb shell su -c rm -r /data/system/batterystats.bin");
+					p2.waitFor();
+					String[] options = new String[] { "Yes", "No" };
+					int response = JOptionPane.showOptionDialog(null, "Done, would you like to reboot your device?",
+							"Reboot device? (Recommended)", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+							options, options[0]);
+					if (response == 0) {
+						try {
+							Process p3 = Runtime.getRuntime().exec("adb reboot");
+							p3.waitFor();
+						} catch (Exception e1) {
+						}
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnClearBatteryStats.setToolTipText("Clear outdated or invalid battery stats");
+		btnClearBatteryStats.setBounds(25, 131, 220, 75);
+		panel_8.add(btnClearBatteryStats);
 		btnMemoryInformation.setToolTipText("View current memory information of android device");
-		btnMemoryInformation.setBounds(541, 131, 220, 75);
+		btnMemoryInformation.setBounds(25, 236, 220, 75);
 		panel_8.add(btnMemoryInformation);
 
 		JButton btnBatteryInformation = new JButton("Battery Information");
 		btnBatteryInformation.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				Batteryinfo obj = new Batteryinfo();
 				obj.setVisible(true);
@@ -938,7 +967,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnCpuInformation.setToolTipText("View current CPU information of android device");
-		btnCpuInformation.setBounds(25, 131, 220, 75);
+		btnCpuInformation.setBounds(282, 131, 220, 75);
 		panel_8.add(btnCpuInformation);
 
 		JButton btnAppInformation = new JButton("App Information");
@@ -972,14 +1001,14 @@ public class Interface extends JFrame {
 					try {
 						Process p1 = Runtime.getRuntime().exec("adb shell am kill-all");
 						p1.waitFor();
-						JOptionPane.showMessageDialog(null, "All safe-to-kill apps are killed");
+						JOptionPane.showMessageDialog(null, "All 'safe to kill' apps have been killed");
 					} catch (Exception e1) {
 					}
 				}
 			}
 		});
 		btnKillApps.setToolTipText("Kill any app currently running on android device");
-		btnKillApps.setBounds(282, 131, 220, 75);
+		btnKillApps.setBounds(541, 131, 220, 75);
 		panel_8.add(btnKillApps);
 
 		JButton btnWifiInformation = new JButton("WiFi Information");
@@ -990,7 +1019,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnWifiInformation.setToolTipText("View current wifi information of android device");
-		btnWifiInformation.setBounds(282, 236, 220, 75);
+		btnWifiInformation.setBounds(541, 236, 220, 75);
 		panel_8.add(btnWifiInformation);
 
 		JButton btnAppPackageList = new JButton("App Packages List");
@@ -1041,8 +1070,13 @@ public class Interface extends JFrame {
 			}
 		});
 		btnUnroot.setToolTipText("Unroot device by removing SU binary from the device");
-		btnUnroot.setBounds(25, 236, 220, 75);
+		btnUnroot.setBounds(282, 236, 220, 75);
 		panel_8.add(btnUnroot);
+
+		JLabel lblNewLabel_1 = new JLabel(
+				"* Needs root access, also may not work with some devices regardless of root access");
+		lblNewLabel_1.setBounds(25, 372, 736, 15);
+		panel_8.add(lblNewLabel_1);
 
 		JPanel panel_10 = new JPanel();
 		panel_10.setBackground(Color.WHITE);
@@ -1103,7 +1137,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnUnpackAPKs.setToolTipText("Unpack APKs stored on disk");
-		btnUnpackAPKs.setBounds(282, 27, 220, 75);
+		btnUnpackAPKs.setBounds(541, 27, 220, 75);
 		panel_10.add(btnUnpackAPKs);
 
 		JButton btnRepackAPKs = new JButton("Repack APKs");
@@ -1115,6 +1149,32 @@ public class Interface extends JFrame {
 		btnRepackAPKs.setToolTipText("Repack previously unpacked APKs and save to them to disk");
 		btnRepackAPKs.setBounds(25, 27, 220, 75);
 		panel_10.add(btnRepackAPKs);
+
+		JButton btnStartAnActivity = new JButton("Start an activity *");
+		btnStartAnActivity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String packagename = JOptionPane.showInputDialog(null, "Enter the package name of the app",
+							"com.package.name");
+					String activityname = JOptionPane.showInputDialog(null, "Enter the activity name of the app",
+							"MainActivity");
+					Process p1 = Runtime.getRuntime().exec("adb shell am start -n " + packagename + "/" + packagename
+							+ "com.package.name." + activityname);
+					p1.waitFor();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		btnStartAnActivity.setToolTipText("Start an actvity of an android app on your android device");
+		btnStartAnActivity.setBounds(282, 27, 220, 75);
+		panel_10.add(btnStartAnActivity);
+
+		JLabel lblActivityWill = new JLabel(
+				"* An activity will not start if you enter wrong package name or activity name");
+		lblActivityWill.setBounds(25, 381, 736, 15);
+		panel_10.add(lblActivityWill);
 
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.WHITE);
@@ -2242,7 +2302,7 @@ public class Interface extends JFrame {
 
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(Color.WHITE);
-		tabbedPane.addTab("Cryptography", null, panel_6, null);
+		tabbedPane.addTab("Crypto", null, panel_6, null);
 		panel_6.setLayout(null);
 
 		JButton btnSHA512 = new JButton("SHA-512");
