@@ -43,10 +43,13 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 
 ### Windows
 > After following all building steps, copy all adb and fastboot files to same directory as of exported Droid PC Suite binary.
+[You may like to download latest adb and fastboot for Windows directly from google](https://dl.google.com/android/repository/platform-tools-latest-windows.zip)
 
-### GNU/ Linux or MacOS (any unix-like OS)
-> Make sure android-tools-adb and android-tools-fastboot are installed on your workstation (These packages can have different name for different distros or operating systems). After following all building steps, set Droid PC Suite binary as executable.
+### GNU/Linux (any unix-like OS)
+> Make sure that android-tools-adb and android-tools-fastboot are installed on your workstation (These packages can have different name for different distros or operating systems). After following all building steps, set Droid PC Suite binary as executable. [You may like to download latest adb and fastboot for GNU/Linux directly from google](https://dl.google.com/android/repository/platform-tools-latest-linux.zip)
+
+### MacOS
+> Make sure that you have installed latest adb and fastboot on your Mac and set Droid PC Suite binary as executable before trying to run Droid PC Suite. [You may like to download latest adb and fastboot for MacOS directly from google](https://dl.google.com/android/repository/platform-tools-latest-darwin.zip)
 
 ## Note: This project's releases are compiled against "openjdk version 1.8.0_111" and requires Java 8 to be installed on your computer to work properly.
-### Support
 Having trouble with /suggestions for /tips for /tricks with Droid PC Suite? Or just want to say Hi or Thanks? [Check out XDA-Developers forum](http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599)
