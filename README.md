@@ -2,7 +2,28 @@
   <img src="https://raw.githubusercontent.com/kvsjxd/Droid-PC-Suite/master/Droid%20PC%20Suite/src/graphics/Splash.png">
 </p>
 Droid PC Suite contains set of tools for administration of android smartphones or tablets that supports communication over USB using Android Debug Bridge Technology. It works on all major operating systems.
-
+## Features:
+* App Manager (Install/ Uninstall Apps & Bloatware)
+* Sophisticated file manager
+* ADB tools
+* Take screenshots
+* Record android device screen
+* Flash any file using flasher
+* Wipe partitions
+* Unroot
+* Reboot to different modes
+* Unlock/ Lock bootloader
+* View and save logcat
+* Advanced backups
+* Restore from backups
+* Bypass 'your' device security (Android 4.4 and below)
+* build.prop Editor
+* ADB Terminal
+* Unpack APKs
+* Repack APKs
+* Cryptographic hash sums comparing and calculator
+* Clear battery stats
+* Launch activities of the apps
 ## Screenshots
 <p align="center">
   <img src="https://github.com/kvsjxd/Droid-PC-Suite/raw/gh-pages/images/1.png">
@@ -37,32 +58,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 <p align="center">
   <img src="https://github.com/kvsjxd/Droid-PC-Suite/raw/gh-pages/images/11.png">
 </p>
-
-## Features:
-* App Manager (Install/ Uninstall Apps & Bloatware)
-* Sophisticated file manager
-* ADB tools
-* Take screenshots
-* Record android device screen
-* Flash any file using flasher
-* Wipe partitions
-* Unroot
-* Reboot to different modes
-* Unlock/ Lock bootloader
-* View and save logcat
-* Advanced backups
-* Restore from backups
-* Bypass 'your' device security (Android 4.4 and below)
-* build.prop Editor
-* ADB Terminal
-* Unpack APKs
-* Repack APKs
-* Cryptographic hash sums comparing and calculator
-* Clear battery stats
-* Launch activities of the apps
-
 ## How to build from source using eclipse:
-
 1. Make sure that you are latest version of Java on your workstation
 2. Git clone this project
 3. Select a workspace and create a new java project using eclipse
@@ -81,6 +77,5 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 
 ### MacOS
 > Make sure that you have installed latest adb and fastboot on your Mac and set Droid PC Suite binary as executable before trying to run Droid PC Suite. [You may like to download latest adb and fastboot for MacOS directly from google](https://dl.google.com/android/repository/platform-tools-latest-darwin.zip)
-
 ## Note: This project's releases are compiled against "openjdk version 1.8.0_111" and requires Java 8 to be installed on your computer to work properly.
 Having trouble with /suggestions for /tips for /tricks with Droid PC Suite? Or just want to say Hi or Thanks? [Check out XDA-Developers forum](http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599)
