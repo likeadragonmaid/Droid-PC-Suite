@@ -24,6 +24,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 * Cryptographic hash sums comparing and calculator
 * Clear battery stats
 * Launch activities of the apps
+
 ## Screenshots
 <p align="center">
   <img src="https://github.com/kvsjxd/Droid-PC-Suite/raw/gh-pages/images/1.png">
@@ -58,6 +59,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 <p align="center">
   <img src="https://github.com/kvsjxd/Droid-PC-Suite/raw/gh-pages/images/11.png">
 </p>
+
 ## How to build from source using eclipse:
 1. Make sure that you are latest version of Java on your workstation
 2. Git clone this project
