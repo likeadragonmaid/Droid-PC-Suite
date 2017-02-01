@@ -1,12 +1,13 @@
 #!/bin/bash
-rm adb.exe AdbWinApi.dll AdbWinUsbApi.dll fastboot.exe "Launcher for Microsoft Windows.exe"
 echo Updating apt-get cache...
 sudo apt-get update
 echo Downloading and installing dependencies...
 sudo apt-get install android-tools-adb android-tools-fastboot
+echo
+echo
 uname -a
-read -p "Is this 64 bit system? yes or no? ";
-if [ $REPLY == "yes" ]; then
+read -p "Is this 64 bit system? [y/n]? ";
+if [ $REPLY == "y" ]; then
 	echo Now installing lib32ncurses5 and lib32z1
 	sudo apt-get install lib32ncurses5 lib32z1
 fi
@@ -21,4 +22,4 @@ if [ $REPLY == "no" ]; then
 fi
 echo Installed Java version :
 java -version
-echo Please ensure that java version "1.8.0_91" or higher is installed on your system!
+echo Please ensure that java version "1.8.0_111" or higher is installed on your system!
