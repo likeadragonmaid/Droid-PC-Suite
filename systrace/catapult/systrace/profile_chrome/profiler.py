@@ -4,7 +4,6 @@
 
 import time
 
-from devil.android.constants import chrome
 from profile_chrome import chrome_startup_tracing_agent
 from profile_chrome import chrome_tracing_agent
 from profile_chrome import ui
@@ -15,7 +14,7 @@ from systrace import tracing_controller
 
 def _GetResults(trace_results, controller, output, compress, write_json,
                 interval):
-  ui.PrintMessage('Downloading...', eol='')
+  ui.PrintMessage('Downloading...')
 
   # Wait for the trace file to get written.
   time.sleep(1)
@@ -36,10 +35,10 @@ def _GetResults(trace_results, controller, output, compress, write_json,
   result = None
   trace_results = output_generator.MergeTraceResultsIfNeeded(trace_results)
   if not write_json:
-    print 'Writing trace HTML'
+    ui.PrintMessage('Writing trace HTML...')
     html_file = trace_results[0].source_name + '.html'
     result = output_generator.GenerateHTMLOutput(trace_results, html_file)
-    print '\nWrote file://%s\n' % result
+    ui.PrintMessage('\nWrote file://%s' % result)
   elif compress and len(trace_results) == 1:
     result = output or trace_results[0].source_name + '.gz'
     util.WriteDataToCompressedFile(trace_results[0].raw_data, result)
@@ -57,19 +56,6 @@ def _GetResults(trace_results, controller, output, compress, write_json,
       f.write(trace_results[0].raw_data)
 
   return result
-
-
-def GetSupportedBrowsers():
-  """Returns the package names of all supported browsers."""
-  # Add aliases for backwards compatibility.
-  supported_browsers = {
-    'stable': chrome.PACKAGE_INFO['chrome_stable'],
-    'beta': chrome.PACKAGE_INFO['chrome_beta'],
-    'dev': chrome.PACKAGE_INFO['chrome_dev'],
-    'build': chrome.PACKAGE_INFO['chrome'],
-  }
-  supported_browsers.update(chrome.PACKAGE_INFO)
-  return supported_browsers
 
 
 def CaptureProfile(options, interval, modules, output=None,
@@ -102,15 +88,17 @@ def CaptureProfile(options, interval, modules, output=None,
     result = controller.StartTracing()
     trace_type = controller.GetTraceType()
     if not result:
-      print 'Trace starting failed.'
+      ui.PrintMessage('Trace starting failed.')
     if interval:
       ui.PrintMessage(('Capturing %d-second %s. Press Enter to stop early...' %
                      (interval, trace_type)), eol='')
       ui.WaitForEnter(interval)
     else:
       ui.PrintMessage('Capturing %s. Press Enter to stop...' % trace_type,
-                     eol='')
+                      eol='')
       raw_input()
+
+    ui.PrintMessage('Stopping...')
     all_results = controller.StopTracing()
   finally:
     if interval:
