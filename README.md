@@ -2,6 +2,7 @@
   <img src="https://raw.githubusercontent.com/kvsjxd/Droid-PC-Suite/master/Droid%20PC%20Suite/src/graphics/Splash.png">
 </p>
 Droid PC Suite contains set of tools for administration of android smartphones or tablets that supports communication over USB using Android Debug Bridge Technology. It works on all major operating systems.
+
 ## Features:
 * App Manager (Install/ Uninstall Apps & Bloatware)
 * Sophisticated file manager
@@ -29,6 +30,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
   <img src="https://github.com/kvsjxd/Droid-PC-Suite/raw/gh-pages/images/1.png">
 </p>
 <a href="https://github.com/kvsjxd/Droid-PC-Suite/tree/gh-pages/images">View more screenshots</a>
+
 ## How to build from source using eclipse:
 1. Make sure that you are latest version of Java on your workstation
 2. Git clone this project
