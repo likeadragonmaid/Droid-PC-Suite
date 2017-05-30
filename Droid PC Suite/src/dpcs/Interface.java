@@ -600,7 +600,13 @@ public class Interface extends JFrame {
 		contentPane.add(ApplicationStatus);
 
 		RootStatusLabel = new JLabel("");
-		RootStatusLabel.setBounds(921, 12, 153, 17);
+		RootStatusLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				JOptionPane.showMessageDialog(null, "If your rom have built in root support without using SuperSU or any similar app then DPCS will depict wrong root status!");
+			}
+		});
+		RootStatusLabel.setBounds(900, 12, 174, 17);
 		RootStatusLabel.setForeground(Color.RED);
 		contentPane.add(RootStatusLabel);
 
@@ -1035,6 +1041,7 @@ public class Interface extends JFrame {
 
 		JLabel lblAdvancedToolsNote = new JLabel(
 				"Note: All of the above tools are not supported by every device or ROM");
+		lblAdvancedToolsNote.setForeground(Color.RED);
 		lblAdvancedToolsNote.setBounds(25, 345, 736, 15);
 		panel_8.add(lblAdvancedToolsNote);
 
@@ -1075,7 +1082,7 @@ public class Interface extends JFrame {
 
 		JLabel lblNewLabel_1 = new JLabel(
 				"* Needs root access, also may not work with some devices regardless of root access");
-		lblNewLabel_1.setBounds(25, 372, 736, 15);
+		lblNewLabel_1.setBounds(25, 359, 736, 15);
 		panel_8.add(lblNewLabel_1);
 
 		JPanel panel_10 = new JPanel();
@@ -1173,7 +1180,7 @@ public class Interface extends JFrame {
 
 		JLabel lblActivityWill = new JLabel(
 				"* An activity will not start if you enter wrong package name or activity name");
-		lblActivityWill.setBounds(25, 381, 736, 15);
+		lblActivityWill.setBounds(25, 345, 736, 15);
 		panel_10.add(lblActivityWill);
 
 		JPanel panel_5 = new JPanel();
@@ -1580,7 +1587,8 @@ public class Interface extends JFrame {
 		btnPasswordPin.setBounds(630, 75, 220, 75);
 		panel_9.add(btnPasswordPin);
 
-		JLabel lblMayNot = new JLabel("# Works on Android 4.4.x and lower");
+		JLabel lblMayNot = new JLabel("# Works only on Android 4.4.x and lower");
+		lblMayNot.setForeground(Color.RED);
 		lblMayNot.setBounds(630, 250, 366, 15);
 		panel_9.add(lblMayNot);
 
@@ -2066,9 +2074,9 @@ public class Interface extends JFrame {
 		WiperDone.setBounds(758, 26, 300, 220);
 		panel_1.add(WiperDone);
 
-		JLabel label_13 = new JLabel("** Device must be rooted");
-		label_13.setBounds(25, 336, 252, 19);
-		panel_1.add(label_13);
+		JLabel lblDeviceMust = new JLabel("* Device must be rooted");
+		lblDeviceMust.setBounds(25, 336, 252, 19);
+		panel_1.add(lblDeviceMust);
 
 		JButton btnWipeRecovery = new JButton("Recovery");
 		btnWipeRecovery.setToolTipText("Wipe recovery partition");
@@ -2170,7 +2178,7 @@ public class Interface extends JFrame {
 		btnWipeData.setBounds(25, 131, 220, 75);
 		panel_1.add(btnWipeData);
 
-		JButton btnFlashDalvikCache = new JButton("Dalvik Cache **");
+		JButton btnFlashDalvikCache = new JButton("Dalvik Cache *");
 		btnFlashDalvikCache.setToolTipText("Wipe dalvik cache");
 		btnFlashDalvikCache.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2248,16 +2256,16 @@ public class Interface extends JFrame {
 		panel_3.setLayout(null);
 
 		JLabel label_17 = new JLabel("Note: Don't worry if the app says to connect your device while");
-		label_17.setBounds(66, 320, 600, 19);
+		label_17.setBounds(25, 321, 600, 19);
 		panel_3.add(label_17);
 
 		JLabel label_18 = new JLabel("android is not booted ex. fastboot, bootloader, booting etc.");
-		label_18.setBounds(66, 337, 600, 19);
+		label_18.setBounds(25, 338, 600, 19);
 		panel_3.add(label_18);
 
 		JLabel lblOnlyForNexus = new JLabel(
-				"Works only with specific devices ex. Nexus, Android One, FEW MTK devices etc.");
-		lblOnlyForNexus.setBounds(66, 351, 600, 24);
+				"Works only with specific devices ex. Nexus, Android One, few MTK devices etc.");
+		lblOnlyForNexus.setBounds(25, 352, 600, 24);
 		panel_3.add(lblOnlyForNexus);
 
 		JButton btnUnlockBootloader = new JButton("Unlock Bootloader");
