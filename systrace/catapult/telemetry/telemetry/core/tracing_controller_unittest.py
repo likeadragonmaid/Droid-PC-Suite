@@ -11,7 +11,7 @@ from telemetry.testing import browser_test_case
 from telemetry.testing import tab_test_case
 from telemetry.timeline import model as model_module
 from telemetry.timeline import tracing_config
-from telemetry.timeline import trace_data as trace_data_module
+from tracing.trace_data import trace_data as trace_data_module
 
 
 class TracingControllerTest(tab_test_case.TabTestCase):
@@ -72,10 +72,8 @@ class TracingControllerTest(tab_test_case.TabTestCase):
     tab = self._browser.tabs[0]
     def InjectMarker(index):
       marker = 'test-marker-%d' % index
-      # TODO(catapult:#3028): Fix interpolation of JavaScript values.
-      tab.EvaluateJavaScript('console.time("%s");' % marker)
-      # TODO(catapult:#3028): Fix interpolation of JavaScript values.
-      tab.EvaluateJavaScript('console.timeEnd("%s");' % marker)
+      tab.EvaluateJavaScript('console.time({{ marker }});', marker=marker)
+      tab.EvaluateJavaScript('console.timeEnd({{ marker }});', marker=marker)
 
     # Set up the tracing config.
     tracing_controller = self._browser.platform.tracing_controller

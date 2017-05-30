@@ -25,6 +25,8 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 * Cryptographic hash sums comparing and calculator
 * Clear battery stats
 * Launch activities of the apps
+* ifconfig and netstat
+* View running processes
 
 <p align="center">
   <img src="https://github.com/kvsjxd/Droid-PC-Suite/raw/gh-pages/images/1.png">

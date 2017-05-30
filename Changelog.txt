@@ -1,3 +1,10 @@
+Version 1.8 (Build 170530)
+
+* Added new tools: ifconfig, netstat and running processes viewer
+* Now DPCS shows information like manufacturer, codename and android version of the device by default
+* Added new information to common workarounds
+* UI fixes and improvements
+
 Version 1.7 (Build 170128)
 
 * Added a tool to clear the battery statistics

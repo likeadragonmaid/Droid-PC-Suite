@@ -49,7 +49,8 @@ from devil.utils import timeout_retry
 
 logger = logging.getLogger(__name__)
 
-_SYSTEM_WEBVIEW_PATHS = ['/system/app/webview', '/system/app/WebViewGoogle']
+_SYSTEM_APP_DIRECTORIES = ['/system/app/', '/system/priv-app/']
+_SYSTEM_WEBVIEW_NAMES = ['webview', 'WebViewGoogle']
 _CHROME_PACKAGE_REGEX = re.compile('.*chrom.*')
 _TOMBSTONE_REGEX = re.compile('tombstone.*')
 
@@ -84,10 +85,12 @@ def ProvisionDevices(
     output_device_blacklist=None,
     reboot_timeout=None,
     remove_system_webview=False,
+    system_app_remove_list=None,
     wipe=True):
   blacklist = (device_blacklist.Blacklist(blacklist_file)
                if blacklist_file
                else None)
+  system_app_remove_list = system_app_remove_list or []
   try:
     devices = script_common.GetDevices(devices, blacklist)
   except device_errors.NoDevicesError:
@@ -122,7 +125,11 @@ def ProvisionDevices(
         lambda d: WaitForCharge(d, min_battery_level)))
 
   if remove_system_webview:
-    steps.append(ProvisionStep(RemoveSystemWebView))
+    system_app_remove_list.extend(_SYSTEM_WEBVIEW_NAMES)
+
+  if system_app_remove_list:
+    steps.append(ProvisionStep(
+        lambda d: RemoveSystemApps(d, system_app_remove_list)))
 
   steps.append(ProvisionStep(SetDate))
   steps.append(ProvisionStep(CheckExternalStorage))
@@ -204,8 +211,9 @@ def WipeChromeData(device):
       _UninstallIfMatch(device, _CHROME_PACKAGE_REGEX,
                         chrome.PACKAGE_INFO['chrome_stable'].package)
       device.RunShellCommand('rm -rf %s/*' % device.GetExternalStoragePath(),
-                             check_return=True)
-      device.RunShellCommand('rm -rf /data/local/tmp/*', check_return=True)
+                             shell=True, check_return=True)
+      device.RunShellCommand('rm -rf /data/local/tmp/*',
+                             shell=True, check_return=True)
     else:
       device.EnableRoot()
       _UninstallIfMatch(device, _CHROME_PACKAGE_REGEX,
@@ -218,17 +226,18 @@ def WipeChromeData(device):
       _WipeFileOrDir(device, '/data/local/.config/')
       _WipeFileOrDir(device, '/data/local/tmp/')
       device.RunShellCommand('rm -rf %s/*' % device.GetExternalStoragePath(),
-                             check_return=True)
+                             shell=True, check_return=True)
   except device_errors.CommandFailedError:
     logger.exception('Possible failure while wiping the device. '
                      'Attempting to continue.')
 
 
 def _UninstallIfMatch(device, pattern, app_to_keep):
-  installed_packages = device.RunShellCommand(['pm', 'list', 'packages'])
+  installed_packages = device.RunShellCommand(
+      ['pm', 'list', 'packages'], check_return=True)
   installed_system_packages = [
-      pkg.split(':')[1] for pkg in device.RunShellCommand(['pm', 'list',
-                                                           'packages', '-s'])]
+      pkg.split(':')[1] for pkg in device.RunShellCommand(
+          ['pm', 'list', 'packages', '-s'], check_return=True)]
   for package_output in installed_packages:
     package = package_output.split(":")[1]
     if pattern.match(package) and not package == app_to_keep:
@@ -343,28 +352,43 @@ def DisableSystemChrome(device):
                          check_return=True)
 
 
-def RemoveSystemWebView(device):
-  if any(device.PathExists(p) for p in _SYSTEM_WEBVIEW_PATHS):
-    logger.info('System WebView exists and needs to be removed')
-    if device.HasRoot():
-      # Disabled Marshmallow's Verity security feature
-      if device.build_version_sdk >= version_codes.MARSHMALLOW:
-        device.adb.DisableVerity()
-        device.Reboot()
-        device.WaitUntilFullyBooted()
-        device.EnableRoot()
+def _RemoveSystemApp(device, system_app):
+  found_paths = []
+  for directory in _SYSTEM_APP_DIRECTORIES:
+    path = os.path.join(directory, system_app)
+    if device.PathExists(path):
+      found_paths.append(path)
+  if not found_paths:
+    logger.warning('Could not find install location for system app %s',
+                   system_app)
+  device.RemovePath(found_paths, force=True, recursive=True)
 
-      # This is required, e.g., to replace the system webview on a device.
-      device.adb.Remount()
-      device.RunShellCommand(['stop'], check_return=True)
-      device.RunShellCommand(['rm', '-rf'] + _SYSTEM_WEBVIEW_PATHS,
-                             check_return=True)
-      device.RunShellCommand(['start'], check_return=True)
-    else:
-      logger.warning('Cannot remove system webview from a non-rooted device')
+def RemoveSystemApps(device, system_app_remove_list):
+  """Attempts to remove the provided system apps from the given device.
+
+  Arguments:
+    device: The device to remove the system apps from.
+    system_app_remove_list: A list of app names to remove, e.g.
+        ['WebViewGoogle', 'GoogleVrCore']
+  """
+  device.EnableRoot()
+  if device.HasRoot():
+    # Disable Marshmallow's Verity security feature
+    if device.build_version_sdk >= version_codes.MARSHMALLOW:
+      logger.info('Disabling Verity on %s', device.serial)
+      device.adb.DisableVerity()
+      device.Reboot()
+      device.WaitUntilFullyBooted()
+      device.EnableRoot()
+
+    device.adb.Remount()
+    device.RunShellCommand(['stop'], check_return=True)
+    for system_app in system_app_remove_list:
+      _RemoveSystemApp(device, system_app)
+    device.RunShellCommand(['start'], check_return=True)
   else:
-    logger.info('System WebView already removed')
-
+    raise device_errors.CommandFailedError(
+        'Failed to remove system apps from non-rooted device', str(device))
 
 
 def _ConfigureLocalProperties(device, java_debug=True):
@@ -435,7 +459,8 @@ def SetDate(device):
 
     get_date_command.append('+"%Y%m%d.%H%M%S"')
     device_time = device.RunShellCommand(
-        get_date_command, as_root=True, single_line=True).replace('"', '')
+        get_date_command, check_return=True,
+        as_root=True, single_line=True).replace('"', '')
     device_time = datetime.datetime.strptime(device_time, "%Y%m%d.%H%M%S")
     correct_time = datetime.datetime.strptime(strgmtime, date_format)
     tdelta = (correct_time - device_time).seconds
@@ -456,12 +481,13 @@ def SetDate(device):
         _set_and_verify_date, wait_period=1, max_tries=2):
       raise device_errors.CommandFailedError(
           'Failed to set date & time.', device_serial=str(device))
+    device.EnableRoot()
     device.BroadcastIntent(
         intent.Intent(action='android.intent.action.TIME_SET'))
 
 
 def LogDeviceProperties(device):
-  props = device.RunShellCommand('getprop', check_return=True)
+  props = device.RunShellCommand(['getprop'], check_return=True)
   for prop in props:
     logger.info('  %s', prop)
 
@@ -527,7 +553,8 @@ def main(raw_args):
       help='Disable the system chrome from devices.')
   parser.add_argument(
       '--emulators', action='store_true',
-      help='provision only emulators and ignore usb devices')
+      help='provision only emulators and ignore usb devices '
+           '(this will not wipe emulators)')
   parser.add_argument(
       '--max-battery-temp', type=int, metavar='NUM',
       help='Wait for the battery to have this temp or lower.')
@@ -544,11 +571,14 @@ def main(raw_args):
            ' wait after each reboot '
            '(default: %s)' % _DEFAULT_TIMEOUTS.HELP_TEXT)
   parser.add_argument(
+      '--remove-system-apps', nargs='*', dest='system_app_remove_list',
+      help='the names of system apps to remove')
+  parser.add_argument(
       '--remove-system-webview', action='store_true',
       help='Remove the system webview from devices.')
   parser.add_argument(
       '--skip-wipe', action='store_true', default=False,
-      help="don't wipe device data during provisioning")
+      help='do not wipe device data during provisioning')
   parser.add_argument(
       '-v', '--verbose', action='count', default=1,
       help='Log more information.')
@@ -596,7 +626,8 @@ def main(raw_args):
         output_device_blacklist=args.output_device_blacklist,
         reboot_timeout=args.reboot_timeout,
         remove_system_webview=args.remove_system_webview,
-        wipe=not args.skip_wipe)
+        system_app_remove_list=args.system_app_remove_list,
+        wipe=not args.skip_wipe and not args.emulators)
   except (device_errors.DeviceUnreachableError, device_errors.NoDevicesError):
     logging.exception('Unable to provision local devices.')
     return exit_codes.INFRA

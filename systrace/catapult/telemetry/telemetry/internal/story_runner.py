@@ -24,6 +24,7 @@ from telemetry import story as story_module
 from telemetry.util import wpr_modes
 from telemetry.value import failure
 from telemetry.value import skip
+from telemetry.value import scalar
 from telemetry.web_perf import story_test
 
 
@@ -37,9 +38,6 @@ def AddCommandLineArgs(parser):
 
   # Page set options
   group = optparse.OptionGroup(parser, 'Page set repeat options')
-  group.add_option('--page-repeat', default=1, type='int',
-                   help='Number of times to repeat each individual page '
-                   'before proceeding with the next page in the pageset.')
   group.add_option('--pageset-repeat', default=1, type='int',
                    help='Number of times to repeat the entire pageset.')
   group.add_option('--max-failures', default=None, type='int',
@@ -65,9 +63,6 @@ def ProcessCommandLineArgs(parser, args):
   story_module.StoryFilter.ProcessCommandLineArgs(parser, args)
   results_options.ProcessCommandLineArgs(parser, args)
 
-  # Page set options
-  if args.page_repeat < 1:
-    parser.error('--page-repeat must be a positive integer.')
   if args.pageset_repeat < 1:
     parser.error('--pageset-repeat must be a positive integer.')
 
@@ -208,8 +203,7 @@ def Run(test, story_set, finder_options, results, max_failures=None,
         cloud_storage.GetFilesInDirectoryIfChanged(directory,
                                                    story_set.bucket)
     if story_set.archive_data_file and not _UpdateAndCheckArchives(
-        story_set.archive_data_file, story_set.wpr_archive_info,
-        stories):
+        story_set.archive_data_file, story_set.wpr_archive_info, stories):
       return
 
   if not stories:
@@ -229,52 +223,51 @@ def Run(test, story_set, finder_options, results, max_failures=None,
     try:
       for storyset_repeat_counter in xrange(finder_options.pageset_repeat):
         for story in group.stories:
-          for story_repeat_counter in xrange(finder_options.page_repeat):
-            if not state:
-              # Construct shared state by using a copy of finder_options. Shared
-              # state may update the finder_options. If we tear down the shared
-              # state after this story run, we want to construct the shared
-              # state for the next story from the original finder_options.
-              state = group.shared_state_class(
-                  test, finder_options.Copy(), story_set)
-            results.WillRunPage(
-                story, storyset_repeat_counter, story_repeat_counter)
-            try:
-              # Log ps on n7s to determine if adb changed processes.
-              # crbug.com/667470
-              if 'Nexus 7' in state.platform.GetDeviceTypeName():
-                ps_output = subprocess.check_output(['ps', '-ef'])
-                logging.info('Ongoing processes:\n%s', ps_output)
+          if not state:
+            # Construct shared state by using a copy of finder_options. Shared
+            # state may update the finder_options. If we tear down the shared
+            # state after this story run, we want to construct the shared
+            # state for the next story from the original finder_options.
+            state = group.shared_state_class(
+                test, finder_options.Copy(), story_set)
 
-              state.platform.WaitForTemperature(35)
-              _WaitForThermalThrottlingIfNeeded(state.platform)
-              _RunStoryAndProcessErrorIfNeeded(story, results, state, test)
-            except exceptions.Error:
-              # Catch all Telemetry errors to give the story a chance to retry.
-              # The retry is enabled by tearing down the state and creating
-              # a new state instance in the next iteration.
-              try:
-                # If TearDownState raises, do not catch the exception.
-                # (The Error was saved as a failure value.)
-                state.TearDownState()
-              finally:
-                # Later finally-blocks use state, so ensure it is cleared.
-                state = None
+          results.WillRunPage(story, storyset_repeat_counter)
+          try:
+            # Log ps on n7s to determine if adb changed processes.
+            # crbug.com/667470
+            if 'Nexus 7' in state.platform.GetDeviceTypeName():
+              ps_output = subprocess.check_output(['ps', '-ef'])
+              logging.info('Ongoing processes:\n%s', ps_output)
+
+            state.platform.WaitForTemperature(35)
+            _WaitForThermalThrottlingIfNeeded(state.platform)
+            _RunStoryAndProcessErrorIfNeeded(story, results, state, test)
+          except exceptions.Error:
+            # Catch all Telemetry errors to give the story a chance to retry.
+            # The retry is enabled by tearing down the state and creating
+            # a new state instance in the next iteration.
+            try:
+              # If TearDownState raises, do not catch the exception.
+              # (The Error was saved as a failure value.)
+              state.TearDownState()
             finally:
-              has_existing_exception = sys.exc_info() != (None, None, None)
-              try:
-                if state:
-                  _CheckThermalThrottling(state.platform)
-                results.DidRunPage(story)
-              except Exception:
-                if not has_existing_exception:
-                  raise
-                # Print current exception and propagate existing exception.
-                exception_formatter.PrintFormattedException(
-                    msg='Exception from result processing:')
-              if state and tear_down_after_story:
-                state.TearDownState()
-                state = None
+              # Later finally-blocks use state, so ensure it is cleared.
+              state = None
+          finally:
+            has_existing_exception = sys.exc_info() != (None, None, None)
+            try:
+              if state:
+                _CheckThermalThrottling(state.platform)
+              results.DidRunPage(story)
+            except Exception:
+              if not has_existing_exception:
+                raise
+              # Print current exception and propagate existing exception.
+              exception_formatter.PrintFormattedException(
+                  msg='Exception from result processing:')
+            if state and tear_down_after_story:
+              state.TearDownState()
+              state = None
           if (effective_max_failures is not None and
               len(results.failures) > effective_max_failures):
             logging.error('Too many failures. Aborting.')
@@ -309,6 +302,7 @@ def RunBenchmark(benchmark, finder_options):
     The number of failure values (up to 254) or 255 if there is an uncaught
     exception.
   """
+  start = time.time()
   benchmark.CustomizeBrowserOptions(finder_options.browser_options)
 
   benchmark_metadata = benchmark.GetMetadata()
@@ -383,6 +377,9 @@ def RunBenchmark(benchmark, finder_options):
         results.UploadTraceFilesToCloud(bucket)
         results.UploadProfilingFilesToCloud(bucket)
     finally:
+      duration = time.time() - start
+      results.AddSummaryValue(scalar.ScalarValue(
+          None, 'BenchmarkDuration', 'minutes', duration / 60.0))
       results.PrintSummary()
   return return_code
 

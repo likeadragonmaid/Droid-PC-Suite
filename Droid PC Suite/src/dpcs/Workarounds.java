@@ -1,7 +1,7 @@
 /*****************************************************************************
  * dpcs/Workarounds.java: Workarounds and additional assistance for Droid PC Suite
  *****************************************************************************
- * Copyright (C) 2016 Karanvir Singh
+ * Copyright (C) 2017 Karanvir Singh
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -10,7 +10,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -56,7 +56,7 @@ public class Workarounds extends JFrame {
 		setTitle("Common Workarounds");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Workarounds.class.getResource("/graphics/Icon.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 565, 240);
+		setBounds(100, 100, 565, 275);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -143,5 +143,13 @@ public class Workarounds extends JFrame {
 		});
 		lblcommonworkaround7.setBounds(25, 173, 504, 24);
 		contentPane.add(lblcommonworkaround7);
+
+		JLabel lblIfYour = new JLabel("* If your rom have built in root support without using SuperSU or");
+		lblIfYour.setBounds(25, 198, 504, 24);
+		contentPane.add(lblIfYour);
+
+		JLabel lblIfYour_1 = new JLabel("any similar app then DPCS will depict wrong root status!");
+		lblIfYour_1.setBounds(35, 211, 494, 24);
+		contentPane.add(lblIfYour_1);
 	}
 }

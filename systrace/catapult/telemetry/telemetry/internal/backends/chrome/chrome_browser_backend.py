@@ -8,6 +8,7 @@ import shlex
 import sys
 
 from telemetry.core import exceptions
+from telemetry.core import util
 from telemetry import decorators
 from telemetry.internal.backends import browser_backend
 from telemetry.internal.backends.chrome import extension_backend
@@ -104,6 +105,10 @@ class ChromeBrowserBackend(browser_backend.BrowserBackend):
     if self.browser_options.disable_default_apps:
       args.append('--disable-default-apps')
 
+    # Disable the search geolocation disclosure infobar, as it is only shown a
+    # small number of times to users and should not be part of perf comparisons.
+    args.append('--disable-search-geolocation-disclosure')
+
     if (self.browser_options.logging_verbosity ==
         self.browser_options.NON_VERBOSE_LOGGING):
       args.extend(['--enable-logging', '--v=0'])
@@ -174,12 +179,6 @@ class ChromeBrowserBackend(browser_backend.BrowserBackend):
     # Extension pages are loaded from an about:blank page,
     # so we need to check that the document URL is the extension
     # page in addition to the ready state.
-    # TODO(catapult:#3028): Fix interpolation of JavaScript values.
-    extension_ready_js = """
-        document.URL.lastIndexOf('chrome-extension://%s/', 0) == 0 &&
-        (document.readyState == 'complete' ||
-         document.readyState == 'interactive')
-    """
     for e in self._extensions_to_load:
       try:
         extension_objects = self.extension_backend[e.extension_id]
@@ -187,8 +186,12 @@ class ChromeBrowserBackend(browser_backend.BrowserBackend):
         return False
       for extension_object in extension_objects:
         try:
-          res = extension_object.EvaluateJavaScript(
-              extension_ready_js % e.extension_id)
+          res = extension_object.EvaluateJavaScript("""
+              document.URL.lastIndexOf({{ url }}, 0) == 0 &&
+              (document.readyState == 'complete' ||
+               document.readyState == 'interactive')
+              """,
+              url='chrome-extension://%s/' % e.extension_id)
         except exceptions.EvaluateException:
           # If the inspected page is not ready, we will get an error
           # when we evaluate a JS expression, but we can just keep polling
@@ -267,6 +270,10 @@ class ChromeBrowserBackend(browser_backend.BrowserBackend):
     if self._system_info_backend is None:
       self._system_info_backend = system_info_backend.SystemInfoBackend(
           self._port)
+    # TODO(crbug.com/706336): Remove this condional branch once crbug.com/704024
+    # is fixed.
+    if util.IsRunningOnCrosDevice():
+      return self._system_info_backend.GetSystemInfo(timeout=30)
     return self._system_info_backend.GetSystemInfo()
 
   @property

@@ -12,9 +12,9 @@ import unittest
 from telemetry import story
 from telemetry import page as page_module
 from telemetry.testing import system_stub
-from telemetry.timeline import trace_data
 from telemetry.value import trace
 from tracing_build import html2trace
+from tracing.trace_data import trace_data
 
 
 class TestBase(unittest.TestCase):
@@ -140,7 +140,6 @@ class ValueTest(TestBase):
       for f in trace_files:
         with open(f, 'r') as trace_file:
           d = trace_file.read()
-          print d
           if d == raw_data['powerTraceAsString']:
             self.assertFalse(battor_seen)
             battor_seen = True
@@ -156,7 +155,6 @@ class ValueTest(TestBase):
     finally:
       shutil.rmtree(tempdir)
       os.remove(v.filename)
-
 
 
 def _IsEmptyDir(path):

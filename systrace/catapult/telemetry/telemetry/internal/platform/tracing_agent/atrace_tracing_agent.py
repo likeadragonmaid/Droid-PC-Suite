@@ -4,7 +4,7 @@
 
 from systrace.tracing_agents import atrace_agent
 from telemetry.internal.platform import tracing_agent
-from telemetry.timeline import trace_data
+from tracing.trace_data import trace_data
 
 from devil.android.sdk import version_codes
 
@@ -14,13 +14,15 @@ class AtraceTracingAgent(tracing_agent.TracingAgent):
     super(AtraceTracingAgent, self).__init__(platform_backend)
     self._device = platform_backend.device
     self._categories = None
-    self._atrace_agent = atrace_agent.AtraceAgent()
+    self._atrace_agent = atrace_agent.AtraceAgent(
+        platform_backend.device.build_version_sdk)
     self._config = None
 
   @classmethod
   def IsSupported(cls, platform_backend):
     return (platform_backend.GetOSName() == 'android' and
-        platform_backend.device > version_codes.JELLY_BEAN_MR1)
+        platform_backend.device.build_version_sdk >
+            version_codes.JELLY_BEAN_MR1)
 
   def StartAgentTracing(self, config, timeout):
     if not config.enable_atrace_trace:
@@ -32,7 +34,7 @@ class AtraceTracingAgent(tracing_agent.TracingAgent):
     self._config = atrace_agent.AtraceConfig(
         config.atrace_config.categories,
         trace_buf_size=None, kfuncs=None, app_name=app_name,
-        compress_trace_data=True, boot=True, from_file=True,
+        compress_trace_data=True, from_file=True,
         device_serial_number=str(self._device), trace_time=None,
         target='android')
     return self._atrace_agent.StartAgentTracing(self._config, timeout)

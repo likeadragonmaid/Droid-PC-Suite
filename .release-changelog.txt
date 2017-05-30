@@ -1,8 +1,6 @@
-Version 1.7 (Build 170128)
+Version 1.8 (Build 170530)
 
-* Added a tool to clear the battery statistics
-* Added a tool to start an activity of an android app on the android device
-* Updated the packaged ADB and fastboot files for windows
-* Updated internal commons-lang library
-* Added two new tooltips
-* Fixed a typo error
+* Added new tools: ifconfig, netstat and running processes viewer
+* Now DPCS shows information like manufacturer, codename and android version of the device by default
+* Added new information to common workarounds
+* UI fixes and improvements

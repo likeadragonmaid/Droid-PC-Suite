@@ -1,7 +1,7 @@
 /*****************************************************************************
  * dpcs/Interface.java: The main interface for Droid PC Suite
  *****************************************************************************
- * Copyright (C) 2016 Karanvir Singh
+ * Copyright (C) 2017 Karanvir Singh
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -10,7 +10,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -27,6 +27,8 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -66,13 +68,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import updater.Updater;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class Interface extends JFrame {
 	JLabel FlasherDone, GeneralDone, WiperDone, BackupAndRestoreDone, ADBConnectionLabel, RootStatusLabel,
-			ApplicationStatus;
+			ApplicationStatus, DeviceManufacturerLabel, DeviceCodenameLabel, AndroidVersionLabel;
 	JTextArea LogViewer, CalculatedCrypto, InputCrypto;
 	boolean adbconnected = false, rooted = false;
 	double AppVersion;
@@ -116,6 +116,25 @@ public class Interface extends JFrame {
 									"Error", JOptionPane.ERROR_MESSAGE);
 						}
 						ADBConnectionLabel.setText("Device is connected");
+
+						java.util.Scanner GetManufacturerName = new java.util.Scanner(Runtime.getRuntime()
+								.exec("adb shell getprop ro.product.manufacturer").getInputStream());
+						String ManufacturerTemp = GetManufacturerName.next();
+						ManufacturerTemp = ManufacturerTemp.toLowerCase();
+						String Manufacturer = Character.toUpperCase(ManufacturerTemp.charAt(0))
+								+ ManufacturerTemp.substring(1);
+						DeviceManufacturerLabel.setText("Manufacturer: " + Manufacturer);
+						GetManufacturerName.close();
+
+						java.util.Scanner GetDeviceName = new java.util.Scanner(
+								Runtime.getRuntime().exec("adb shell getprop ro.product.name").getInputStream());
+						DeviceCodenameLabel.setText("Device codename: " + GetDeviceName.next());
+						GetDeviceName.close();
+
+						java.util.Scanner GetAndroidVersion = new java.util.Scanner(Runtime.getRuntime()
+								.exec("adb shell getprop ro.build.version.release").getInputStream());
+						AndroidVersionLabel.setText("Android version: " + GetAndroidVersion.next());
+						GetAndroidVersion.close();
 					} else {
 						adbconnected = false;
 						ADBConnectionLabel.setText("Connect your device...");
@@ -170,7 +189,7 @@ public class Interface extends JFrame {
 		setTitle("Droid PC Suite");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1088, 715);
+		setBounds(100, 100, 1075, 715);
 		try {
 			InputStreamReader reader2 = new InputStreamReader(
 					getClass().getResourceAsStream("/others/app-version.txt"));
@@ -593,6 +612,18 @@ public class Interface extends JFrame {
 			}
 		});
 
+		AndroidVersionLabel = new JLabel("");
+		AndroidVersionLabel.setBounds(818, 223, 243, 15);
+		contentPane.add(AndroidVersionLabel);
+
+		DeviceCodenameLabel = new JLabel("");
+		DeviceCodenameLabel.setBounds(818, 203, 243, 15);
+		contentPane.add(DeviceCodenameLabel);
+
+		DeviceManufacturerLabel = new JLabel("");
+		DeviceManufacturerLabel.setBounds(818, 184, 243, 15);
+		contentPane.add(DeviceManufacturerLabel);
+
 		JLabel lblApplicationVersion = new JLabel("Version: " + AppVersion);
 		lblApplicationVersion.setBounds(818, 150, 135, 22);
 		contentPane.add(lblApplicationVersion);
@@ -603,7 +634,8 @@ public class Interface extends JFrame {
 		RootStatusLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				JOptionPane.showMessageDialog(null, "If your rom have built in root support without using SuperSU or any similar app then DPCS will depict wrong root status!");
+				JOptionPane.showMessageDialog(null,
+						"If your rom have built in root support without using SuperSU or any similar app then DPCS will depict wrong root status!");
 			}
 		});
 		RootStatusLabel.setBounds(900, 12, 174, 17);
@@ -947,10 +979,10 @@ public class Interface extends JFrame {
 			}
 		});
 		btnClearBatteryStats.setToolTipText("Clear outdated or invalid battery stats");
-		btnClearBatteryStats.setBounds(25, 131, 220, 75);
+		btnClearBatteryStats.setBounds(800, 27, 220, 75);
 		panel_8.add(btnClearBatteryStats);
 		btnMemoryInformation.setToolTipText("View current memory information of android device");
-		btnMemoryInformation.setBounds(25, 236, 220, 75);
+		btnMemoryInformation.setBounds(800, 131, 220, 75);
 		panel_8.add(btnMemoryInformation);
 
 		JButton btnBatteryInformation = new JButton("Battery Information");
@@ -973,7 +1005,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnCpuInformation.setToolTipText("View current CPU information of android device");
-		btnCpuInformation.setBounds(282, 131, 220, 75);
+		btnCpuInformation.setBounds(25, 131, 220, 75);
 		panel_8.add(btnCpuInformation);
 
 		JButton btnAppInformation = new JButton("App Information");
@@ -1025,7 +1057,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnWifiInformation.setToolTipText("View current wifi information of android device");
-		btnWifiInformation.setBounds(541, 236, 220, 75);
+		btnWifiInformation.setBounds(800, 236, 220, 75);
 		panel_8.add(btnWifiInformation);
 
 		JButton btnAppPackageList = new JButton("App Packages List");
@@ -1077,13 +1109,46 @@ public class Interface extends JFrame {
 			}
 		});
 		btnUnroot.setToolTipText("Unroot device by removing SU binary from the device");
-		btnUnroot.setBounds(282, 236, 220, 75);
+		btnUnroot.setBounds(541, 236, 220, 75);
 		panel_8.add(btnUnroot);
 
 		JLabel lblNewLabel_1 = new JLabel(
 				"* Needs root access, also may not work with some devices regardless of root access");
 		lblNewLabel_1.setBounds(25, 359, 736, 15);
 		panel_8.add(lblNewLabel_1);
+
+		JButton btnRunningProcesses = new JButton("Running Processes");
+		btnRunningProcesses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RunningProcesses obj = new RunningProcesses();
+				obj.setVisible(true);
+			}
+		});
+		btnRunningProcesses.setToolTipText("View information about current running processes on android device");
+		btnRunningProcesses.setBounds(282, 236, 220, 75);
+		panel_8.add(btnRunningProcesses);
+
+		JButton btnNetstat = new JButton("netstat");
+		btnNetstat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Netstat obj = new Netstat();
+				obj.setVisible(true);
+			}
+		});
+		btnNetstat.setToolTipText("View netstat information of android device");
+		btnNetstat.setBounds(25, 236, 220, 75);
+		panel_8.add(btnNetstat);
+
+		JButton btnIfconfig = new JButton("ifconfig");
+		btnIfconfig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Ifconfig obj = new Ifconfig();
+				obj.setVisible(true);
+			}
+		});
+		btnIfconfig.setToolTipText("View IP configurations of android device");
+		btnIfconfig.setBounds(282, 131, 220, 75);
+		panel_8.add(btnIfconfig);
 
 		JPanel panel_10 = new JPanel();
 		panel_10.setBackground(Color.WHITE);
