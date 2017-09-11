@@ -135,6 +135,9 @@ public class Interface extends JFrame {
 					} else {
 						adbconnected = false;
 						ADBConnectionLabel.setText("Connect your device...");
+						DeviceManufacturerLabel.setText("");
+						DeviceCodenameLabel.setText("");
+						AndroidVersionLabel.setText("");
 					}
 				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
@@ -534,6 +537,9 @@ public class Interface extends JFrame {
 						adbconnected = false;
 						ADBConnectionLabel.setText("");
 						ADBConnectionLabel.setText("Connect your device...");
+						DeviceManufacturerLabel.setText("");
+						DeviceCodenameLabel.setText("");
+						AndroidVersionLabel.setText("");
 						JOptionPane.showMessageDialog(null,
 								"Please try again or perhaps try installing your android device adb drivers on PC");
 					}
