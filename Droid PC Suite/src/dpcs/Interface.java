@@ -39,6 +39,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -110,13 +111,11 @@ public class Interface extends JFrame {
 							Devicelistviewer.append(line);
 						}
 						if (Devicelistviewer.getLineCount() > 1) {
-							JOptionPane.showMessageDialog(null,
-									Devicelistviewer.getLineCount()
-											+ " devices detected!\nOnly 1 device is allowed at a time!\nPlease disconnect other devices!",
+							JOptionPane.showMessageDialog(null, Devicelistviewer.getLineCount()
+									+ " devices detected!\nOnly 1 device is allowed at a time!\nPlease disconnect other devices!",
 									"Error", JOptionPane.ERROR_MESSAGE);
 						}
 						ADBConnectionLabel.setText("Device is connected");
-
 						java.util.Scanner GetManufacturerName = new java.util.Scanner(Runtime.getRuntime()
 								.exec("adb shell getprop ro.product.manufacturer").getInputStream());
 						String ManufacturerTemp = GetManufacturerName.next();
@@ -125,12 +124,10 @@ public class Interface extends JFrame {
 								+ ManufacturerTemp.substring(1);
 						DeviceManufacturerLabel.setText("Manufacturer: " + Manufacturer);
 						GetManufacturerName.close();
-
 						java.util.Scanner GetDeviceName = new java.util.Scanner(
 								Runtime.getRuntime().exec("adb shell getprop ro.product.name").getInputStream());
 						DeviceCodenameLabel.setText("Device codename: " + GetDeviceName.next());
 						GetDeviceName.close();
-
 						java.util.Scanner GetAndroidVersion = new java.util.Scanner(Runtime.getRuntime()
 								.exec("adb shell getprop ro.build.version.release").getInputStream());
 						AndroidVersionLabel.setText("Android version: " + GetAndroidVersion.next());
@@ -139,8 +136,8 @@ public class Interface extends JFrame {
 						adbconnected = false;
 						ADBConnectionLabel.setText("Connect your device...");
 					}
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 				try {
 					File file = new File("su");
@@ -159,8 +156,8 @@ public class Interface extends JFrame {
 							RootStatusLabel.setText("");
 						}
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 				try {
 					Thread.sleep(1000);
@@ -223,7 +220,7 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					BufferedReader reader = new BufferedReader(new InputStreamReader(p1.getInputStream()));
 					JOptionPane.showMessageDialog(null, "State: " + reader.readLine());
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -247,7 +244,7 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					BufferedReader reader = new BufferedReader(new InputStreamReader(p1.getInputStream()));
 					JOptionPane.showMessageDialog(null, reader.readLine());
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -265,7 +262,7 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					BufferedReader reader = new BufferedReader(new InputStreamReader(p1.getInputStream()));
 					JOptionPane.showMessageDialog(null, reader.readLine());
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -292,7 +289,7 @@ public class Interface extends JFrame {
 						Devicelistviewer.append(line + "\n");
 					}
 					JOptionPane.showMessageDialog(null, Devicelistviewer);
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -320,7 +317,7 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					BufferedReader reader = new BufferedReader(new InputStreamReader(p1.getInputStream()));
 					JOptionPane.showMessageDialog(null, "Serial No: " + reader.readLine());
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -334,7 +331,7 @@ public class Interface extends JFrame {
 					Process p1 = Runtime.getRuntime().exec("adb wait-for-device");
 					p1.waitFor();
 					JOptionPane.showMessageDialog(null, "Waiting...");
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -372,7 +369,7 @@ public class Interface extends JFrame {
 					JOptionPane.showMessageDialog(null, reader.readLine());
 					Process p3 = Runtime.getRuntime().exec("fastboot reboot");
 					p3.waitFor();
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -391,7 +388,7 @@ public class Interface extends JFrame {
 					JOptionPane.showMessageDialog(null, reader.readLine() + "\n");
 					Process p3 = Runtime.getRuntime().exec("fastboot reboot");
 					p3.waitFor();
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -414,7 +411,7 @@ public class Interface extends JFrame {
 					JOptionPane.showMessageDialog(null, "Done, Click OK to reboot");
 					Process p3 = Runtime.getRuntime().exec("fastboot reboot");
 					p3.waitFor();
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -433,8 +430,8 @@ public class Interface extends JFrame {
 					Process p1 = Runtime.getRuntime().exec("adb reboot download");
 					p1.waitFor();
 					ApplicationStatus.setText("Done");
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -490,13 +487,13 @@ public class Interface extends JFrame {
 		mntmNeedHelp.setToolTipText("Get online help for Droid PC Suite");
 		mntmNeedHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, "Post your queries on XDA-Developers thread");
 				try {
-					JOptionPane.showMessageDialog(null, "Post your queries on XDA-Developers thread");
 					Desktop.getDesktop().browse(
 							new URL("http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599")
 									.toURI());
-				} catch (Exception e) {
-					System.err.println(e);
+				} catch (IOException | URISyntaxException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -540,8 +537,8 @@ public class Interface extends JFrame {
 						JOptionPane.showMessageDialog(null,
 								"Please try again or perhaps try installing your android device adb drivers on PC");
 					}
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 				try {
 					File file = new File("su");
@@ -560,7 +557,7 @@ public class Interface extends JFrame {
 							RootStatusLabel.setText("");
 						}
 					}
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -725,8 +722,8 @@ public class Interface extends JFrame {
 					}
 					Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/screenshot.png");
 					p3.waitFor();
-				} catch (Exception e) {
-					e.printStackTrace();
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -779,8 +776,8 @@ public class Interface extends JFrame {
 					}
 					Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/videorecording.mp4");
 					p3.waitFor();
-				} catch (Exception e) {
-					e.printStackTrace();
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -801,33 +798,25 @@ public class Interface extends JFrame {
 						int response = JOptionPane.showOptionDialog(null, "Where to install the app?", "Installer",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 						if (response == 0) {
-							try {
-								GeneralDone.setText("");
-								JFileChooser chooser = new JFileChooser();
-								FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
-								chooser.setFileFilter(filter);
-								int returnVal = chooser.showOpenDialog(getParent());
-								if (returnVal == JFileChooser.APPROVE_OPTION) {
-									File file = chooser.getSelectedFile();
-									String filename = chooser.getSelectedFile().getName();
-									try {
-										ApplicationStatus.setText("Installing...");
-										String[] commands = new String[3];
-										commands[0] = "adb";
-										commands[1] = "install";
-										commands[2] = file.getAbsolutePath();
-										ApplicationStatus.setText("Installing App...");
-										Process p1 = Runtime.getRuntime().exec(commands, null);
-										p1.waitFor();
-										ApplicationStatus.setText(
-												filename + " has been successfully installed on your android device!");
-										GeneralDone.setIcon(
-												new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-									} catch (Exception e1) {
-										System.err.println(e1);
-									}
-								}
-							} catch (Exception e1) {
+							GeneralDone.setText("");
+							JFileChooser chooser = new JFileChooser();
+							FileNameExtensionFilter filter = new FileNameExtensionFilter("APK Files", "apk");
+							chooser.setFileFilter(filter);
+							int returnVal = chooser.showOpenDialog(getParent());
+							if (returnVal == JFileChooser.APPROVE_OPTION) {
+								File file = chooser.getSelectedFile();
+								String filename = chooser.getSelectedFile().getName();
+								ApplicationStatus.setText("Installing...");
+								String[] commands = new String[3];
+								commands[0] = "adb";
+								commands[1] = "install";
+								commands[2] = file.getAbsolutePath();
+								ApplicationStatus.setText("Installing App...");
+								Process p1 = Runtime.getRuntime().exec(commands, null);
+								p1.waitFor();
+								ApplicationStatus
+										.setText(filename + " has been successfully installed on your android device!");
+								GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 							}
 						}
 						if (response == 1) {
@@ -838,27 +827,22 @@ public class Interface extends JFrame {
 							int returnVal = chooser.showOpenDialog(getParent());
 							if (returnVal == JFileChooser.APPROVE_OPTION) {
 								File file = chooser.getSelectedFile();
-								try {
-									ApplicationStatus.setText("Installing...");
-									Process p1 = Runtime.getRuntime().exec("adb remount");
-									p1.waitFor();
-									String[] pushcommand = new String[4];
-									pushcommand[0] = "adb";
-									pushcommand[1] = "push";
-									pushcommand[2] = file.getAbsolutePath();
-									pushcommand[3] = "/system/priv-app/";
-									ApplicationStatus.setText("Installing App...");
-									Process p2 = Runtime.getRuntime().exec(pushcommand, null);
-									p2.waitFor();
-									ApplicationStatus.setText("Rebooting your android device");
-									Process p3 = Runtime.getRuntime().exec("adb reboot");
-									p3.waitFor();
-									ApplicationStatus.setText("");
-									GeneralDone
-											.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-								} catch (Exception e1) {
-									System.err.println(e1);
-								}
+								ApplicationStatus.setText("Installing...");
+								Process p1 = Runtime.getRuntime().exec("adb remount");
+								p1.waitFor();
+								String[] pushcommand = new String[4];
+								pushcommand[0] = "adb";
+								pushcommand[1] = "push";
+								pushcommand[2] = file.getAbsolutePath();
+								pushcommand[3] = "/system/priv-app/";
+								ApplicationStatus.setText("Installing App...");
+								Process p2 = Runtime.getRuntime().exec(pushcommand, null);
+								p2.waitFor();
+								ApplicationStatus.setText("Rebooting your android device");
+								Process p3 = Runtime.getRuntime().exec("adb reboot");
+								p3.waitFor();
+								ApplicationStatus.setText("");
+								GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 							}
 						}
 						if (response == 2) {
@@ -869,60 +853,44 @@ public class Interface extends JFrame {
 							int returnVal = chooser.showOpenDialog(getParent());
 							if (returnVal == JFileChooser.APPROVE_OPTION) {
 								File file = chooser.getSelectedFile();
-								try {
-									ApplicationStatus.setText("Installing...");
-									Process p1 = Runtime.getRuntime().exec("adb remount");
-									p1.waitFor();
-									String[] pushcommand = new String[4];
-									pushcommand[0] = "adb";
-									pushcommand[1] = "push";
-									pushcommand[2] = file.getAbsolutePath();
-									pushcommand[3] = "/system/app/";
-									Process p2 = Runtime.getRuntime().exec(pushcommand, null);
-									p2.waitFor();
-									ApplicationStatus.setText("Rebooting your android device");
-									Process p3 = Runtime.getRuntime().exec("adb reboot");
-									p3.waitFor();
-									ApplicationStatus.setText("");
-									GeneralDone
-											.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-								} catch (Exception e1) {
-									System.err.println(e1);
-								}
+								ApplicationStatus.setText("Installing...");
+								Process p1 = Runtime.getRuntime().exec("adb remount");
+								p1.waitFor();
+								String[] pushcommand = new String[4];
+								pushcommand[0] = "adb";
+								pushcommand[1] = "push";
+								pushcommand[2] = file.getAbsolutePath();
+								pushcommand[3] = "/system/app/";
+								Process p2 = Runtime.getRuntime().exec(pushcommand, null);
+								p2.waitFor();
+								ApplicationStatus.setText("Rebooting your android device");
+								Process p3 = Runtime.getRuntime().exec("adb reboot");
+								p3.waitFor();
+								ApplicationStatus.setText("");
+								GeneralDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 							}
 						}
-					} catch (Exception e1) {
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 				if (MainResponse == 1) {
-					try {
-						GeneralDone.setText("");
-						String[] options = new String[] { "User apps", "Priv-apps", "System apps" };
-						int response = JOptionPane.showOptionDialog(null, "Which kind of app you want to uninstall?",
-								"Uninstaller", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options,
-								options[0]);
-						if (response == 0) {
-							try {
-								UninstallUserApps obj = new UninstallUserApps();
-								obj.setVisible(true);
-							} catch (Exception e1) {
-							}
-						}
-						if (response == 1) {
-							try {
-								UninstallPrivApps obj = new UninstallPrivApps();
-								obj.setVisible(true);
-							} catch (Exception e1) {
-							}
-						}
-						if (response == 2) {
-							try {
-								UninstallSystemApps obj = new UninstallSystemApps();
-								obj.setVisible(true);
-							} catch (Exception e1) {
-							}
-						}
-					} catch (Exception e1) {
+					GeneralDone.setText("");
+					String[] options = new String[] { "User apps", "Priv-apps", "System apps" };
+					int response = JOptionPane.showOptionDialog(null, "Which kind of app you want to uninstall?",
+							"Uninstaller", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options,
+							options[0]);
+					if (response == 0) {
+						UninstallUserApps obj = new UninstallUserApps();
+						obj.setVisible(true);
+					}
+					if (response == 1) {
+						UninstallPrivApps obj = new UninstallPrivApps();
+						obj.setVisible(true);
+					}
+					if (response == 2) {
+						UninstallSystemApps obj = new UninstallSystemApps();
+						obj.setVisible(true);
 					}
 				}
 			}
@@ -967,13 +935,10 @@ public class Interface extends JFrame {
 							"Reboot device? (Recommended)", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 							options, options[0]);
 					if (response == 0) {
-						try {
-							Process p3 = Runtime.getRuntime().exec("adb reboot");
-							p3.waitFor();
-						} catch (Exception e1) {
-						}
+						Process p3 = Runtime.getRuntime().exec("adb reboot");
+						p3.waitFor();
 					}
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -987,7 +952,6 @@ public class Interface extends JFrame {
 
 		JButton btnBatteryInformation = new JButton("Battery Information");
 		btnBatteryInformation.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				Batteryinfo obj = new Batteryinfo();
 				obj.setVisible(true);
@@ -1032,7 +996,8 @@ public class Interface extends JFrame {
 						Process p1 = Runtime.getRuntime().exec("adb shell am force-stop " + selectedapp);
 						p1.waitFor();
 						JOptionPane.showMessageDialog(null, selectedapp + " has been killed");
-					} catch (Exception e1) {
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 				if (response == 1) {
@@ -1040,7 +1005,8 @@ public class Interface extends JFrame {
 						Process p1 = Runtime.getRuntime().exec("adb shell am kill-all");
 						p1.waitFor();
 						JOptionPane.showMessageDialog(null, "All 'safe to kill' apps have been killed");
-					} catch (Exception e1) {
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -1103,7 +1069,7 @@ public class Interface extends JFrame {
 					} else {
 						JOptionPane.showMessageDialog(null, "This device is not rooted");
 					}
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -1201,7 +1167,7 @@ public class Interface extends JFrame {
 						}
 						zipFile.close();
 						JOptionPane.showMessageDialog(null, filename + " has been successfully extracted");
-					} catch (Exception e1) {
+					} catch (IOException e1) {
 						e1.printStackTrace();
 						JOptionPane.showMessageDialog(null, "An error occured");
 					}
@@ -1233,7 +1199,7 @@ public class Interface extends JFrame {
 					Process p1 = Runtime.getRuntime().exec("adb shell am start -n " + packagename + "/" + packagename
 							+ "com.package.name." + activityname);
 					p1.waitFor();
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 
@@ -1288,8 +1254,8 @@ public class Interface extends JFrame {
 						ApplicationStatus.setText("Restore completed successfully!");
 						BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnRestoreFromCustomLocationBackup.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -1321,8 +1287,8 @@ public class Interface extends JFrame {
 					ApplicationStatus.setText("Backup completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupInternelStorage.setSelected(false);
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1350,8 +1316,8 @@ public class Interface extends JFrame {
 					ApplicationStatus.setText("Backup completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupSingleApp.setSelected(false);
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1378,8 +1344,8 @@ public class Interface extends JFrame {
 					ApplicationStatus.setText("Backup completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupAppAndAppData.setSelected(false);
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1409,8 +1375,8 @@ public class Interface extends JFrame {
 					ApplicationStatus.setText("Backup completed successfully");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupWholeDevice.setSelected(false);
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1437,8 +1403,8 @@ public class Interface extends JFrame {
 					ApplicationStatus.setText("Restore completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnRestorePreviousBackup.setSelected(false);
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1465,8 +1431,8 @@ public class Interface extends JFrame {
 					ApplicationStatus.setText("Backup completed successfully!");
 					BackupAndRestoreDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 					btnBackupSystem.setSelected(false);
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1508,8 +1474,8 @@ public class Interface extends JFrame {
 					Process p1 = Runtime.getRuntime().exec("fastboot reboot");
 					p1.waitFor();
 					ApplicationStatus.setText("Done");
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1526,8 +1492,8 @@ public class Interface extends JFrame {
 					Process p1 = Runtime.getRuntime().exec("fasboot reboot-bootloader");
 					p1.waitFor();
 					ApplicationStatus.setText("Done");
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 		});
@@ -1544,8 +1510,8 @@ public class Interface extends JFrame {
 					Process p1 = Runtime.getRuntime().exec("adb reboot fastboot");
 					p1.waitFor();
 					ApplicationStatus.setText("Done");
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1562,8 +1528,8 @@ public class Interface extends JFrame {
 					Process p1 = Runtime.getRuntime().exec("adb reboot bootloader");
 					p1.waitFor();
 					ApplicationStatus.setText("Done");
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1580,8 +1546,8 @@ public class Interface extends JFrame {
 					Process p1 = Runtime.getRuntime().exec("adb reboot recovery");
 					p1.waitFor();
 					ApplicationStatus.setText("Done");
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1598,8 +1564,8 @@ public class Interface extends JFrame {
 					Process p1 = Runtime.getRuntime().exec("adb reboot");
 					p1.waitFor();
 					ApplicationStatus.setText("Done");
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1626,7 +1592,8 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					ApplicationStatus.setText(
 							"Done, now try to unlock the device with a random pattern then change security manually from settings");
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1643,8 +1610,8 @@ public class Interface extends JFrame {
 					Process p1 = Runtime.getRuntime().exec("adb shell su -c rm /data/system/password.key");
 					p1.waitFor();
 					ApplicationStatus.setText("Done, check your device...");
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1675,8 +1642,8 @@ public class Interface extends JFrame {
 					Process p2 = Runtime.getRuntime().exec("adb reboot");
 					p2.waitFor();
 					ApplicationStatus.setText("Done, check your device...");
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1726,13 +1693,13 @@ public class Interface extends JFrame {
 							write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
 							LogViewer.write(write);
 							ApplicationStatus.setText("Logcat saved");
-						} catch (Exception e) {
+						} catch (IOException e) {
 							e.printStackTrace();
 						} finally {
 							if (write != null)
 								try {
 									write.close();
-								} catch (Exception e) {
+								} catch (IOException e) {
 									e.printStackTrace();
 								}
 						}
@@ -1773,19 +1740,15 @@ public class Interface extends JFrame {
 					p3.waitFor();
 					Process p4 = Runtime.getRuntime().exec("adb shell rm /sdcard/.logcat.txt");
 					p4.waitFor();
-					try {
-						Reader reader = new FileReader(new File(".logcat.txt"));
-						LogViewer.read(reader, "");
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					Reader reader = new FileReader(new File(".logcat.txt"));
+					LogViewer.read(reader, "");
 					File file = new File(".logcat.txt");
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 					}
 					ApplicationStatus.setText("");
-				} catch (Exception e) {
-					System.err.println(e);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -1829,8 +1792,8 @@ public class Interface extends JFrame {
 						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashSystem.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -1863,8 +1826,8 @@ public class Interface extends JFrame {
 						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashData.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -1894,8 +1857,8 @@ public class Interface extends JFrame {
 						ApplicationStatus.setText("Sideloaded...");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashViaRecovery.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -1938,8 +1901,8 @@ public class Interface extends JFrame {
 						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashCache.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -1974,8 +1937,8 @@ public class Interface extends JFrame {
 						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnBootImage.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -2007,8 +1970,8 @@ public class Interface extends JFrame {
 						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashZipArchive.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -2043,8 +2006,8 @@ public class Interface extends JFrame {
 						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashRecovery.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -2084,8 +2047,8 @@ public class Interface extends JFrame {
 						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashSplash.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -2119,8 +2082,8 @@ public class Interface extends JFrame {
 						ApplicationStatus.setText(filename + "has been successfully flashed on your android device");
 						FlasherDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
 						btnFlashSplash.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -2154,8 +2117,8 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					ApplicationStatus.setText("Recovery has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -2174,8 +2137,8 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					ApplicationStatus.setText("Boot has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -2194,8 +2157,8 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					ApplicationStatus.setText("System has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -2214,8 +2177,8 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					ApplicationStatus.setText("Splash has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -2234,8 +2197,8 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					ApplicationStatus.setText("Data has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -2259,8 +2222,8 @@ public class Interface extends JFrame {
 					p3.waitFor();
 					ApplicationStatus.setText("Done");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -2282,8 +2245,8 @@ public class Interface extends JFrame {
 					p2.waitFor();
 					ApplicationStatus.setText("Done");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -2301,8 +2264,8 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					ApplicationStatus.setText("Radio has been wiped");
 					WiperDone.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Done.png")));
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -2346,8 +2309,8 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					Process p2 = Runtime.getRuntime().exec("fastboot oem unlock");
 					p2.waitFor();
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -2364,8 +2327,8 @@ public class Interface extends JFrame {
 					p1.waitFor();
 					Process p2 = Runtime.getRuntime().exec("fastboot oem lock");
 					p2.waitFor();
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -2568,7 +2531,7 @@ public class Interface extends JFrame {
 						file4.delete();
 					}
 					System.out.println("Droid PC Suite terminated");
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}

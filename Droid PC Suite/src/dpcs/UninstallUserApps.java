@@ -28,6 +28,7 @@ import org.apache.commons.io.IOUtils;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -142,8 +143,8 @@ public class UninstallUserApps extends JFrame {
 						UserAppUninstallDone
 								.setIcon(new ImageIcon(Interface.class.getResource("/graphics/Smalldone.png")));
 						btnUninstall.setSelected(false);
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -184,8 +185,8 @@ public class UninstallUserApps extends JFrame {
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 					}
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -221,8 +222,8 @@ public class UninstallUserApps extends JFrame {
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();
 			}
-		} catch (Exception e1) {
-			System.err.println(e1);
+		} catch (IOException | InterruptedException e1) {
+			e1.printStackTrace();
 		}
 	}
 }

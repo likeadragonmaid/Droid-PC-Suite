@@ -27,6 +27,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Reader;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -101,7 +102,7 @@ public class Buildpropeditor extends JFrame {
 							if (write != null)
 								try {
 									write.close();
-								} catch (Exception e1) {
+								} catch (IOException e1) {
 									e1.printStackTrace();
 								}
 						}
@@ -120,18 +121,19 @@ public class Buildpropeditor extends JFrame {
 					JOptionPane.showMessageDialog(null, "Cannot push empty file!");
 				} else {
 					FileWriter write = null;
-					try {
-						write = new FileWriter("build.prop");
-						BuildPropEditorWindow.write(write);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					} finally {
+						try {
+							write = new FileWriter("build.prop");
+							BuildPropEditorWindow.write(write);
+						} catch (IOException e2) {
+							e2.printStackTrace();
+						}
+					finally {
 						if (write != null)
 							try {
 								write.close();
-							} catch (Exception e1) {
+							} catch (IOException e1) {
 								e1.printStackTrace();
-							}
+								}
 					}
 					try {
 						Process p1 = Runtime.getRuntime().exec("adb push build.prop /sdcard/");
@@ -140,8 +142,8 @@ public class Buildpropeditor extends JFrame {
 						if (file.exists() && !file.isDirectory()) {
 							file.delete();
 						}
-					} catch (Exception e1) {
-						System.err.println(e1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -156,18 +158,14 @@ public class Buildpropeditor extends JFrame {
 				try {
 					Process p1 = Runtime.getRuntime().exec("adb pull /system/build.prop");
 					p1.waitFor();
-					try {
-						Reader reader = new FileReader(new File("build.prop"));
-						BuildPropEditorWindow.read(reader, "");
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					Reader reader = new FileReader(new File("build.prop"));
+					BuildPropEditorWindow.read(reader, "");
 					File file = new File("build.prop");
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 					}
-				} catch (Exception e) {
-					System.err.println(e);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -177,18 +175,14 @@ public class Buildpropeditor extends JFrame {
 		try {
 			Process p1 = Runtime.getRuntime().exec("adb pull /system/build.prop");
 			p1.waitFor();
-			try {
-				Reader reader = new FileReader(new File("build.prop"));
-				BuildPropEditorWindow.read(reader, "");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Reader reader = new FileReader(new File("build.prop"));
+			BuildPropEditorWindow.read(reader, "");
 			File file = new File("build.prop");
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();
 			}
-		} catch (Exception e) {
-			System.err.println(e);
+		} catch (IOException | InterruptedException e1) {
+			e1.printStackTrace();
 		}
 	}
 }

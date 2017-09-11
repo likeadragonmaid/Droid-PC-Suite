@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
@@ -45,7 +46,7 @@ public class DataReceiver {
 			saveLocation = new File(probs.getProperty("saveLocation"));
 		} catch (FileNotFoundException e) {
 			setSaveLocation(new File(getSaveLocation()));
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -58,7 +59,7 @@ public class DataReceiver {
 			processIn = process.getInputStream();
 			reader = new BufferedReader(new InputStreamReader(processIn));
 			Logger.writeToLog(reader.readLine());
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			Logger.writeToLog(e.getMessage());
 		} finally {
@@ -67,11 +68,10 @@ public class DataReceiver {
 					reader.close();
 				if (processIn != null)
 					processIn.close();
-			} catch (Exception e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	public ArrayList<String> getDevices(boolean log) {
@@ -82,7 +82,6 @@ public class DataReceiver {
 			Process process = new ProcessBuilder("adb", "devices").start();
 			processIN = process.getInputStream();
 			br = new BufferedReader(new InputStreamReader(processIN));
-
 			br.readLine();
 			String line;
 			while ((line = br.readLine()) != null && line.length() > 0) {
@@ -91,7 +90,7 @@ public class DataReceiver {
 					ret.add(split[0]);
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			Logger.writeToLog(e.getMessage());
 		} finally {
@@ -100,7 +99,7 @@ public class DataReceiver {
 					br.close();
 				if (processIN != null)
 					processIN.close();
-			} catch (Exception e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -115,7 +114,7 @@ public class DataReceiver {
 			try {
 				new ProcessBuilder("adb", "connect", ip).start();
 				Logger.writeToLog(ip + " connected");
-			} catch (Exception e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 				Logger.writeToLog(e.getMessage());
 			}
@@ -127,7 +126,6 @@ public class DataReceiver {
 			return null;
 		}
 		ArrayList<FileObj> ret = new ArrayList<FileObj>();
-
 		Process process;
 		BufferedReader br = null;
 		InputStream processIN = null;
@@ -135,34 +133,26 @@ public class DataReceiver {
 			process = new ProcessBuilder("adb", "-s", selectedDevice, "ls", dir).start();
 			processIN = process.getInputStream();
 			br = new BufferedReader(new InputStreamReader(processIN));
-
 			String line;
-
 			if (br.readLine() == null) {
 				return null;
 			}
 			br.readLine();
-
 			while ((line = br.readLine()) != null) {
 				if (line.length() > 24) {
-
 					String[] split = line.split(" ");
-
 					long lastEdit = Long.parseLong(split[2], 16);
 					Calendar date = Calendar.getInstance();
 					date.setTimeInMillis((lastEdit * 1000));
-
 					String name = "";
-
 					for (int i = 27; i < line.length(); i++) {
 						name += line.charAt(i);
 					}
-
 					ret.add(new FileObj(name, dir, sdf.format(date.getTime()), Long.parseLong(split[1], 16), false,
 							false));
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			Logger.writeToLog(e.getMessage());
 		} finally {
@@ -171,7 +161,7 @@ public class DataReceiver {
 					br.close();
 				if (processIN != null)
 					processIN.close();
-			} catch (Exception e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -205,9 +195,8 @@ public class DataReceiver {
 			Process p = new ProcessBuilder("adb", "-s", selectedDevice, "pull", path, dest).start();
 			p.waitFor();
 			Logger.writeToLog(path + " pulled to " + dest);
-
 			return new File(dest + "\\" + splits[splits.length - 1]);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			Logger.writeToLog("failed to pull " + path);
 			Logger.writeToLog(e.getMessage());
@@ -220,7 +209,7 @@ public class DataReceiver {
 			Process process = new ProcessBuilder("adb", "-s", selectedDevice, "push", source, destination).start();
 			process.waitFor();
 			Logger.writeToLog(source + "failed to push " + destination);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			Logger.writeToLog("failed to save properties" + source);
 			Logger.writeToLog(e.getMessage());
@@ -243,7 +232,6 @@ public class DataReceiver {
 			} else {
 				reader.readLine();
 				ArrayList<String> filesToDelete = new ArrayList<String>();
-
 				while ((line = reader.readLine()) != null) {
 					String[] splits = line.split(" ");
 					filesToDelete.add(path + "/" + splits[3]);
@@ -260,7 +248,7 @@ public class DataReceiver {
 					deleteFile(path);
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			Logger.writeToLog("failed to delete " + path);
 			Logger.writeToLog(e.getMessage());
@@ -270,7 +258,7 @@ public class DataReceiver {
 					reader.close();
 				if (processIN != null)
 					processIN.close();
-			} catch (Exception e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -297,7 +285,7 @@ public class DataReceiver {
 		probs.setProperty(key, value);
 		try {
 			probs.store(new FileWriter(new File(".explorer.properties")), "");
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			Logger.writeToLog("failed to delete ");
 			Logger.writeToLog(e.getMessage());

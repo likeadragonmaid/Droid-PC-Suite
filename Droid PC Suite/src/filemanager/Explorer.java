@@ -35,6 +35,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import filemanager.DataReceiver;
@@ -92,9 +93,7 @@ public class Explorer extends Frame {
 
 		Button chooseDestination = new Button("Choose Location");
 		chooseDestination.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-
 				JFileChooser fc = new JFileChooser();
 				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				if (fc.showOpenDialog(Explorer.this) == JFileChooser.APPROVE_OPTION) {
@@ -103,7 +102,6 @@ public class Explorer extends Frame {
 					destination.setText(receiver.getSaveLocation());
 					Logger.writeToLog(" - set as save destination");
 				}
-
 			}
 		});
 
@@ -119,7 +117,7 @@ public class Explorer extends Frame {
 				}
 				try {
 					new ProcessBuilder("explorer", receiver.getSaveLocation() + selection).start();
-				} catch (Exception ex) {
+				} catch (IOException ex) {
 					ex.printStackTrace();
 					Logger.writeToLog("failed to open file or directory");
 				}
@@ -135,7 +133,6 @@ public class Explorer extends Frame {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser fc = new JFileChooser();
 				fc.setFileSelectionMode(fc.FILES_AND_DIRECTORIES);
-
 				if (fc.showOpenDialog(Explorer.this) == JFileChooser.APPROVE_OPTION) {
 					File selection = fc.getSelectedFile();
 					source.setText(selection.getAbsolutePath());

@@ -22,6 +22,7 @@ package dpcs;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -68,8 +69,9 @@ public class ADBHelp extends JFrame {
 		try {
 			InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/others/adbhelp.txt"));
 			HelpViewer.read(reader, "");
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 }

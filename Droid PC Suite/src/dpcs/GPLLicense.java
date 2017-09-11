@@ -22,6 +22,7 @@ package dpcs;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -68,7 +69,7 @@ public class GPLLicense extends JFrame {
 		try {
 			InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/licenses/gpl-2.0.txt"));
 			LicenseViewer.read(reader, "");
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

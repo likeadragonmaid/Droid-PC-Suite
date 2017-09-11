@@ -29,6 +29,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -87,8 +88,8 @@ public class UpdaterGUI extends JFrame {
 					getClass().getResourceAsStream("/others/app-version.txt"));
 			String tmp = IOUtils.toString(reader2);
 			ApplicationVersion = Double.parseDouble(tmp);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 		setIconImage(Toolkit.getDefaultToolkit().getImage(UpdaterGUI.class.getResource("/graphics/Icon.png")));
 		setResizable(false);
@@ -137,7 +138,7 @@ public class UpdaterGUI extends JFrame {
 						JOptionPane.showMessageDialog(null,
 								"Download complete!\nPlease delete this version and extract the downloaded zip\nwhich is saved at "
 										+ fileToSave.getAbsolutePath() + ".zip");
-					} catch (Exception e) {
+					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
@@ -152,7 +153,7 @@ public class UpdaterGUI extends JFrame {
 			if (file3.exists() && !file3.isDirectory()) {
 				file3.delete();
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

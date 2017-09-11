@@ -30,6 +30,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -149,7 +150,7 @@ public class FilePanel extends Panel {
 
 		try {
 			new ProcessBuilder("explorer", file.getAbsolutePath()).start();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			Logger.writeToLog("failed to open file");
 			e.printStackTrace();
 		}

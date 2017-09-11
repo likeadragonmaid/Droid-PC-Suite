@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Reader;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -95,13 +96,13 @@ public class Appinfo extends JFrame {
 						try {
 							write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
 							AppInformationViewer.write(write);
-						} catch (Exception e) {
+						} catch (IOException e) {
 							e.printStackTrace();
 						} finally {
 							if (write != null)
 								try {
 									write.close();
-								} catch (Exception e) {
+								} catch (IOException e) {
 									e.printStackTrace();
 								}
 						}
@@ -116,55 +117,48 @@ public class Appinfo extends JFrame {
 		JButton btnEnterAnAnotherPackageName = new JButton("Another Package");
 		btnEnterAnAnotherPackageName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String selectedapp = (JOptionPane.showInputDialog(null, "Enter app's package name:"));
+				Process p1;
 				try {
-					String selectedapp = (JOptionPane.showInputDialog(null, "Enter app's package name:"));
-					Process p1 = Runtime.getRuntime()
+					p1 = Runtime.getRuntime()
 							.exec("adb shell dumpsys meminfo " + selectedapp + "> /sdcard/.appinfo.txt");
 					p1.waitFor();
 					Process p2 = Runtime.getRuntime().exec("adb pull /sdcard/.appinfo.txt");
 					p2.waitFor();
 					Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/.appinfo.txt");
 					p3.waitFor();
-					try {
-						Reader reader = new FileReader(new File(".appinfo.txt"));
-						AppInformationViewer.read(reader, "");
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
+					Reader reader = new FileReader(new File(".appinfo.txt"));
+					AppInformationViewer.read(reader, "");
 					File file = new File(".appinfo.txt");
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 					}
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
 		btnEnterAnAnotherPackageName.setToolTipText("Enter an another package name");
 		btnEnterAnAnotherPackageName.setBounds(10, 323, 220, 47);
 		contentPane.add(btnEnterAnAnotherPackageName);
+		JOptionPane.showMessageDialog(null, "You can find an app package name from App Packages List");
+		String selectedapp = (JOptionPane.showInputDialog(null, "Enter app's package name:"));
+		Process p1;
 		try {
-			JOptionPane.showMessageDialog(null, "You can find an app package name from App Packages List");
-			String selectedapp = (JOptionPane.showInputDialog(null, "Enter app's package name:"));
-			Process p1 = Runtime.getRuntime()
-					.exec("adb shell dumpsys meminfo " + selectedapp + "> /sdcard/.appinfo.txt");
+			p1 = Runtime.getRuntime().exec("adb shell dumpsys meminfo " + selectedapp + "> /sdcard/.appinfo.txt");
 			p1.waitFor();
 			Process p2 = Runtime.getRuntime().exec("adb pull /sdcard/.appinfo.txt");
 			p2.waitFor();
 			Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/.appinfo.txt");
 			p3.waitFor();
-			try {
-				Reader reader = new FileReader(new File(".appinfo.txt"));
-				AppInformationViewer.read(reader, "");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Reader reader = new FileReader(new File(".appinfo.txt"));
+			AppInformationViewer.read(reader, "");
 			File file = new File(".appinfo.txt");
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();
 			}
-		} catch (Exception e) {
-			System.err.println(e);
+		} catch (IOException | InterruptedException e1) {
+			e1.printStackTrace();
 		}
 	}
 }

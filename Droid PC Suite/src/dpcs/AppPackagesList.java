@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
@@ -81,6 +82,7 @@ public class AppPackagesList extends JFrame {
 		btnRefresh.setToolTipText("Refresh the apps list");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				try {
 					Process p1 = Runtime.getRuntime().exec("adb shell pm list packages > /sdcard/.allapps.txt");
 					p1.waitFor();
@@ -110,8 +112,8 @@ public class AppPackagesList extends JFrame {
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 					}
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -147,8 +149,8 @@ public class AppPackagesList extends JFrame {
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();
 			}
-		} catch (Exception e1) {
-			System.err.println(e1);
+		} catch (IOException | InterruptedException e1) {
+			e1.printStackTrace();
 		}
 	}
 }

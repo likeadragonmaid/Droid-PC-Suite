@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Reader;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -88,18 +89,14 @@ public class Ifconfig extends JFrame {
 					p2.waitFor();
 					Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/.ifconfig.txt");
 					p3.waitFor();
-					try {
-						Reader reader = new FileReader(new File(".ifconfig.txt"));
-						IfconfigInformationViewer.read(reader, "");
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
+					Reader reader = new FileReader(new File(".ifconfig.txt"));
+					IfconfigInformationViewer.read(reader, "");
 					File file = new File(".ifconfig.txt");
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 					}
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -125,13 +122,13 @@ public class Ifconfig extends JFrame {
 						try {
 							write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
 							IfconfigInformationViewer.write(write);
-						} catch (Exception e) {
+						} catch (IOException e) {
 							e.printStackTrace();
 						} finally {
 							if (write != null)
 								try {
 									write.close();
-								} catch (Exception e) {
+								} catch (IOException e) {
 									e.printStackTrace();
 								}
 						}
@@ -149,18 +146,14 @@ public class Ifconfig extends JFrame {
 			p2.waitFor();
 			Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/.ifconfig.txt");
 			p3.waitFor();
-			try {
-				Reader reader = new FileReader(new File(".ifconfig.txt"));
-				IfconfigInformationViewer.read(reader, "");
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			Reader reader = new FileReader(new File(".ifconfig.txt"));
+			IfconfigInformationViewer.read(reader, "");
 			File file = new File(".ifconfig.txt");
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();
 			}
-		} catch (Exception e1) {
-			System.err.println(e1);
+		} catch (IOException | InterruptedException e1) {
+			e1.printStackTrace();
 		}
 	}
 }

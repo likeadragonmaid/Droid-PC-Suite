@@ -24,6 +24,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
 
@@ -49,7 +50,7 @@ public class Repacker {
 			zipFile.addFolder(PathOfDirectoryToBeZipped, parameters);
 			JOptionPane.showMessageDialog(null,
 					"APK repacked successfully! Saved at\n" + PathOfDirectoryToBeZipped + ".apk");
-		} catch (Exception e1) {
+		} catch (ZipException e1) {
 			e1.printStackTrace();
 		}
 	}

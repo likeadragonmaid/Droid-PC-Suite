@@ -31,6 +31,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -89,7 +90,7 @@ public class About extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					Desktop.getDesktop().browse(new URL("https://github.com/kvsjxd/Droid-PC-Suite/").toURI());
-				} catch (Exception e) {
+				} catch (IOException | URISyntaxException e) {
 					e.printStackTrace();
 				}
 			}
@@ -122,10 +123,10 @@ public class About extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					Desktop.getDesktop().browse(
-							new URL("http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
+					Desktop.getDesktop().browse(new URL(
+							"http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
 									.toURI());
-				} catch (Exception e) {
+				} catch (IOException | URISyntaxException e) {
 					e.printStackTrace();
 				}
 			}
@@ -180,10 +181,10 @@ public class About extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					Desktop.getDesktop().browse(
-							new URL("http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
+					Desktop.getDesktop().browse(new URL(
+							"http://forum.xda-developers.com/member.php?s=82fb1dacfee601c8f79084b30d57d5a2&u=5640594")
 									.toURI());
-				} catch (Exception e1) {
+				} catch (IOException | URISyntaxException e1) {
 					e1.printStackTrace();
 				}
 			}

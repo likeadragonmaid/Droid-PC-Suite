@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import javax.swing.JButton;
@@ -93,7 +94,7 @@ public class Terminal extends JFrame {
 					InputStreamReader reader = new InputStreamReader(
 							getClass().getResourceAsStream("/others/adbhelp.txt"));
 					TerminalEmulatorDisplay.read(reader, "");
-				} catch (Exception e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -112,18 +113,14 @@ public class Terminal extends JFrame {
 					p2.waitFor();
 					Process p3 = Runtime.getRuntime().exec("adb shell rm /sdcard/.androidshellcommands.txt");
 					p3.waitFor();
-					try {
-						Reader reader = new FileReader(new File(".androidshellcommands.txt"));
-						TerminalEmulatorDisplay.read(reader, "");
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					Reader reader = new FileReader(new File(".androidshellcommands.txt"));
+					TerminalEmulatorDisplay.read(reader, "");
 					File file = new File(".androidshellcommands.txt");
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 					}
-				} catch (Exception e) {
-					System.err.println(e);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -138,7 +135,7 @@ public class Terminal extends JFrame {
 					InputStreamReader reader = new InputStreamReader(
 							getClass().getResourceAsStream("/others/fastboothelp.txt"));
 					TerminalEmulatorDisplay.read(reader, "");
-				} catch (Exception e1) {
+				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -211,7 +208,7 @@ public class Terminal extends JFrame {
 						Terminal.this.TerminalEmulatorDisplay.append("\n" + line);
 						line = reader.readLine();
 					}
-				} catch (Exception e1) {
+				} catch (IOException | InterruptedException e1) {
 					Terminal.this.TerminalEmulatorDisplay.append("" + e1);
 				}
 			}

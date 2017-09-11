@@ -21,7 +21,7 @@
 package dpcs;
 
 import java.io.File;
-
+import java.io.IOException;
 import javax.swing.SwingUtilities;
 import java.awt.Color;
 
@@ -54,8 +54,8 @@ public class Main {
 						}
 					}
 					System.out.println("Connectivity and root detection service started...");
-				} catch (Exception e) {
-					System.err.println(e);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});

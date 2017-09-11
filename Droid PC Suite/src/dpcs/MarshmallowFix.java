@@ -26,7 +26,9 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -72,8 +74,8 @@ public class MarshmallowFix extends JFrame {
 					Desktop.getDesktop().browse(
 							new URL("http://forum.xda-developers.com/attachment.php?attachmentid=3761901&d=1464187904")
 									.toURI());
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | URISyntaxException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -87,13 +89,13 @@ public class MarshmallowFix extends JFrame {
 		JTextArea MarshmallowFixviewer = new JTextArea();
 		MarshmallowFixviewer.setEditable(false);
 		scrollPane.setViewportView(MarshmallowFixviewer);
-
 		try {
 			InputStreamReader reader = new InputStreamReader(
 					getClass().getResourceAsStream("/others/marshmallow-fix.txt"));
 			MarshmallowFixviewer.read(reader, "");
-		} catch (Exception e1) {
-			System.err.println(e1);
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
+
 	}
 }

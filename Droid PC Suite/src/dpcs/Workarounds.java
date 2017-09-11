@@ -26,6 +26,8 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -102,8 +104,8 @@ public class Workarounds extends JFrame {
 					Desktop.getDesktop()
 							.browse(new URL("https://androidonlinux.wordpress.com/2013/05/12/setting-up-adb-on-linux/")
 									.toURI());
-				} catch (Exception e) {
-					e.printStackTrace();
+				} catch (IOException | URISyntaxException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -132,13 +134,9 @@ public class Workarounds extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				try {
-					MarshmallowFix obj = new MarshmallowFix();
-					obj.setVisible(true);
-					dispose();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				MarshmallowFix obj = new MarshmallowFix();
+				obj.setVisible(true);
+				dispose();
 			}
 		});
 		lblcommonworkaround7.setBounds(25, 173, 504, 24);

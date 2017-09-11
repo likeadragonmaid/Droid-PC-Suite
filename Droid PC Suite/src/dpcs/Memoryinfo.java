@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Reader;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -84,18 +85,14 @@ public class Memoryinfo extends JFrame {
 				try {
 					Process p1 = Runtime.getRuntime().exec("adb pull /proc/meminfo");
 					p1.waitFor();
-					try {
-						Reader reader = new FileReader(new File("meminfo"));
-						MemoryInformationViewer.read(reader, "");
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
+					Reader reader = new FileReader(new File("meminfo"));
+					MemoryInformationViewer.read(reader, "");
 					File file = new File("meminfo");
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
 					}
-				} catch (Exception e1) {
-					System.err.println(e1);
+				} catch (IOException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -121,13 +118,13 @@ public class Memoryinfo extends JFrame {
 						try {
 							write = new FileWriter(fileToSave.getAbsolutePath() + ".txt");
 							MemoryInformationViewer.write(write);
-						} catch (Exception e) {
+						} catch (IOException e) {
 							e.printStackTrace();
 						} finally {
 							if (write != null)
 								try {
 									write.close();
-								} catch (Exception e) {
+								} catch (IOException e) {
 									e.printStackTrace();
 								}
 						}
@@ -141,18 +138,14 @@ public class Memoryinfo extends JFrame {
 		try {
 			Process p1 = Runtime.getRuntime().exec("adb pull /proc/meminfo");
 			p1.waitFor();
-			try {
-				Reader reader = new FileReader(new File("meminfo"));
-				MemoryInformationViewer.read(reader, "");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Reader reader = new FileReader(new File("meminfo"));
+			MemoryInformationViewer.read(reader, "");
 			File file = new File("meminfo");
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();
 			}
-		} catch (Exception e) {
-			System.err.println(e);
+		} catch (IOException | InterruptedException e1) {
+			e1.printStackTrace();
 		}
 	}
 }
