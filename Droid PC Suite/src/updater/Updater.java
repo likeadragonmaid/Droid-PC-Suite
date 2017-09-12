@@ -1,7 +1,7 @@
 /*****************************************************************************
  * updater/Updater.java: Updater initialization logic for Droid PC Suite
  *****************************************************************************
- * Copyright (C) 2016 Karanvir Singh
+ * Copyright (C) 2017 Karanvir Singh
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -65,7 +65,7 @@ public class Updater {
 				UpdaterGUI obj = new UpdaterGUI();
 				obj.setVisible(true);
 			} else {
-				System.out.println("You are running latest Droid PC Suite...");
+				System.out.println("You are running latest official build of Droid PC Suite...");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
