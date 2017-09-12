@@ -146,8 +146,15 @@ public class Interface extends JFrame {
 					File file = new File("su");
 					Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
 					p1.waitFor();
+					File file2 = new File("51-addonsu.sh");
+					Process p2 = Runtime.getRuntime().exec("adb pull /system/addon.d/51-addonsu.sh");
+					p2.waitFor();
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
+						rooted = true;
+						RootStatusLabel.setText("Device is rooted");
+					} else if (file2.exists() && !file.isDirectory()) {
+						file2.delete();
 						rooted = true;
 						RootStatusLabel.setText("Device is rooted");
 					} else {
@@ -550,8 +557,15 @@ public class Interface extends JFrame {
 					File file = new File("su");
 					Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
 					p1.waitFor();
+					File file2 = new File("51-addonsu.sh");
+					Process p2 = Runtime.getRuntime().exec("adb pull /system/addon.d/51-addonsu.sh");
+					p2.waitFor();
 					if (file.exists() && !file.isDirectory()) {
 						file.delete();
+						rooted = true;
+						RootStatusLabel.setText("Device is rooted");
+					} else if (file2.exists() && !file.isDirectory()) {
+						file2.delete();
 						rooted = true;
 						RootStatusLabel.setText("Device is rooted");
 					} else {
@@ -1061,7 +1075,7 @@ public class Interface extends JFrame {
 						JOptionPane.showMessageDialog(null,
 								"Only the SU Binary will get removed since there are lot of different root management\napplications for android available, I can't regularly search for them and add their\nsupport to this application. If you think this concerns you, you can help me by sending\nme a list of root management applicationsfor android like supersu, kingroot, kingoroot,\netc. But I can't promise that I will add support for each of them. Cheers! :)");
 					}
-					JOptionPane.showMessageDialog(null, "Unrooting work only on non-production builds of android");
+					JOptionPane.showMessageDialog(null, "Unrooting work only on non-production android builds");
 					Process p1 = Runtime.getRuntime().exec("adb pull /system/xbin/su");
 					p1.waitFor();
 					File file2 = new File("su");
@@ -2511,7 +2525,7 @@ public class Interface extends JFrame {
 					System.out.println("Killing ADB instance...");
 					Process p1 = Runtime.getRuntime().exec("adb kill-server");
 					p1.waitFor();
-					System.out.println("Cleaning cache...");
+					System.out.println("Clearing temporary files (if any)...");
 					File file2 = new File(".CheckADBConnection");
 					if (file2.exists() && !file2.isDirectory()) {
 						file2.delete();
@@ -2534,7 +2548,11 @@ public class Interface extends JFrame {
 					}
 					File file7 = new File(".systemapps.txt");
 					if (file7.exists() && !file7.isDirectory()) {
-						file4.delete();
+						file7.delete();
+					}
+					File file8 = new File("51-addonsu.sh");
+					if (file8.exists() && !file8.isDirectory()) {
+						file8.delete();
 					}
 					System.out.println("Droid PC Suite terminated");
 				} catch (IOException | InterruptedException e1) {
