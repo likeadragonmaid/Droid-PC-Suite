@@ -673,15 +673,6 @@ public class Interface extends JFrame {
 		tabbedPane.addTab("General", null, panel_7, null);
 		panel_7.setLayout(null);
 
-		JButton btnADBTerminal = new JButton("ADB Terminal");
-		btnADBTerminal.setToolTipText("Send commands to your android device via ADB protocol, EXPERIMENTAL!");
-		btnADBTerminal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Terminal obj = new Terminal();
-				obj.setVisible(true);
-			}
-		});
-
 		JButton btnBuildpropeditor = new JButton("build.prop Editor");
 		btnBuildpropeditor
 				.setToolTipText("Editor for editing build properties of your android device, Use with Caution!");
@@ -691,10 +682,8 @@ public class Interface extends JFrame {
 				obj.setVisible(true);
 			}
 		});
-		btnBuildpropeditor.setBounds(541, 27, 220, 75);
+		btnBuildpropeditor.setBounds(282, 27, 220, 75);
 		panel_7.add(btnBuildpropeditor);
-		btnADBTerminal.setBounds(25, 27, 220, 75);
-		panel_7.add(btnADBTerminal);
 
 		JLabel lblNoteInstallationTo = new JLabel("# Only for android 4.4.x and higher");
 		lblNoteInstallationTo.setBounds(20, 311, 1046, 15);
@@ -713,7 +702,7 @@ public class Interface extends JFrame {
 				filemanager.FileManager.main(null);
 			}
 		});
-		btnFileManager.setBounds(25, 131, 220, 75);
+		btnFileManager.setBounds(541, 27, 220, 75);
 		panel_7.add(btnFileManager);
 
 		JLabel lblNeedsRoot = new JLabel(
@@ -747,7 +736,7 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		btnScreenshot.setBounds(282, 131, 220, 75);
+		btnScreenshot.setBounds(25, 131, 220, 75);
 		panel_7.add(btnScreenshot);
 
 		JButton btnScreenRecorder = new JButton("Screen Recorder #");
@@ -801,7 +790,7 @@ public class Interface extends JFrame {
 				}
 			}
 		});
-		btnScreenRecorder.setBounds(541, 131, 220, 75);
+		btnScreenRecorder.setBounds(282, 131, 220, 75);
 		panel_7.add(btnScreenRecorder);
 
 		JButton btnAppManager = new JButton("App Manager");
@@ -916,7 +905,7 @@ public class Interface extends JFrame {
 			}
 		});
 		btnAppManager.setToolTipText("Manage Apps on your android device");
-		btnAppManager.setBounds(282, 27, 220, 75);
+		btnAppManager.setBounds(25, 27, 220, 75);
 		panel_7.add(btnAppManager);
 
 		JLabel lblInstallationAndUninstallation = new JLabel(
