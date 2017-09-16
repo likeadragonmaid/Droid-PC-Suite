@@ -652,7 +652,8 @@ public class Interface extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				JOptionPane.showMessageDialog(null,
-						"If your rom have built in root support without using SuperSU or any similar app then DPCS will depict wrong root status!");
+						"If your rom have built-in root support rather than SuperSU\nor any similar root management app then DPCS may display\nincorrect root status!",
+						"Warning", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		RootStatusLabel.setBounds(900, 12, 174, 17);
