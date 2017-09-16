@@ -65,7 +65,8 @@ public class Updater {
 				UpdaterGUI obj = new UpdaterGUI();
 				obj.setVisible(true);
 			} else {
-				System.out.println("You are running latest official build of Droid PC Suite...");
+				System.out.println(
+						"You are running an unofficial or a custom build of Droid PC Suite...\nUse official builds for support! Download here:\nhttps://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
