@@ -160,7 +160,7 @@ public class Interface extends JFrame {
 					} else {
 						if (adbconnected == true) {
 							rooted = false;
-							RootStatusLabel.setText("Device is not rooted");
+							RootStatusLabel.setText("");
 						} else {
 							rooted = false;
 							RootStatusLabel.setText("");
@@ -571,7 +571,7 @@ public class Interface extends JFrame {
 					} else {
 						if (adbconnected == true) {
 							rooted = false;
-							RootStatusLabel.setText("Device is not rooted");
+							RootStatusLabel.setText("");
 						} else {
 							rooted = false;
 							RootStatusLabel.setText("");
