@@ -39,9 +39,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import org.apache.commons.io.IOUtils;
-
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -98,24 +96,24 @@ public class About extends JFrame {
 		btnGitHub.setBounds(369, 295, 111, 25);
 		contentPane.add(btnGitHub);
 
-		JLabel lblMyFriend4 = new JLabel("Gulati-kun");
+		JLabel lblMyFriend4 = new JLabel("Raghav Gulati");
 		lblMyFriend4.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblMyFriend4.setBounds(25, 266, 242, 24);
 		contentPane.add(lblMyFriend4);
 
-		JLabel lblMyFriend3 = new JLabel("Anil-kun");
+		JLabel lblMyFriend3 = new JLabel("Anil Kumar");
 		lblMyFriend3.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblMyFriend3.setBounds(25, 242, 242, 24);
 		contentPane.add(lblMyFriend3);
 
-		JLabel lblMyFriend2 = new JLabel("Suri-kun");
+		JLabel lblMyFriend2 = new JLabel("Bharat Suri");
 		lblMyFriend2.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblMyFriend2.setBounds(25, 217, 242, 24);
 		contentPane.add(lblMyFriend2);
 
-		JLabel lblApplicationVersion = new JLabel("Version: " + AppVersion);
+		JLabel lblApplicationVersion = new JLabel("Version: " + AppVersion + " UNOFFICIAL");
 		lblApplicationVersion.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblApplicationVersion.setBounds(382, 16, 132, 18);
+		lblApplicationVersion.setBounds(320, 16, 200, 18);
 		contentPane.add(lblApplicationVersion);
 
 		JLabel lblForMyOther = new JLabel("For my other Android stuff visit me on XDA - Developers (@kvsjxd)");
@@ -171,7 +169,7 @@ public class About extends JFrame {
 		lblDeveloper.setBounds(25, 12, 233, 24);
 		contentPane.add(lblDeveloper);
 
-		JLabel lblMrAleksandarDespotovski_shi = new JLabel("Aleksandar Despotovski-shi");
+		JLabel lblMrAleksandarDespotovski_shi = new JLabel("Aleksandar Despotovski");
 		lblMrAleksandarDespotovski_shi.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblMrAleksandarDespotovski_shi.setBounds(25, 169, 242, 24);
 		contentPane.add(lblMrAleksandarDespotovski_shi);
@@ -204,7 +202,7 @@ public class About extends JFrame {
 		lblMyname.setBounds(25, 36, 242, 24);
 		contentPane.add(lblMyname);
 
-		JLabel lblMyFriend1 = new JLabel("My friend - Chetan-kun");
+		JLabel lblMyFriend1 = new JLabel("Chetan Sharma");
 		lblMyFriend1.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblMyFriend1.setBounds(25, 145, 242, 24);
 		contentPane.add(lblMyFriend1);
