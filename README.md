@@ -32,7 +32,6 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 <p align="center">
   <img src="https://github.com/kvsjxd/Droid-PC-Suite/raw/gh-pages/images/1.png">
 </p>
-<a href="https://github.com/kvsjxd/Droid-PC-Suite/tree/gh-pages/images">View more screenshots</a>
 
 ## How to build from source using eclipse:
 1. Make sure that you are latest version of Java on your workstation
