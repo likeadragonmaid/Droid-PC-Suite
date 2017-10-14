@@ -3,10 +3,10 @@
 </p>
 Droid PC Suite contains set of tools for administration of android smartphones or tablets that supports communication over USB using Android Debug Bridge Technology. It works on all major operating systems.
 
-# [Download](https://github.com/kvsjxd/Droid-PC-Suite/releases/download/1.8/DPCS.v1.8.Stable.zip)
+# [Download](https://github.com/kvsjxd/Droid-PC-Suite/releases/download/1.9/DPCS.v1.9.Stable.zip)
 
 ## Features:
-* App Manager (Install/ Uninstall Apps & Bloatware)
+* App Manager (Install/Uninstall Apps + Bloatware)
 * Sophisticated file manager
 * ADB tools
 * Take screenshots
@@ -16,7 +16,6 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 * Unroot
 * Reboot to different modes
 * Unlock/ Lock bootloader
-* View and save logcat
 * Advanced backups
 * Restore from backups
 * Bypass 'your' device security (Android 4.4 and below)
@@ -28,6 +27,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 * Launch activities of the apps
 * ifconfig and netstat
 * View running processes
+* Bundled ADB, Fastboot, sqlite3 and various other related tools for Windows
 
 <p align="center">
   <img src="https://github.com/kvsjxd/Droid-PC-Suite/raw/gh-pages/images/1.png">
