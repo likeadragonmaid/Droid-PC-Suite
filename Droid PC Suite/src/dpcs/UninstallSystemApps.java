@@ -105,9 +105,11 @@ public class UninstallSystemApps extends JFrame {
 				} else {
 					try {
 						AppStatus.setText("Uninstalling...");
-						Process p1 = Runtime.getRuntime().exec("adb shell pm uninstall -k --user 0 " + list.getSelectedValue());
+						Process p1 = Runtime.getRuntime()
+								.exec("adb shell pm uninstall -k --user 0 " + list.getSelectedValue());
 						p1.waitFor();
-						Process p2 = Runtime.getRuntime().exec("adb shell pm list packages -s > /sdcard/.systemapps.txt");
+						Process p2 = Runtime.getRuntime()
+								.exec("adb shell pm list packages -s > /sdcard/.systemapps.txt");
 						p2.waitFor();
 						Process p3 = Runtime.getRuntime().exec("adb pull /sdcard/.systemapps.txt");
 						p3.waitFor();
