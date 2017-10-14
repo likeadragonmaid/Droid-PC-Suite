@@ -9,4 +9,5 @@ Version 1.9 (Build 171014)
 * Fixed a bug which made device info stay intact after disconnecting the device
 * Updated library commons-lang3-3.5 to commons-lang3-3.6
 * Improved exception handling
+* Bundled ADB and Fastboot for Windows updated to Pkg.Revision=26.0.1
 * Minor improvements to UI
