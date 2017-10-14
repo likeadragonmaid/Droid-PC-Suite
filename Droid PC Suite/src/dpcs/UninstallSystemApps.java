@@ -50,6 +50,7 @@ public class UninstallSystemApps extends JFrame {
 	JList list;
 	List<String> lines;
 	String[] values;
+	String[] moddedvalues;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -70,7 +71,7 @@ public class UninstallSystemApps extends JFrame {
 		setTitle("Uninstall System Apps");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(UninstallSystemApps.class.getResource("/graphics/Icon.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 482, 475);
+		setBounds(100, 100, 482, 430);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,10 +79,11 @@ public class UninstallSystemApps extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel AppStatus = new JLabel("");
-		AppStatus.setBounds(12, 393, 456, 17);
+		AppStatus.setBounds(12, 366, 456, 17);
 		contentPane.add(AppStatus);
 
 		SystemAppUninstallDone = new JLabel("");
+		SystemAppUninstallDone.setText("");
 		SystemAppUninstallDone.setBounds(151, 312, 186, 56);
 		contentPane.add(SystemAppUninstallDone);
 
@@ -103,31 +105,29 @@ public class UninstallSystemApps extends JFrame {
 				} else {
 					try {
 						AppStatus.setText("Uninstalling...");
-						Process p1 = Runtime.getRuntime().exec("adb remount");
+						Process p1 = Runtime.getRuntime().exec("adb shell pm uninstall -k --user 0 " + list.getSelectedValue());
 						p1.waitFor();
-						String[] commands = new String[3];
-						commands[0] = "adb shell su -c rm -r ";
-						commands[1] = "/system/app/";
-						commands[2] = " " + list.getSelectedValue();
-						Process p2 = Runtime.getRuntime().exec(commands, null);
+						Process p2 = Runtime.getRuntime().exec("adb shell pm list packages -s > /sdcard/.systemapps.txt");
 						p2.waitFor();
-						Process p3 = Runtime.getRuntime().exec("adb shell ls /system/app/ > /sdcard/.systemapps.txt");
+						Process p3 = Runtime.getRuntime().exec("adb pull /sdcard/.systemapps.txt");
 						p3.waitFor();
-						Process p4 = Runtime.getRuntime().exec("adb pull /sdcard/.systemapps.txt");
+						Process p4 = Runtime.getRuntime().exec("adb shell rm /sdcard/.systemapps.txt");
 						p4.waitFor();
-						Process p5 = Runtime.getRuntime().exec("adb shell rm /sdcard/.systemapps.txt");
-						p5.waitFor();
 						lines = IOUtils.readLines(new FileInputStream(".systemapps.txt"));
 						values = new String[lines.size()];
 						values = lines.toArray(values);
+						moddedvalues = new String[values.length];
+						for (int i = 0; i < values.length; i++) {
+							moddedvalues[i] = values[i].substring(8);
+						}
 						list = new JList();
 						list.setModel(new AbstractListModel() {
 							public int getSize() {
-								return values.length;
+								return moddedvalues.length;
 							}
 
 							public Object getElementAt(int index) {
-								return values[index];
+								return moddedvalues[index];
 							}
 						});
 						scrollPane.setViewportView(list);
@@ -153,7 +153,7 @@ public class UninstallSystemApps extends JFrame {
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Process p1 = Runtime.getRuntime().exec("adb shell ls /system/app/ > /sdcard/.systemapps.txt");
+					Process p1 = Runtime.getRuntime().exec("adb shell pm list packages -s > /sdcard/.systemapps.txt");
 					p1.waitFor();
 					Process p2 = Runtime.getRuntime().exec("adb pull /sdcard/.systemapps.txt");
 					p2.waitFor();
@@ -162,14 +162,18 @@ public class UninstallSystemApps extends JFrame {
 					lines = IOUtils.readLines(new FileInputStream(".systemapps.txt"));
 					values = new String[lines.size()];
 					values = lines.toArray(values);
+					moddedvalues = new String[values.length];
+					for (int i = 0; i < values.length; i++) {
+						moddedvalues[i] = values[i].substring(8);
+					}
 					list = new JList();
 					list.setModel(new AbstractListModel() {
 						public int getSize() {
-							return values.length;
+							return moddedvalues.length;
 						}
 
 						public Object getElementAt(int index) {
-							return values[index];
+							return moddedvalues[index];
 						}
 					});
 					scrollPane.setViewportView(list);
@@ -186,7 +190,7 @@ public class UninstallSystemApps extends JFrame {
 		contentPane.add(btnRefresh);
 
 		try {
-			Process p1 = Runtime.getRuntime().exec("adb shell ls /system/app/ > /sdcard/.systemapps.txt");
+			Process p1 = Runtime.getRuntime().exec("adb shell pm list packages -s > /sdcard/.systemapps.txt");
 			p1.waitFor();
 			Process p2 = Runtime.getRuntime().exec("adb pull /sdcard/.systemapps.txt");
 			p2.waitFor();
@@ -195,24 +199,21 @@ public class UninstallSystemApps extends JFrame {
 			lines = IOUtils.readLines(new FileInputStream(".systemapps.txt"));
 			values = new String[lines.size()];
 			values = lines.toArray(values);
+			moddedvalues = new String[values.length];
+			for (int i = 0; i < values.length; i++) {
+				moddedvalues[i] = values[i].substring(8);
+			}
 			list = new JList();
 			list.setModel(new AbstractListModel() {
 				public int getSize() {
-					return values.length;
+					return moddedvalues.length;
 				}
 
 				public Object getElementAt(int index) {
-					return values[index];
+					return moddedvalues[index];
 				}
 			});
 			scrollPane.setViewportView(list);
-			JLabel lblNewLabel = new JLabel("Note: You should also remove app's odex file if it exists");
-			lblNewLabel.setBounds(25, 374, 438, 17);
-			contentPane.add(lblNewLabel);
-
-			JLabel label = new JLabel("Needs root and does not work on production android builds!");
-			label.setBounds(25, 413, 454, 17);
-			contentPane.add(label);
 			File file = new File(".systemapps.txt");
 			if (file.exists() && !file.isDirectory()) {
 				file.delete();

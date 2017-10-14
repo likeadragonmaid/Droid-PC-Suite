@@ -804,7 +804,7 @@ public class Interface extends JFrame {
 				if (MainResponse == 0) {
 					try {
 						GeneralDone.setText("");
-						String[] options = new String[] { "User apps", "Priv-apps", "System apps" };
+						String[] options = new String[] { "User apps", "Priv-apps *", "System apps *" };
 						int response = JOptionPane.showOptionDialog(null, "Where to install the app?", "Installer",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 						if (response == 0) {
@@ -886,7 +886,7 @@ public class Interface extends JFrame {
 				}
 				if (MainResponse == 1) {
 					GeneralDone.setText("");
-					String[] options = new String[] { "User apps", "Priv-apps", "System apps" };
+					String[] options = new String[] { "User apps", "System apps" };
 					int response = JOptionPane.showOptionDialog(null, "Which kind of app you want to uninstall?",
 							"Uninstaller", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options,
 							options[0]);
@@ -895,10 +895,6 @@ public class Interface extends JFrame {
 						obj.setVisible(true);
 					}
 					if (response == 1) {
-						UninstallPrivApps obj = new UninstallPrivApps();
-						obj.setVisible(true);
-					}
-					if (response == 2) {
 						UninstallSystemApps obj = new UninstallSystemApps();
 						obj.setVisible(true);
 					}
@@ -910,12 +906,12 @@ public class Interface extends JFrame {
 		panel_7.add(btnAppManager);
 
 		JLabel lblInstallationAndUninstallation = new JLabel(
-				"Installation and Uninstallation of apps to Priv-app is only for android 4.4 and higher, requires root and even simply may not work on your device!");
+				"Installation of apps to Priv-app is only for android 4.4 and higher, requires root and even simply may not work on your device!");
 		lblInstallationAndUninstallation.setBounds(20, 356, 1046, 15);
 		panel_7.add(lblInstallationAndUninstallation);
 
 		JLabel lblInstallationAndUninstallation_1 = new JLabel(
-				"Installation and Uninstallation of apps to System requires root, and may not work for your device!");
+				"Installation of apps to System requires root, and may not work for your device!");
 		lblInstallationAndUninstallation_1.setBounds(20, 341, 1046, 15);
 		panel_7.add(lblInstallationAndUninstallation_1);
 
