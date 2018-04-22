@@ -1,6 +1,9 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/kvsjxd/Droid-PC-Suite/master/Droid%20PC%20Suite/src/graphics/Splash.png">
 </p>
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 Droid PC Suite contains set of tools for administration of android smartphones or tablets that supports communication over USB using Android Debug Bridge Technology. It works on all major operating systems.
 
 # [Download](https://github.com/kvsjxd/Droid-PC-Suite/releases/download/1.9/DPCS.v1.9.Stable.zip)
@@ -54,3 +57,6 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 > Make sure that you have installed latest adb and fastboot on your Mac and set Droid PC Suite binary as executable before trying to run Droid PC Suite. [You may like to download latest adb and fastboot for MacOS directly from google](https://dl.google.com/android/repository/platform-tools-latest-darwin.zip)
 ## Note: This project's releases are compiled against "openjdk version 1.8.0_144" and requires Java 8 to be installed on your computer to work properly.
 Having trouble with /suggestions for /tips for /tricks with Droid PC Suite? Or just want to say Hi or Thanks? [Check out XDA-Developers forum](http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599)
+
+## Issues on devices shipping with Google's Project Treble:
+Since I'm not investing anymore of my time on this project, there is a high chance that some of the features may not work on Project Treble enabled devices since they have a few changes in their file system partitioning scheme. The features that directly rely on /system partition to work would be most likey broken.
