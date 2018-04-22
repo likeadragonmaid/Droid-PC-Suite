@@ -59,4 +59,4 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 Having trouble with /suggestions for /tips for /tricks with Droid PC Suite? Or just want to say Hi or Thanks? [Check out XDA-Developers forum](http://forum.xda-developers.com/android/development/tool-droid-pc-suite-t3398599)
 
 ## Issues on devices shipping with Google's Project Treble:
-Since I'm not investing anymore of my time on this project, there is a high chance that some of the features may not work on Project Treble enabled devices since they have a few changes in their file system partitioning scheme. The features that directly rely on /system partition to work would be most likey broken.
+Since I'm not investing anymore of my time on this project, there is a high chance that some of the features may not work on Project Treble enabled devices since they have a few changes in their file system partitioning scheme. The features that directly rely on /system partition to work are most likey broken.
