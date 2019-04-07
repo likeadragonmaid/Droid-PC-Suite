@@ -37,7 +37,7 @@ public class Updater {
 	public Updater() {
 		try {
 			System.out.println("Checking for updates...");
-			URL url1 = new URL("https://raw.githubusercontent.com/kvsjxd/Droid-PC-Suite/master/.release-version.txt");
+			URL url1 = new URL("https://raw.githubusercontent.com/shouko-komi/Droid-PC-Suite/master/.release-version.txt");
 			ReadableByteChannel obj1 = Channels.newChannel(url1.openStream());
 			FileOutputStream outputstream1 = new FileOutputStream(".release-version.txt");
 			outputstream1.getChannel().transferFrom(obj1, 0, Long.MAX_VALUE);
@@ -58,7 +58,7 @@ public class Updater {
 				System.out.println(
 						"New update V" + AvailableUpdate + " is available! Please download latest version now!");
 				URL url2 = new URL(
-						"https://raw.githubusercontent.com/kvsjxd/Droid-PC-Suite/master/.release-changelog.txt");
+						"https://raw.githubusercontent.com/shouko-komi/Droid-PC-Suite/master/.release-changelog.txt");
 				ReadableByteChannel obj2 = Channels.newChannel(url2.openStream());
 				FileOutputStream outputstream2 = new FileOutputStream(".release-changelog.txt");
 				outputstream2.getChannel().transferFrom(obj2, 0, Long.MAX_VALUE);
