@@ -87,7 +87,7 @@ public class About extends JFrame {
 		btnGitHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Desktop.getDesktop().browse(new URL("https://github.com/kvsjxd/Droid-PC-Suite/").toURI());
+					Desktop.getDesktop().browse(new URL("https://github.com/shouko-komi/Droid-PC-Suite/").toURI());
 				} catch (IOException | URISyntaxException e) {
 					e.printStackTrace();
 				}
@@ -143,12 +143,12 @@ public class About extends JFrame {
 		lblForMyOther.setBounds(25, 321, 502, 24);
 		contentPane.add(lblForMyOther);
 
-		JLabel lblMySensei2 = new JLabel("Karun Sensei");
+		JLabel lblMySensei2 = new JLabel("Karun");
 		lblMySensei2.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblMySensei2.setBounds(25, 120, 242, 24);
 		contentPane.add(lblMySensei2);
 
-		JLabel lblMySensei1 = new JLabel("Prashotam Sensei");
+		JLabel lblMySensei1 = new JLabel("Prashotam");
 		lblMySensei1.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblMySensei1.setBounds(25, 98, 242, 24);
 		contentPane.add(lblMySensei1);
