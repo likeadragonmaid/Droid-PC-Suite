@@ -68,11 +68,11 @@ public class UpdaterGUI extends JFrame {
 	@SuppressWarnings("resource")
 	public UpdaterGUI() {
 		try {
-			URL url1 = new URL("https://raw.githubusercontent.com/kvsjxd/Droid-PC-Suite/master/.release-version.txt");
+			URL url1 = new URL("https://raw.githubusercontent.com/shouko-komi/Droid-PC-Suite/master/.release-version.txt");
 			ReadableByteChannel obj1 = Channels.newChannel(url1.openStream());
 			FileOutputStream outputstream1 = new FileOutputStream(".release-version.txt");
 			outputstream1.getChannel().transferFrom(obj1, 0, Long.MAX_VALUE);
-			URL url2 = new URL("https://raw.githubusercontent.com/kvsjxd/Droid-PC-Suite/master/.release-changelog.txt");
+			URL url2 = new URL("https://raw.githubusercontent.com/shouko-komi/Droid-PC-Suite/master/.release-changelog.txt");
 			ReadableByteChannel obj2 = Channels.newChannel(url2.openStream());
 			FileOutputStream outputstream2 = new FileOutputStream(".release-changelog.txt");
 			outputstream2.getChannel().transferFrom(obj2, 0, Long.MAX_VALUE);
@@ -130,7 +130,7 @@ public class UpdaterGUI extends JFrame {
 				if (userSelection == JFileChooser.APPROVE_OPTION) {
 					File fileToSave = fileChooser.getSelectedFile();
 					try {
-						URL url = new URL("https://github.com/kvsjxd/Droid-PC-Suite/releases/download/"
+						URL url = new URL("https://github.com/shouko-komi/Droid-PC-Suite/releases/download/"
 								+ AvailableUpdate + "/DPCS.v" + AvailableUpdate + ".Stable.zip");
 						ReadableByteChannel obj = Channels.newChannel(url.openStream());
 						FileOutputStream outputstream = new FileOutputStream(fileToSave.getAbsolutePath() + ".zip");
