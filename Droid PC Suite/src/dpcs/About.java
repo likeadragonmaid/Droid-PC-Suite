@@ -1,7 +1,7 @@
 /*****************************************************************************
  * dpcs/About.java: About JFrame for Droid PC Suite
  *****************************************************************************
- * Copyright (C) 2017 Karanvir Singh
+ * Copyright (C) 2019 Shouko Komi
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -174,7 +174,7 @@ public class About extends JFrame {
 		lblMrAleksandarDespotovski_shi.setBounds(25, 169, 242, 24);
 		contentPane.add(lblMrAleksandarDespotovski_shi);
 
-		JLabel lblMyname = new JLabel("Karanvir Singh");
+		JLabel lblMyname = new JLabel("Shouko Komi");
 		lblMyname.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

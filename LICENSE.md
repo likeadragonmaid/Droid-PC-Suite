@@ -4,7 +4,7 @@ Droid PC Suite contains set of tools for administration of android
 smartphones or tablets that supports communication over USB using
 Android Debug Bridge Technology. It works on all major operating systems
 
-Copyright (C) 2017 Dynamic Softwares
+Copyright (C) 2019 Dynamic Softwares
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

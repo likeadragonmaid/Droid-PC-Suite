@@ -1,7 +1,7 @@
 /*****************************************************************************
  * filemanager/Explorer.java: Explorer class for Droid PC Suite
  *****************************************************************************
- * Copyright (C) 2017 Karanvir Singh
+ * Copyright (C) 2019 Shouko Komi
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
