@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/shouko-komi/Droid-PC-Suite/master/Droid%20PC%20Suite/src/graphics/Splash.png">
+  <img src="https://tildegit.org/shouko/Droid-PC-Suite/raw/branch/master/Droid%20PC%20Suite/src/graphics/Splash.png">
 </p>
 
 [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
@@ -31,7 +31,7 @@ Droid PC Suite contains set of tools for administration of android smartphones o
 * Bundled ADB, Fastboot, sqlite3 and various other related tools for Windows
 
 <p align="center">
-  <img src="https://github.com/shouko-komi/Droid-PC-Suite/raw/gh-pages/images/1.png">
+  <img src="https://tildegit.org/shouko/Droid-PC-Suite/raw/branch/master/Screenshot/Droid-PC-Suite.png">
 </p>
 
 ## How to build from source using eclipse:
