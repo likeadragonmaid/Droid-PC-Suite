@@ -6,8 +6,6 @@
 
 Droid PC Suite contains set of tools for administration of android smartphones or tablets that supports communication over USB using Android Debug Bridge Technology. It works on all major operating systems.
 
-# [Download](https://github.com/shouko-komi/Droid-PC-Suite/releases/download/1.9/DPCS.v1.9.Stable.zip)
-
 ## Features:
 * App Manager (Install/Uninstall Apps + Bloatware)
 * Sophisticated file manager
