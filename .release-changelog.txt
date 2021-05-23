@@ -1,0 +1,13 @@
+Version 1.9 (Build 171014)
+
+* Removed logcat viewer and related features as "they were deprecated and buggy in DPCS"
+* Support for uninstalling system apps easily without root added
+* Priv-apps and System apps uninstallers are now unified into one 
+* Removed unreliable status "Device is not rooted" to prevent confusion
+* Removed ADB Terminal since it was just experimental
+* Added support for detecting official in-built root in LineageOS devices 
+* Fixed a bug which made device info stay intact after disconnecting the device
+* Updated library commons-lang3-3.5 to commons-lang3-3.6
+* Improved exception handling
+* Bundled ADB and Fastboot for Windows updated to Pkg.Revision=26.0.1
+* Minor improvements to UI

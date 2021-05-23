@@ -1,0 +1,21 @@
+Follow the below given steps to fix your Marshmallow device:
+
+1. Root your device (Skip if already rooted).
+
+2. Flash a compatible custom recovery on your
+   device like CWM/ TWRP/ PhilZ etc.
+   (Skip if already flashed) 
+
+3. Download the file by clicking download button below.
+
+4. Copy the file to your device external memory card or internal memory.
+
+5. Reboot to recovery.
+
+6. Install or flash the copied file using custom recovery.
+
+7. Wipe cache using custom recovery. (Optional)
+
+8. Reboot your device.
+
+9. Reconnect your device to your computer and use force connect.
